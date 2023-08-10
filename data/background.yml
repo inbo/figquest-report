@@ -1,0 +1,37 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting: id
+  hash: 1e9a67fe94e6fca76be0805ec24767d49464bf44
+  data_hash: 3c4cc5142f3cd460eb977cb9e0383131c7654953
+id:
+  class: numeric
+numbers:
+  class: factor
+  labels:
+  - not familiar
+  - not very familiar
+  - familiar
+  - very familiar
+  index:
+  - 1
+  - 2
+  - 3
+  - 4
+  ordered: no
+statistics:
+  class: factor
+  labels:
+  - not familiar
+  - not very familiar
+  - familiar
+  - very familiar
+  index:
+  - 1
+  - 2
+  - 3
+  - 4
+  ordered: no
+survey:
+  class: numeric

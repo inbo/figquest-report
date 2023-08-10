@@ -1,0 +1,20 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting: id
+  hash: f99e114128f545ca1e3de81ab8b50ef3d7da4fc2
+  data_hash: e8b36011a56c8b78328adf8f83811cd6bdb1e99c
+id:
+  class: numeric
+classification:
+  class: factor
+  labels:
+  - none
+  - symbol
+  - colour
+  index:
+  - 1
+  - 2
+  - 3
+  ordered: no

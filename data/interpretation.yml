@@ -1,0 +1,43 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting:
+  - id
+  - truth
+  - after
+  - participant
+  hash: 0b56b41d329e371febae31f38ac900582c3ee729
+  data_hash: 10a0c23744cab513af8cb6ba603f2c35b55b309e
+id:
+  class: numeric
+score:
+  class: factor
+  labels:
+  - lower
+  - comparable
+  - higher
+  - unclear
+  - no idea
+  index:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  ordered: no
+truth:
+  class: factor
+  labels:
+  - potential increase
+  - moderate increase
+  - stable
+  index:
+  - 1
+  - 2
+  - 3
+  ordered: no
+after:
+  class: logical
+participant:
+  class: logical

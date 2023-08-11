@@ -1,0 +1,132 @@
+---
+title: Op zoek naar een optimale trendfiguur
+author:
+  - name:
+      given: Thierry
+      family: Onkelinx
+    email: thierry.onkelinx@inbo.be
+    orcid: 0000-0001-8804-4216
+    affiliation: Research Institute for Nature and Forest (INBO)
+    corresponding: true
+reviewer:
+  - name:
+      given: Raïsa
+      family: Carmen
+    email: raisa.carmen@inbo.be
+    orcid: 0000-0003-1025-8702
+    affiliation: Research Institute for Nature and Forest (INBO)
+lang: nl
+style: INBO
+floatbarrier: subsubsection
+keywords: "trend; onzekerheid"
+community: "inbo"
+publication_type: report
+funder: Research Institute for Nature and Forest (INBO)
+rightsholder: Research Institute for Nature and Forest (INBO)
+bibliography: references.bib
+link-citations: TRUE
+site: bookdown::bookdown_site
+nocolophon: TRUE
+output:
+  INBOmd::gitbook: default
+  INBOmd::pdf_report: default
+  INBOmd::epub_book: default
+# Don't run the format below.
+# Only required for RStudio to recognise the project as a bookdown project.
+# Hence don't use 'Build all formats'.
+  bookdown::dontrun: default
+---
+
+# Samenvatting {.unnumbered}
+
+<!-- description: start -->
+
+De tekst voor de verplichte samenvatting.
+Hou het [Heerlijk Helder](https://overheid.vlaanderen.be/communicatie/heerlijk-helder).
+<!-- description: end -->
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, eval = TRUE, cache = FALSE, warning = TRUE, error = FALSE,
+  message = TRUE
+)
+library(cluster)
+library(effectclass)
+library(git2rdata)
+library(INBOtheme)
+library(INLA)
+library(kableExtra)
+library(scales)
+library(tidyverse)
+if (interactive()) {
+  theme_set(
+    theme_inbo(base_size = 10) +
+          theme(axis.title = element_blank())
+  )
+} else {
+  switch(
+    opts_knit$get("rmarkdown.pandoc.to"),
+    html = {
+      opts_chunk$set(dev = "png", dpi = 72)
+      theme_set(
+        theme_inbo(base_size = 12) +
+          theme(axis.title = element_blank())
+      )
+    },
+    latex = {
+      opts_chunk$set(dev = "cairo_pdf", dpi = 300)
+      theme_set(
+        theme_inbo(base_size = 9) +
+          theme(axis.title = element_blank())
+      )
+      update_geom_defaults("point", list(size = 1.5))
+    },
+    epub3 = {
+      opts_chunk$set(dev = "png", dpi = 300)
+      theme_set(
+        theme_inbo(base_size = 12) +
+          theme(axis.title = element_blank())
+      )
+    }
+  )
+}
+conflicted::conflicts_prefer(dplyr::filter)
+delta_percent <- function(x) {
+  label_percent()(x - 1)
+}
+n_sample <- 1e3
+```
+
+```{r read-data}
+read_vc("background", "../../data") |>
+  transmute(
+    .data$id,
+    type = ifelse(
+      .data$statistics %in% c("familiar", "very familiar"), 3,
+      ifelse(
+        .data$numbers %in% c("familiar", "very familiar"), 2, 1
+      )
+    ) |>
+      factor(
+        levels = 1:3, labels = c("weinig vertrouwd", "enkel cijfers", "beide")
+      ),
+    cijfers = factor(
+      .data$numbers,
+      labels = c(
+        "niet vertrouwd", "weinig vertrouwd", "vertrouwd", "zeer vertrouwd"
+      )
+    ),
+    numbers, statistics,
+    statistiek = factor(
+      .data$statistics,
+      labels = c(
+        "niet vertrouwd", "weinig vertrouwd", "vertrouwd", "zeer vertrouwd"
+      )
+    )
+  ) -> background
+read_vc("reference", "../../data") -> reference
+read_vc("uncertainty", "../../data") -> uncertainty
+read_vc("classification", "../../data") -> classification
+read_vc("interpretation", "../../data") -> interpretation
+```

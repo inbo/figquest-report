@@ -1,0 +1,61 @@
+<!-- hier komt de inhoudstafel bij pdf -->
+
+\mainmatter
+
+# Achtergrond van de deelnemers
+
+We stuurden de vragenlijst rond via de nieuwsbrieven van de INBO en Statistiek Vlaanderen.
+Verder vroegen we aan alle INBO medewerkers om de vragenlijst in te vullen.
+Tenslotte vroegen we aan een aantal overheidsinstellingen waar we vaak mee samenwerken om de vragenlijst intern rond te sturen.
+
+In totaal vulden `r nrow(background)` personen onze vragenlijst (deels) in.
+De voorkennis van de deelnemer mogelijk een invloed heeft op de keuzes.
+Daarom vroegen we om een zelfinschatting van hun vertrouwdheid met cijfers en statistiek.
+Tabel \@ref(tab:achtergrond) geeft een kruistabel van deze zelfinschattingen.
+Zoals te verwachten voelen deelnemers die zich vertrouwd voelen met statistiek zich meestal ook vertrouwd met cijfers.
+Globaal kunnen we drie groepen onderscheiden: 1) deelnemers die zowel met cijfers als statistiek vertrouwd zijn; 2) deelnemers die wel vertrouwd zijn met cijfers en minder met statistiek; en 3) deelnemers zijn zich noch met cijfers noch met statistiek vertrouwd voelen.
+Verder in het rapport zullen drie groepen respectievelijk benoemen als "beide", "enkel cijfers" en "weinig vertrouwd".
+We gebruiken hiervoor de volgende criteria:
+
+1.  "beide": iedereen die aangeeft "vertrouwd" of "zeer vertrouwd" te zijn met statistiek.
+2.  "enkel cijfers": iedereen die aangeeft "vertrouwd" of "zeer vertrouwd" te zijn met cijfers en "niet vertrouwd" of "weinig vertrouwd" met statistiek.
+3.  "weinig vertrouwd": iedereen die aangeeft "niet vertrouwd" of "weinig vertrouwd" te zijn met zowel cijfers als statistiek.
+
+In tabel \@ref(tab:achtergrond-type) geven we een overzicht van het aantal deelnemers per groep.
+Merk op dat een belangrijk deel van de deelnemers bestaat uit personen die zich (zeer) vertrouwd voelen met statistiek.
+Bij vervolgonderzoek lijkt het ons belangrijk om zeker de groep "weinig vertrouwd" actief te bevragen.
+
+```{r achtergrond}
+background |>
+  count(.data$cijfers, .data$statistiek, name = "aantal") |>
+  pivot_wider(
+    names_from = "statistiek", names_sort = TRUE, values_from = "aantal",
+    values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(
+      ., across(-"cijfers", sum), across("cijfers", ~"totaal")
+    )
+  ) %>%
+  bind_cols(
+    select(., -"cijfers") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Kruistabel van zelfinschatting van de deelnemers qua
+      vertrouwdheid met cijfers (rijen) en statistiek (kolommen).",
+    booktabs = TRUE, align = "l|rr|rr|r"
+  ) |>
+  row_spec(c(2, 4), hline_after = TRUE) |>
+  row_spec(5, bold = TRUE) |>
+  column_spec(6, bold = TRUE)
+```
+
+```{r achtergrond-type}
+background |>
+  count(.data$type, name = "aantal") |>
+  mutate(aandeel = sprintf("%.0f%%", 100 * .data$aantal / sum(.data$aantal))) |>
+  kbl(
+    booktabs = TRUE, align = "lrr", caption = "Aantal deelnemers per categorie."
+  )
+```

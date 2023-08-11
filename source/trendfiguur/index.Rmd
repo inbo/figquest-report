@@ -49,11 +49,13 @@ Hou het [Heerlijk Helder](https://overheid.vlaanderen.be/communicatie/heerlijk-h
 library(knitr)
 opts_chunk$set(
   echo = FALSE, eval = TRUE, cache = FALSE, warning = TRUE, error = FALSE,
-  message = TRUE
+  message = TRUE, fig.width = 6
 )
 library(cluster)
 library(effectclass)
+library(figquest)
 library(git2rdata)
+library(gridExtra)
 library(INBOtheme)
 library(INLA)
 library(kableExtra)
@@ -117,7 +119,6 @@ read_vc("background", "../../data") |>
         "niet vertrouwd", "weinig vertrouwd", "vertrouwd", "zeer vertrouwd"
       )
     ),
-    numbers, statistics,
     statistiek = factor(
       .data$statistics,
       labels = c(
@@ -125,7 +126,22 @@ read_vc("background", "../../data") |>
       )
     )
   ) -> background
-read_vc("reference", "../../data") -> reference
+read_vc("reference", "../../data") |>
+  transmute(
+    .data$id,
+    index = factor(
+      .data$index, levels = c("index", "change"),
+      labels = c("index", "procentuele wijziging")
+    ),
+    trend = factor(
+      .data$trend, levels = c("strong", "moderate"),
+      labels = c("sterk", "matig")
+    ),
+    referentie = factor(
+      .data$reference, levels = c("none", "line", "line + text"),
+      labels = c("geen", "lijn", "lijn + tekst")
+    )
+  ) -> reference
 read_vc("uncertainty", "../../data") -> uncertainty
 read_vc("classification", "../../data") -> classification
 read_vc("interpretation", "../../data") -> interpretation

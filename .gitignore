@@ -2,5 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+*.log
+*.tex
 data/email.*
 output/
+source/*/cover.txt

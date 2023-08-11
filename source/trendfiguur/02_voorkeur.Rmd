@@ -1,0 +1,112 @@
+# Voorkeur van de deelnemers
+
+In dit hoofstuk gaan we vraag per vraag na welke voorkeur de deelnemers aangaven.
+
+## Index of wijziging ten opzichte van referentie
+
+De eerste aanpassingsmogelijkheid die we de deelnemers aanboden, betrof de Y-as.
+De deelnemer moest kiezen tussen "index" of "procentuele wijziging".
+Bij "index" vermenigvuldigen we alle waarden met dezelfde constante zodat de waarde voor het referentiejaar gelijk is aan 100.
+Bij "procentuele wijziging" berekenen we procentuele wijziging ten opzichte van het referentiejaar.
+De wijziging van het referentiejaar ten opzichte van zichzelf in dan uiteraard per definitie +0%.
+In figuur \@ref(fig:y-as) tonen we beide figuren naast elkaar.
+
+```{r y-as, fig.cap = "Keuzemogelijkheden voor de Y-as."}
+set.seed(20230811)
+ds <- generate_data(size = "strong")
+create_figure(dataset = ds) |>
+  grid.arrange(
+    create_figure(dataset = ds, y_label = "change"), nrow = 1
+  )
+```
+
+```{r y-as-type}
+reference |>
+  inner_join(background, by = "id") |>
+  mutate(
+    `Y-as` = .data$index, index = as.integer(.data$`Y-as` == "index")
+  ) -> ds_referentie
+ds_referentie |>
+  count(.data$`Y-as`, .data$type, name = "aantal") |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "aantal",
+    values_fill = list(aantal = 0)
+  ) %>%
+  bind_rows(
+    summarise(
+      ., across(-"Y-as", sum), across("Y-as", ~"totaal")
+    )
+  ) %>%
+  bind_cols(
+    select(., -"Y-as") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor schaal Y-as per type deelnemers", align = "lrrr",
+    booktabs = TRUE
+  ) |>
+  row_spec(2, hline_after = TRUE) |>
+  row_spec(3, bold = TRUE) |>
+  column_spec(5, bold = TRUE)
+```
+
+```{r tab-index-model}
+tribble(
+  ~"typeweinig vertrouwd", ~"typeenkel cijfers", ~"typebeide",
+  1, -1,  0,
+  1,  0, -1,
+  0,  1, -1,
+  1 / 3, 1 / 3, 1 / 3
+) |>
+  inla.make.lincombs() |>
+  setNames(
+    c("weinig vs cijfers", "weinig vs beide", "cijfers vs beide", "gemiddelde")
+  ) -> lc
+m_0 <- inla(
+  index ~ 1, family = "binomial", data = ds_referentie,
+  control.compute = list(waic = TRUE)
+)
+m_index <- inla(
+  index ~ 0 + type, family = "binomial", data = ds_referentie, lincomb = lc,
+  control.compute = list(waic = TRUE)
+)
+delta_waic <- m_0$waic$waic - m_index$waic$waic
+```
+
+Op basis van de ruwe data (tabel \@ref(tab:y-as-type)) stellen we over het algemeen een voorkeur vast voor een index.
+De voorkeur verschilt naargelang het type deelnemer.
+Deelnemers uit de groep "beide" hebben een lichte voorkeur voor een index.
+Deze uit de groep "enkel cijfers" hebben mogelijk een voorkeur voor een index.
+Terwijl de groep "weinig vertrouwd" een voorkeur hebben voor een index.
+Merk dat de breedte van de intervallen samenhangen met het aantal deelnemers in elke groep.
+
+```{r fig-index-type, fig.cap = "Kans dat een deelnemer Y-as met index verkiest boven een procentuele wijziging, opgesplitst per type deelnemer."}
+m_index$summary.fixed |>
+  rownames_to_column("type") |>
+  mutate(
+    type = str_remove(.data$type, "type")
+  ) |>
+  bind_rows(
+    m_index$summary.lincomb.derived |>
+      rownames_to_column(var = "type") |>
+      filter(.data$type == "gemiddelde")
+  ) |>
+  mutate(
+    type = factor(.data$type, levels = c("gemiddelde", levels(background$type)))
+  ) |>
+  ggplot(
+    aes(
+      x = plogis(mean), xmin = plogis(`0.025quant`),
+      xmax = plogis(`0.975quant`), y = type, colour = type
+    )
+  ) +
+  geom_errorbarh(position = position_dodge(width = 0.5)) +
+  geom_vline(xintercept = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
+  geom_point() +
+  scale_x_continuous(
+    "kans op voorkeur voor index", labels = label_percent(), limits = 0:1
+  ) +
+  scale_y_discrete(limits = rev(c("gemiddelde", levels(background$type)))) +
+  theme(axis.title.x = element_text())
+```

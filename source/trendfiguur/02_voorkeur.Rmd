@@ -42,7 +42,7 @@ ds_referentie |>
       transmute(totaal = pmap_dbl(., sum))
   ) |>
   kbl(
-    caption = "Voorkeur voor schaal Y-as per type deelnemers", align = "lrrr",
+    caption = "Voorkeur voor schaal Y-as per type deelnemer.", align = "lrrr",
     booktabs = TRUE
   ) |>
   row_spec(2, hline_after = TRUE) |>
@@ -50,7 +50,7 @@ ds_referentie |>
   column_spec(5, bold = TRUE)
 ```
 
-```{r tab-index-model}
+```{r y-as-model}
 tribble(
   ~"typeweinig vertrouwd", ~"typeenkel cijfers", ~"typebeide",
   1, -1,  0,
@@ -74,13 +74,13 @@ delta_waic <- m_0$waic$waic - m_index$waic$waic
 ```
 
 Op basis van de ruwe data (tabel \@ref(tab:y-as-type)) stellen we over het algemeen een voorkeur vast voor een index.
-De voorkeur verschilt naargelang het type deelnemer.
+De voorkeur verschilt naargelang het type deelnemer (\@ref(fig:fig-y-as-type)).
 Deelnemers uit de groep "beide" hebben een lichte voorkeur voor een index.
 Deze uit de groep "enkel cijfers" hebben mogelijk een voorkeur voor een index.
 Terwijl de groep "weinig vertrouwd" een voorkeur hebben voor een index.
 Merk dat de breedte van de intervallen samenhangen met het aantal deelnemers in elke groep.
 
-```{r fig-index-type, fig.cap = "Kans dat een deelnemer Y-as met index verkiest boven een procentuele wijziging, opgesplitst per type deelnemer."}
+```{r fig-y-as-type, fig.cap = "Kans dat een deelnemer Y-as met index verkiest boven een procentuele wijziging, opgesplitst per type deelnemer."}
 m_index$summary.fixed |>
   rownames_to_column("type") |>
   mutate(
@@ -109,4 +109,177 @@ m_index$summary.fixed |>
   ) +
   scale_y_discrete(limits = rev(c("gemiddelde", levels(background$type)))) +
   theme(axis.title.x = element_text())
+```
+
+## Het gebruik van referentielijnen op de grafiek
+
+Na de schaal van de Y-as bieden we de deelnemer de keuze tussen drie opties voor referentielijnen: 1) geen referentielijnen, 2) enkel de referentielijnen en 3) geannoteerde referentielijnen.
+We illustreren de mogelijkheden in figuur \@ref(fig:referentie-sterk).
+Merk op dat we het type "index" gebruiken voor de Y-as.
+Tijdens de bevraging kreeg elke deelnemer de geselecteerde Y-as uit de vorige vraag.
+
+De lijn "referentie" verwijst naar een relevant referentieniveau dat te kiezen is door de maker van de figuur.
+Een logische keuze de toestand in een bepaald referentiejaar.
+Een andere mogelijkheid is het niveau van een bepaalde doelstelling uit een beleidsplan.
+Daarnaast gebruiken we nog twee bijkomende lijnen: "belangrijke toename" en "belangrijke afname".
+Deze lijnen kunnen de lezer van de figuur helpen bij de interpretatie.
+Het is aan betrokken expert om te bepalen wat een "belangrijke toename" en "belangrijke afname" is én om deze keuze te motiveren.
+Vaak kan de expert een van beiden bepalen.
+Gebruik in dat geval het tegengestelde effect voor de andere lijn.
+Stel dat de expert stelt dat -50% (een halvering) een belangrijke afname is.
+Het tegengestelde effect is dan +100% (een verdubbeling).
+
+Een bijkomend voordeel van het weergeven van een belangrijke toename en afname is dat we vermijden van te sterk in te zoomen wanneer enkel beperkte verschillen aanwezig zijn.
+We illustreren dit in figuur \@ref(fig:referentie-matig).
+Merk op dat de deelfiguur zonder referentielijnen sterkere verschillen lijkt te vertonen dan de andere figuren, hoewel alle figuren dezelfde tijdreeks tonen.
+
+```{r referentie-sterk, fig.cap = "Keuzemogelijkheden voor de referentie met een sterke trend als voorbeeld.", fig.height = 5}
+grid.arrange(
+  create_figure(dataset = ds) +
+    ggtitle("geen"),
+  create_figure(dataset = ds, reference = "lines") +
+    ggtitle("lijnen"),
+  create_figure(dataset = ds, reference = "lines + text") +
+    ggtitle("geannoteerde lijnen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+```{r referentie-matig, fig.cap = "Keuzemogelijkheden voor de referentie met een matige trend als voorbeeld.", fig.height = 5}
+ds_moderate <- generate_data(size = "moderate")
+grid.arrange(
+  create_figure(dataset = ds_moderate) +
+    ggtitle("geen"),
+  create_figure(dataset = ds_moderate, reference = "lines") +
+    ggtitle("lijnen"),
+  create_figure(dataset = ds_moderate, reference = "lines + text") +
+    ggtitle("geannoteerde lijnen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+In tabel \@ref(@tab:referentie) geven we een overzicht van de waargenomen voorkeuren.
+De voorkeur verschilt naargelang de voorkennis van de deelnemers en de sterkte van de trend (fig. \@ref(fig:referentie-model)).
+Globaal kunnen we stellen dat er een duidelijke voorkeur is voor referentielijnen, zeker wanneer we deze expliciet benoemen in de figuur.
+Deelnemers uit de groep "weinig vertrouwd" verkiezen vaker om geen referentielijnen te zien.
+Zeker bij een matige trend zagen we fenomeen.
+Bij dergelijke figuren zijn de referentielijnen met een belangrijke toename of afname extremer dan de trendreeks.
+Hierdoor toont de trendreeks in de figuur een minder sterke schommeling.
+
+```{r referentie}
+reference |>
+  inner_join(background, by = "id") |>
+  count(.data$referentie, .data$trend, .data$type) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(
+      ., referentie = "totaal", trend = "",
+      across(-c("referentie", "trend"), sum)
+    )
+  ) %>%
+  bind_cols(
+    select(., -c("referentie", "trend")) %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor referentielijnen per type deelnemer.",
+    align = "llrrr", booktabs = TRUE
+  ) |>
+  row_spec(c(2, 4, 6), hline_after = TRUE) |>
+  row_spec(7, bold = TRUE) |>
+  column_spec(6, bold = TRUE)
+```
+
+```{r referentie-model-fit}
+reference |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$referentie, .data$trend) |>
+  complete(
+    .data$type, .data$referentie, .data$trend, fill = list(n = 0)
+  ) -> ds_referentie
+m_type_trend <- inla(
+  n ~ 0 + referentie + referentie:type + referentie:trend, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r referentie-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + referentie, family = "poisson", data = ds_referentie,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + referentie + referentie:type, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE)
+)
+m_trend <- inla(
+  n ~ 0 + referentie + referentie:trend, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE)
+)
+m_type_trend <- inla(
+  n ~ 0 + referentie + referentie:type + referentie:trend, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE)
+)
+m_type_trend2 <- inla(
+  n ~ 0 + referentie + referentie:type + referentie:trend +
+    referentie:type+trend,
+  family = "poisson", data = ds_referentie, control.compute = list(waic = TRUE)
+)
+waic <- c(
+  m0$waic$waic, m_type$waic$waic, m_trend$waic$waic, m_type_trend$waic$waic,
+  m_type_trend2$waic$waic
+)
+```
+
+```{r referentie-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om referentielijnen te tonen, al dan niet beschrijvende tekst."}
+inla.posterior.sample(n = 1e3, m_type_trend) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_referentie |>
+      select("type", "referentie", "trend")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"referentie", -"trend"), names_to = "sim",
+    values_to = "estimate"
+  ) |>
+  mutate(
+    estimate = exp(.data$estimate),
+    referentie = factor(
+      .data$referentie, levels = c("lijn + tekst", "lijn", "geen"),
+      labels = c(
+        "lijnen\nmet tekst", "lijnen al\ndan niet met\nmet tekst", "geen"
+      )
+    )
+  ) |>
+  arrange(.data$referentie) |>
+  group_by(.data$type, .data$trend, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$referentie != "geen") |>
+  group_by(.data$type, .data$trend, .data$referentie) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    .groups = "drop"
+  ) |>
+  mutate(type = interaction(.data$trend, .data$type, sep = "\n")) |>
+  ggplot(
+    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = referentie)
+  ) +
+  geom_vline(xintercept = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
+  geom_errorbarh(position = position_dodge(width = 0.5)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  scale_x_continuous(labels = percent, limits = 0:1)
 ```

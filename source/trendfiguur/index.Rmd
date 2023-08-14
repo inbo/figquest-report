@@ -93,7 +93,7 @@ if (interactive()) {
     }
   )
 }
-conflicted::conflicts_prefer(dplyr::filter)
+conflicted::conflicts_prefer(dplyr::filter, dplyr::lag)
 delta_percent <- function(x) {
   label_percent()(x - 1)
 }

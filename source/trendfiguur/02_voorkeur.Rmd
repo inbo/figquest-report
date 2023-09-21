@@ -160,7 +160,7 @@ grid.arrange(
 )
 ```
 
-In tabel \@ref(@tab:referentie) geven we een overzicht van de waargenomen voorkeuren.
+In tabel \@ref(tab:referentie) geven we een overzicht van de waargenomen voorkeuren.
 De voorkeur verschilt naargelang de voorkennis van de deelnemers en de sterkte van de trend (fig. \@ref(fig:referentie-model)).
 Globaal kunnen we stellen dat er een duidelijke voorkeur is voor referentielijnen, zeker wanneer we deze expliciet benoemen in de figuur.
 Deelnemers uit de groep "weinig vertrouwd" verkiezen vaker om geen referentielijnen te zien.
@@ -187,7 +187,7 @@ reference |>
   ) |>
   kbl(
     caption = "Voorkeur voor referentielijnen per type deelnemer.",
-    align = "llrrr", booktabs = TRUE
+    align = "llrrrr", booktabs = TRUE
   ) |>
   row_spec(c(2, 4, 6), hline_after = TRUE) |>
   row_spec(7, bold = TRUE) |>
@@ -226,7 +226,7 @@ m_type_trend <- inla(
 )
 m_type_trend2 <- inla(
   n ~ 0 + referentie + referentie:type + referentie:trend +
-    referentie:type+trend,
+    referentie:type:trend,
   family = "poisson", data = ds_referentie, control.compute = list(waic = TRUE)
 )
 waic <- c(
@@ -244,15 +244,19 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
   filter(str_detect(.data$parameter, "Predictor")) |>
   bind_cols(
     ds_referentie |>
-      select("type", "referentie", "trend")
+      select("type", "referentie")
   ) |>
   select(-"parameter") |>
   pivot_longer(
-    c(-"type", -"referentie", -"trend"), names_to = "sim",
+    c(-"type", -"referentie"), names_to = "sim",
     values_to = "estimate"
   ) |>
+  group_by(.data$referentie, .data$type, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(), .groups = "drop"
+  ) |>
   mutate(
-    estimate = exp(.data$estimate),
     referentie = factor(
       .data$referentie, levels = c("lijn + tekst", "lijn", "geen"),
       labels = c(
@@ -261,23 +265,214 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
     )
   ) |>
   arrange(.data$referentie) |>
-  group_by(.data$type, .data$trend, .data$sim) |>
+  group_by(.data$type, .data$sim) |>
   mutate(
     estimate = cumsum(.data$estimate) / sum(.data$estimate)
   ) |>
   filter(.data$referentie != "geen") |>
-  group_by(.data$type, .data$trend, .data$referentie) |>
+  group_by(.data$type, .data$referentie) |>
   summarise(
     mediaan = median(.data$estimate),
     lcl = quantile(.data$estimate, probs = 0.025),
     ucl = quantile(.data$estimate, probs = 0.975),
     .groups = "drop"
   ) |>
-  mutate(type = interaction(.data$trend, .data$type, sep = "\n")) |>
   ggplot(
     aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = referentie)
   ) +
   geom_vline(xintercept = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
+  geom_errorbarh(position = position_dodge(width = 0.5)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  scale_x_continuous(labels = percent, limits = 0:1)
+```
+
+## Aanduiding van onzekerheid
+
+We beschouwen in dit geval de onzekerheid ten gevolge van de steekproeftrekking.
+Vaak is het onmogelijk om alle elementen van de volledige populatie te meten.
+In dat geval maken we gebruik van een zogenaamde steekproef: het gedeelte van de steekproef dat we effectief meten.
+We gaan er vanuit dat het om een representatieve steekproef gaat: een deel van de populatie waarvan we verwachten dat ze gelijkaardige kenmerken heeft als de volledige populatie.
+Op die manier kunnen de kenmerken van de steekproef gebruiken als een benadering van deze kenmerken voor de volledige populatie.
+
+Telkens we een andere aselecte representatieve steekproef trekken uit de populatie zullen we meestal een iets andere schatting krijgen van het kenmerk waarin we geïnteresseerd zijn.
+Er is bijgevolg onvermijdelijk een zekere mate van onzekerheid rond de schatting op basis van een steekproef.
+Met statistiek kunnen we op basis van een enkele steekproef inschatten hoe groot deze onzekerheid is, het zogenaamde betrouwbaarheidsinterval.
+Kort door de bocht is er 95% kans dat de werkelijke waarde (van de populatie) binnen het 95% betrouwbaarheidsinterval ligt.
+Bijgevolg is er 5% kans dat de werkelijke waarde buiten het 95% betrouwbaarsheidsinterval ligt.
+Meestal zorgen we dat de grenzen symetrisch zijn zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
+
+Hoe groter het verschil tussen de onder- en bovengrens van het interval, hoe breder het interval en hoe groter de onzekerheid (en kleiner de precisie).
+Hoe meer (niet verklaarde) variabiliteit in de gegevens, hoe breder het betrouwbaarheidsinterval.
+Het vergroten dan de steekproef zorgt dan weer voor een smaller betrouwbaarheidsinterval.
+
+Het dekkingspercentage van het betrouwbaarheidsinterval heeft eveneens invloed op de breedte van het interval.
+Wanneer een dekking van 90% voldoende is volstaat een smaller interval in vergelijking met een dekking van 95%.
+De dekking van het interval aanpassen is een tweesnijdend zwaard.
+Vaak vergelijken we de grenzen van het interval met een referentie.
+Ligt het interval volledig boven of onder de referentie, dan stellen we dat er een (significant) effect is.
+Een lagere dekking geeft een hogere kans op vals positieven.
+Op basis van de steekproef stellen we dat er een verschil is, terwijl er op populatieniveau geen verschil is.
+Het waargenomen verschil in de steekproef is dan het gevolg van toeval.
+Een hogere dekking geeft dan weer een hogere kans op vals negatieven.
+Door het brede interval kunnen we het werkelijke verschil in de populatie niet aantonen.
+
+In de ecologie zijn vals positieven meestal veiliger dan vals negatieven.
+Bij vals negatieve uitspraken kunnen we bijvoorbeeld te lang blijven veronderstellen dat de toestand voldoende is.
+Hierdoor kunnen we te laat beginnen ingrijpen waardoor we drastischere en duurdere maatregelen nodig hebben.
+Bij vals positieve uitspraken zullen we mogelijk te snel ingrijpen.
+We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperker zijn
+
+We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) band; en 3) "gradient".
+Bij "geen" tonen we de onzekerheid rond de geschatte trend niet.
+Hoewel dit de eenvoudigste figuur oplevert, bieden we de gebruiker geen inzicht in de onzekerheid rond de geschatte trend.
+"Band" is een eenvoudige manier om de onzekerheid weer te geven.
+De band geeft de boven- en ondergrens van het 90% betrouwbaarheidsinterval weer.
+"Gradient" toont de onzekerheid als een combinatie van drie banden met verschillende transparantie.
+De breedste, meest transparante band toont de boven- en ondergrens van het 90% betrouwbaarheidsinterval (net zoals "band").
+De smalste, minst transparante band toont de boven- en ondergrens van het 30% betrouwbaarheidsinterval.
+De middenste band toont de boven- en ondergrens van het 60% betrouwbaarheidsinterval.
+De waarden met een hogere waarschijnlijkheidsdichtheid zijn hierdoor donkerder weergegeven.
+
+```{r onzekerheid-keuze, fig.cap = "Keuzemogelijkheden voor het aangeven van onzekerheid.", fig.height = 5}
+ds_potential <- generate_data("potential")
+grid.arrange(
+  create_figure(dataset = ds_potential, reference = "lines + text") +
+    ggtitle("geen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds_potential, reference = "lines + text", ci = "band"
+  ) +
+    ggtitle("band") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds_potential, reference = "lines + text", ci = "gradient"
+  ) +
+    ggtitle("gradient") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+Tabel \@ref(tab:onzekerheid) geeft een overzicht van de voorkeur van de deelnemers.
+Negen op tien van de deelnemers die zich vertrouwd voelen met cijfers verkiezen om de onzekerheid te zien op de figuur \@ref(fig:onzekerheid-model).
+Ook bij wie zich minder vertrouwd voelt, geeft driekwart een voorkeur voor de weergave van onzekerheid aan.
+Globaal verkiezen de deelnemers de stijl "band" boven "gradient".
+
+```{r onzekerheid}
+uncertainty |>
+  inner_join(background, by = "id") |>
+  count(.data$onzekerheid, .data$trend, .data$type) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(
+      ., onzekerheid = "totaal", trend = "",
+      across(-c("onzekerheid", "trend"), sum)
+    )
+  ) %>%
+  bind_cols(
+    select(., -c("onzekerheid", "trend")) %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor weergave van onzekerheid per type deelnemer.",
+    align = "llrrrr", booktabs = TRUE
+  ) |>
+  row_spec(c(3, 6, 9), hline_after = TRUE) |>
+  row_spec(10, bold = TRUE) |>
+  column_spec(6, bold = TRUE)
+```
+
+```{r onzekerheid-model-fit}
+uncertainty |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$onzekerheid, .data$trend) |>
+  complete(
+    .data$type, .data$onzekerheid, .data$trend, fill = list(n = 0)
+  ) -> ds_onzekerheid
+m_type_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend,
+  family = "poisson", data = ds_onzekerheid,
+  control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r onzekerheid-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + onzekerheid, family = "poisson", data = ds_onzekerheid,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type, family = "poisson",
+  data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:trend, family = "poisson",
+  data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_type_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend,
+  family = "poisson", data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_type_trend2 <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend +
+    onzekerheid:type:trend,
+  family = "poisson", data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+waic <- c(
+  m0$waic$waic, m_type$waic$waic, m_trend$waic$waic, m_type_trend$waic$waic,
+  m_type_trend2$waic$waic
+)
+```
+
+```{r onzekerheid-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om onzekerheid te tonen, al dan niet als gradient."}
+inla.posterior.sample(n = 1e3, m_type_trend) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_onzekerheid |>
+      select("type", "onzekerheid", "trend")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"onzekerheid", -"trend"), names_to = "sim",
+    values_to = "estimate"
+  ) |>
+  group_by(.data$type, .data$onzekerheid, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    onzekerheid = factor(
+      .data$onzekerheid, levels = c("band", "gradient", "geen"),
+      labels = c("band", "band of \ngradient", "geen")
+    )
+  ) |>
+  arrange(.data$onzekerheid) |>
+  group_by(.data$type, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$onzekerheid != "geen") |>
+  group_by(.data$type, .data$onzekerheid) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    .groups = "drop"
+  ) |>
+  ggplot(
+    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = onzekerheid)
+  ) +
+  geom_vline(xintercept = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(0.1, 0.9), linetype = 4) +
   geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
   geom_errorbarh(position = position_dodge(width = 0.5)) +
   geom_point(position = position_dodge(width = 0.5)) +

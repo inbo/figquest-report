@@ -142,7 +142,26 @@ read_vc("reference", "../../data") |>
       labels = c("geen", "lijn", "lijn + tekst")
     )
   ) -> reference
-read_vc("uncertainty", "../../data") -> uncertainty
 read_vc("classification", "../../data") -> classification
+read_vc("uncertainty", "../../data") |>
+  transmute(
+    .data$id,
+    trend = factor(
+      .data$trend,
+      levels = c(
+        "strong trend with high precision",
+        "moderate trend with high precision",
+        "moderate trend with low precision"
+      ),
+      labels = c(
+        "sterke trend met hoge precisie", "matige trend met hoge precisie",
+        "matige trend met lage precisie"
+      )
+    ),
+    onzekerheid = factor(
+      .data$uncertainty, levels = c("gradient", "band", "none"),
+      labels = c("gradient", "band", "geen")
+    )
+  ) -> uncertainty
 read_vc("interpretation", "../../data") -> interpretation
 ```

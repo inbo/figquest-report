@@ -142,7 +142,6 @@ read_vc("reference", "../../data") |>
       labels = c("geen", "lijn", "lijn + tekst")
     )
   ) -> reference
-read_vc("classification", "../../data") -> classification
 read_vc("uncertainty", "../../data") |>
   transmute(
     .data$id,
@@ -163,5 +162,13 @@ read_vc("uncertainty", "../../data") |>
       labels = c("gradient", "band", "geen")
     )
   ) -> uncertainty
+read_vc("classification", "../../data") |>
+  transmute(
+    .data$id,
+    indeling = factor(
+      .data$classification, levels = c("colour", "symbol", "none"),
+      labels = c("kleursymbool", "symbool", "geen")
+    )
+  ) -> classification
 read_vc("interpretation", "../../data") -> interpretation
 ```

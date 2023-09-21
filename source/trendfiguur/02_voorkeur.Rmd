@@ -478,3 +478,232 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
   geom_point(position = position_dodge(width = 0.5)) +
   scale_x_continuous(labels = percent, limits = 0:1)
 ```
+
+## Indeling van indices
+
+Klassiek maken we enkel een onderscheid tussen significante en niet-significante indices.
+Een index is niet-significant wanneer de referentie (index = 100) binnen het betrouwbaarheidsinterval ligt.
+Merk op dat informatie over de onzekerheid bijgevolg noodzakelijk is.
+De significante schattingen kunnen opdelingen in een significante toename (betrouwbaarheidsinterval volledig boven de referentie) en een significante afname (betrouwsbaarheidsinterval volledig onder de referentie).
+
+Wanneer we naast de referentie aangeven wat een belangrijke toename of afname is, kunnen we de niet-significante indices verder opdelen.
+Een niet-significante index waarvan het betrouwbaarheidsinterval volledig tussen een belangrijke afname en een belangrijke toename ligt, beschouwen we als "stabiel" (fig. \@ref(fig:indeling-basis)).
+Op basis van het betrouwbaarheidsinterval kunnen we immers stellen dat de kans op een belangrijke afname of toename klein is.
+Van zodra het betrouwbaarheidsinterval een belangrijke toename of afname omvat, hebben we geen enkele zekerheid en beschouwen we de index als "onbekend".
+
+```{r indeling-basis, fig.cap = "Basisindeling van indices.", message = FALSE}
+data.frame(
+  effect = factor(
+    4:1,
+    labels = c(
+      "significant\ntoename", "significant\nafname",
+      "niet-significant\nstabiel", "niet-significant\nonbekend"
+    )
+  ),
+  lcl = c(0.2, -0.5, -0.2, -0.5),
+  ucl = c(0.5, -0.2, 0.2, 0.5)
+) |>
+  mutate(schatting = (.data$lcl + .data$ucl) / 2) |>
+  ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
+  stat_effect(threshold = 0.25, detailed = FALSE) +
+  geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
+  scale_effect(
+    "indeling", detailed = FALSE,
+    labels = class_labels(lang = "nl", detailed = FALSE)
+  ) +
+  scale_y_continuous(
+    breaks = c(-0.25, 0, 0.25),
+    labels = c(
+      "belangrijke\nafname\nt.o.v. referentie", "referentie",
+      "belangrijke\ntoename\nt.o.v. referentie"
+    )
+  ) +
+  theme(
+    axis.title = element_blank()
+  ) +
+  coord_flip()
+```
+
+Om het onderscheid te kunnen maken tussen "stabiel" en "onbekend" moeten we definieren wat een een belangrijke toename en een belangrijke afname zijn.
+Eens we dat vastgelegd hebben, kunnen we de indeling verder verfijnen (\@ref(fig:indeling-detail)).
+Is het interval volledig boven de belangrijke toename dan kunnen we spreken van een "sterke toename".
+Een interval volledig tussen de referentie en de belanrijke toename is dan een "matige toename".
+
+```{r indeling-detail, fig.cap = "Gedetailleerd van indices.", message = FALSE}
+data.frame(
+  effect = factor(
+    10:1,
+    labels = c(
+      "significant\nsterke toename", "significant\ntoename",
+      "significant\nmatige toename", "niet-significant\nstabiel",
+      "significant\nmatige afname", "significant\nafname",
+      "significant\nsterke afname", "niet-significant\nmogelijke afname",
+      "niet-significant\nmogelijke toename", "niet-significant\nonbekend"
+    )
+  ),
+  lcl = c(0.3, 0.2, 0.1, -0.1, -0.2, -0.3, -0.4, -0.3, -0.1, -0.3),
+  ucl = c(0.4, 0.3, 0.2,  0.1, -0.1, -0.2, -0.3,  0.1,  0.3,  0.3)
+) |>
+  mutate(schatting = (.data$lcl + .data$ucl) / 2) |>
+  ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
+  stat_effect(threshold = 0.25) +
+  geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
+  scale_effect(
+    "indeling", labels = class_labels(lang = "nl")
+  ) +
+  scale_y_continuous(
+    breaks = c(-0.25, 0, 0.25),
+    labels = c(
+      "belangrijke\nafname\nt.o.v. referentie", "referentie",
+      "belangrijke\ntoename\nt.o.v. referentie"
+    )
+  ) +
+  theme(
+    axis.title = element_blank()
+  ) +
+  coord_flip()
+```
+
+We boden de deelnemers die keuzemogelijkheden aan: 1) "geen"; 2) "symbool" of 3) "gekleurd symbool" (fig. \@ref(fig:indeling-keuze)).
+Bij "geen" tonen we enkel de trendlijn.
+Bij "symbool" plaatsen we een symbool ter hoogte van de trendlijn.
+Hierbij hebben alle symbolen dezelfde kleur.
+Het symbool geeft voor elke index de interpretatie voor het verschil van de index met de referentie.
+Hiervoor gebruiken we de detailleerde interpretatie uit figuur \@ref(fig:indeling-detail).
+"Gekleurd symbool" is, op de kleur na, identiek aan "symbool".
+Voor de kleuren kozen we een kleurgradient van donkerrood naar lichtgroen.
+Een aantal deelnemers maakte ons attent op het feit dat deze kleuren mogelijk moeilijk te onderscheiden zijn voor mensen met een gestoord kleurenzicht.
+De gekozen symbolen proberen maximaal rekening te houden met deze mensen.
+Ten eerste bevat elk symbool tekens die dezelfde informatie bevatten als "symbool".
+De lezers heeft bijgevolg de kleur niet nodig om de figuur te interpreteren.
+Ten tweede hebben we bewust gekozen voor een kleurgradient die van donker naar licht gaat.
+Mensen die het moeilijker hebben om rood en groen van elkaar te onderscheiden kunnen meestal wel het verschil maken tussen licht en donker.
+Op die manier denken we voor personen die kleur kunnen waarnemen extra ondersteuning te bieden, zonder de overige mensen te beperken.
+
+```{r indeling-keuze, fig.cap = "Keuzemogelijkheden voor het weergeven van een indeling.", fig.height = 11}
+grid.arrange(
+  create_figure(dataset = ds, reference = "lines + text", ci = "band") +
+    ggtitle("geen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds, reference = "lines + text", ci = "band", effect = "symbol"
+  ) +
+    ggtitle("symbool") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds, reference = "lines + text", ci = "band",
+    effect = "colour symbol"
+  ) +
+    ggtitle("gekleurd symbool") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+```{r indeling}
+classification |>
+  inner_join(background, by = "id") |>
+  count(.data$indeling, .data$type) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(., indeling = "totaal", across(-"indeling", sum))
+  ) %>%
+  bind_cols(
+    select(., -"indeling") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor weergave van indeling per type deelnemer.",
+    align = "lrrrr", booktabs = TRUE
+  ) |>
+  row_spec(3, hline_after = TRUE) |>
+  row_spec(4, bold = TRUE) |>
+  column_spec(5, bold = TRUE)
+```
+
+```{r indeling-model-fit}
+classification |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$indeling) |>
+  complete(
+    .data$type, .data$indeling,, fill = list(n = 0)
+  ) -> ds_indeling
+m0 <- inla(
+  n ~ 0 + indeling,
+  family = "poisson", data = ds_indeling,
+  control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r indeling-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + indeling, family = "poisson", data = ds_indeling,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + indeling + indeling:type, family = "poisson",
+  data = ds_indeling, control.compute = list(waic = TRUE)
+)
+waic <- c(
+  m0$waic$waic, m_type$waic$waic
+)
+```
+
+We vonden geen verschil in voorkeur tussen de deelnemers op basis van hun voorkennis (fig. \@ref(fig:indeling-model)).
+Zes op de tien van de deelnemers verkiest om geen symbool te zien.
+Mogelijk vonden de deelnemers het symbool te groot ten opzichte van de trendlijn.
+Een kleiner symbool zou het symbool dan weer onleesbaar maken.
+Driekwart van de deelnemers die een symbool verkiezen, hebben een voorkeur voor een gekleurd symbool.
+
+```{r indeling-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om symbolen te tonen, al dan niet als gekleurd."}
+inla.posterior.sample(n = 1e3, m0) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_indeling |>
+      select("type", "indeling")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"indeling"), names_to = "sim", values_to = "estimate"
+  ) |>
+  group_by(.data$type, .data$indeling, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    indeling = factor(
+      .data$indeling, levels = c("kleursymbool", "symbool", "geen"),
+      labels = c("kleursymbool", "symbool\nal dan niet gekleurd", "geen")
+    )
+  ) |>
+  arrange(.data$indeling) |>
+  group_by(.data$type, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$indeling != "geen") |>
+  group_by(.data$type, .data$indeling) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    .groups = "drop"
+  ) |>
+  ggplot(
+    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = indeling)
+  ) +
+  geom_vline(xintercept = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(0.1, 0.9), linetype = 4) +
+  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
+  geom_errorbarh(position = position_dodge(width = 0.5)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  scale_x_continuous(labels = percent, limits = 0:1)
+```

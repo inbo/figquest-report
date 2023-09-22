@@ -479,7 +479,7 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
   scale_x_continuous(labels = percent, limits = 0:1)
 ```
 
-## Indeling van indices
+## Indeling van indices {#indeling}
 
 Klassiek maken we enkel een onderscheid tussen significante en niet-significante indices.
 Een index is niet-significant wanneer de referentie (index = 100) binnen het betrouwbaarheidsinterval ligt.

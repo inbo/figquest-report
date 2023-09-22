@@ -170,5 +170,18 @@ read_vc("classification", "../../data") |>
       labels = c("kleursymbool", "symbool", "geen")
     )
   ) -> classification
-read_vc("interpretation", "../../data") -> interpretation
+read_vc("interpretation", "../../data") |>
+  transmute(
+    .data$id, achteraf = .data$after, eigen = .data$participant,
+    score = factor(
+      .data$score,
+      levels = c("lower", "comparable", "higher", "unclear", "no idea"),
+      labels = c("lager", "vergelijkbaar", "hoger", "onduidelijk", "geen idee")
+    ),
+    waarheid = factor(
+      .data$truth,
+      levels = c("potential increase", "moderate increase", "stable"),
+      labels = c("mogelijke toename", "matige toename", "stabiel")
+    )
+  ) -> interpretation
 ```

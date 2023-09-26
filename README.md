@@ -1,4 +1,7 @@
 <!-- badges: start -->
+[![website](https://img.shields.io/badge/website-https://github.com/inbo/figquest-report-c04384)](https://github.com/inbo/figquest-report)
+![GitHub](https://img.shields.io/github/license/inbo/inbomd_examples)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/inbo/figquest-report/check-project)
 <!-- badges: end -->
 
 # Analysis of questionnaire on trend figures

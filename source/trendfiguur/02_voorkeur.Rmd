@@ -346,7 +346,7 @@ grid.arrange(
     ggtitle("band") +
     geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
   create_figure(
-    dataset = ds_potential, reference = "lines + text", ci = "gradiënt"
+    dataset = ds_potential, reference = "lines + text", ci = "gradient"
   ) +
     ggtitle("gradiënt") +
     geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),

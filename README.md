@@ -1,7 +1,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-# Analysis of questionaire on trend figures
+# Analysis of questionnaire on trend figures
 
 [Onkelinx, Thierry![ORCID logo](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-8804-4216)[^aut][^cre][^inbo.be]
 Research Institute for Nature and Forest (INBO)[^cph][^fnd]
@@ -12,7 +12,7 @@ Research Institute for Nature and Forest (INBO)[^cph][^fnd]
 [^cre]: contact person
 [^inbo.be]: Research Institute for Nature and Forest (INBO)
 
-**keywords**: trendfiguur
+**keywords**: trends figure; uncertainty; classification
 
 <!-- community: inbo -->
 

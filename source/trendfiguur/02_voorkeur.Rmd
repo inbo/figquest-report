@@ -1,6 +1,6 @@
 # Voorkeur van de deelnemers
 
-In dit hoofstuk gaan we vraag per vraag na welke voorkeur de deelnemers aangaven.
+In dit hoofdstuk gaan we vraag per vraag na welke voorkeur de deelnemers aangaven.
 
 ## Index of wijziging ten opzichte van referentie
 
@@ -299,8 +299,8 @@ Telkens we een andere aselecte representatieve steekproef trekken uit de populat
 Er is bijgevolg onvermijdelijk een zekere mate van onzekerheid rond de schatting op basis van een steekproef.
 Met statistiek kunnen we op basis van een enkele steekproef inschatten hoe groot deze onzekerheid is, het zogenaamde betrouwbaarheidsinterval.
 Kort door de bocht is er 95% kans dat de werkelijke waarde (van de populatie) binnen het 95% betrouwbaarheidsinterval ligt.
-Bijgevolg is er 5% kans dat de werkelijke waarde buiten het 95% betrouwbaarsheidsinterval ligt.
-Meestal zorgen we dat de grenzen symetrisch zijn zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
+Bijgevolg is er 5% kans dat de werkelijke waarde buiten het 95% betrouwbaarheidsinterval ligt.
+Meestal zorgen we dat de grenzen symmetrisch zijn zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
 
 Hoe groter het verschil tussen de onder- en bovengrens van het interval, hoe breder het interval en hoe groter de onzekerheid (en kleiner de precisie).
 Hoe meer (niet verklaarde) variabiliteit in de gegevens, hoe breder het betrouwbaarheidsinterval.
@@ -321,17 +321,17 @@ In de ecologie zijn vals positieven meestal veiliger dan vals negatieven.
 Bij vals negatieve uitspraken kunnen we bijvoorbeeld te lang blijven veronderstellen dat de toestand voldoende is.
 Hierdoor kunnen we te laat beginnen ingrijpen waardoor we drastischere en duurdere maatregelen nodig hebben.
 Bij vals positieve uitspraken zullen we mogelijk te snel ingrijpen.
-We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperker zijn
+We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperkter zijn
 
-We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) band; en 3) "gradient".
+We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) band; en 3) "gradiënt".
 Bij "geen" tonen we de onzekerheid rond de geschatte trend niet.
 Hoewel dit de eenvoudigste figuur oplevert, bieden we de gebruiker geen inzicht in de onzekerheid rond de geschatte trend.
 "Band" is een eenvoudige manier om de onzekerheid weer te geven.
 De band geeft de boven- en ondergrens van het 90% betrouwbaarheidsinterval weer.
-"Gradient" toont de onzekerheid als een combinatie van drie banden met verschillende transparantie.
+"Gradiënt" toont de onzekerheid als een combinatie van drie banden met verschillende transparantie.
 De breedste, meest transparante band toont de boven- en ondergrens van het 90% betrouwbaarheidsinterval (net zoals "band").
 De smalste, minst transparante band toont de boven- en ondergrens van het 30% betrouwbaarheidsinterval.
-De middenste band toont de boven- en ondergrens van het 60% betrouwbaarheidsinterval.
+De middelste band toont de boven- en ondergrens van het 60% betrouwbaarheidsinterval.
 De waarden met een hogere waarschijnlijkheidsdichtheid zijn hierdoor donkerder weergegeven.
 
 ```{r onzekerheid-keuze, fig.cap = "Keuzemogelijkheden voor het aangeven van onzekerheid.", fig.height = 5}
@@ -346,9 +346,9 @@ grid.arrange(
     ggtitle("band") +
     geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
   create_figure(
-    dataset = ds_potential, reference = "lines + text", ci = "gradient"
+    dataset = ds_potential, reference = "lines + text", ci = "gradiënt"
   ) +
-    ggtitle("gradient") +
+    ggtitle("gradiënt") +
     geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
   ncol = 1
 )
@@ -357,7 +357,7 @@ grid.arrange(
 Tabel \@ref(tab:onzekerheid) geeft een overzicht van de voorkeur van de deelnemers.
 Negen op tien van de deelnemers die zich vertrouwd voelen met cijfers verkiezen om de onzekerheid te zien op de figuur \@ref(fig:onzekerheid-model).
 Ook bij wie zich minder vertrouwd voelt, geeft driekwart een voorkeur voor de weergave van onzekerheid aan.
-Globaal verkiezen de deelnemers de stijl "band" boven "gradient".
+Globaal verkiezen de deelnemers de stijl "band" boven "gradiënt".
 
 ```{r onzekerheid}
 uncertainty |>
@@ -427,7 +427,7 @@ waic <- c(
 )
 ```
 
-```{r onzekerheid-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om onzekerheid te tonen, al dan niet als gradient."}
+```{r onzekerheid-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om onzekerheid te tonen, al dan niet als gradiënt."}
 inla.posterior.sample(n = 1e3, m_type_trend) |>
   map("latent") |>
   map(data.frame) |>
@@ -451,8 +451,8 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
   ) |>
   mutate(
     onzekerheid = factor(
-      .data$onzekerheid, levels = c("band", "gradient", "geen"),
-      labels = c("band", "band of \ngradient", "geen")
+      .data$onzekerheid, levels = c("band", "gradiënt", "geen"),
+      labels = c("band", "band of \ngradiënt", "geen")
     )
   ) |>
   arrange(.data$onzekerheid) |>
@@ -481,13 +481,13 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
 
 ## Indeling van indices {#indeling}
 
-Klassiek maken we enkel een onderscheid tussen significante en niet-significante indices.
-Een index is niet-significant wanneer de referentie (index = 100) binnen het betrouwbaarheidsinterval ligt.
+Klassiek maken we enkel een onderscheid tussen significante en niet significante indices.
+Een index is niet significant wanneer de referentie (index = 100) binnen het betrouwbaarheidsinterval ligt.
 Merk op dat informatie over de onzekerheid bijgevolg noodzakelijk is.
-De significante schattingen kunnen opdelingen in een significante toename (betrouwbaarheidsinterval volledig boven de referentie) en een significante afname (betrouwsbaarheidsinterval volledig onder de referentie).
+De significante schattingen kunnen opdelingen in een significante toename (betrouwbaarheidsinterval volledig boven de referentie) en een significante afname (betrouwbaarheidsinterval volledig onder de referentie).
 
-Wanneer we naast de referentie aangeven wat een belangrijke toename of afname is, kunnen we de niet-significante indices verder opdelen.
-Een niet-significante index waarvan het betrouwbaarheidsinterval volledig tussen een belangrijke afname en een belangrijke toename ligt, beschouwen we als "stabiel" (fig. \@ref(fig:indeling-basis)).
+Wanneer we naast de referentie aangeven wat een belangrijke toename of afname is, kunnen we de niet significante indices verder opdelen.
+Een niet significante index waarvan het betrouwbaarheidsinterval volledig tussen een belangrijke afname en een belangrijke toename ligt, beschouwen we als "stabiel" (fig. \@ref(fig:indeling-basis)).
 Op basis van het betrouwbaarheidsinterval kunnen we immers stellen dat de kans op een belangrijke afname of toename klein is.
 Van zodra het betrouwbaarheidsinterval een belangrijke toename of afname omvat, hebben we geen enkele zekerheid en beschouwen we de index als "onbekend".
 
@@ -524,10 +524,10 @@ data.frame(
   coord_flip()
 ```
 
-Om het onderscheid te kunnen maken tussen "stabiel" en "onbekend" moeten we definieren wat een een belangrijke toename en een belangrijke afname zijn.
+Om het onderscheid te kunnen maken tussen "stabiel" en "onbekend" moeten we definiëren wat een een belangrijke toename en een belangrijke afname zijn.
 Eens we dat vastgelegd hebben, kunnen we de indeling verder verfijnen (\@ref(fig:indeling-detail)).
 Is het interval volledig boven de belangrijke toename dan kunnen we spreken van een "sterke toename".
-Een interval volledig tussen de referentie en de belanrijke toename is dan een "matige toename".
+Een interval volledig tussen de referentie en de belangrijke toename is dan een "matige toename".
 
 ```{r indeling-detail, fig.cap = "Gedetailleerd van indices.", message = FALSE}
 data.frame(
@@ -571,12 +571,12 @@ Hierbij hebben alle symbolen dezelfde kleur.
 Het symbool geeft voor elke index de interpretatie voor het verschil van de index met de referentie.
 Hiervoor gebruiken we de detailleerde interpretatie uit figuur \@ref(fig:indeling-detail).
 "Gekleurd symbool" is, op de kleur na, identiek aan "symbool".
-Voor de kleuren kozen we een kleurgradient van donkerrood naar lichtgroen.
+Voor de kleuren kozen we een kleurgradiënt van donkerrood naar lichtgroen.
 Een aantal deelnemers maakte ons attent op het feit dat deze kleuren mogelijk moeilijk te onderscheiden zijn voor mensen met een gestoord kleurenzicht.
 De gekozen symbolen proberen maximaal rekening te houden met deze mensen.
 Ten eerste bevat elk symbool tekens die dezelfde informatie bevatten als "symbool".
 De lezers heeft bijgevolg de kleur niet nodig om de figuur te interpreteren.
-Ten tweede hebben we bewust gekozen voor een kleurgradient die van donker naar licht gaat.
+Ten tweede hebben we bewust gekozen voor een kleurgradiënt die van donker naar licht gaat.
 Mensen die het moeilijker hebben om rood en groen van elkaar te onderscheiden kunnen meestal wel het verschil maken tussen licht en donker.
 Op die manier denken we voor personen die kleur kunnen waarnemen extra ondersteuning te bieden, zonder de overige mensen te beperken.
 

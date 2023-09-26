@@ -3,14 +3,14 @@
 Deelnemers aan deze studie gaven hun voorkeur aan voor trendfiguren.
 Daarnaast lieten we hen een twee reeksen van drie trendfiguren inschatten.
 De eerste reeks was de meest eenvoudige figuur met de schaal van de y-as als een index.
-De tweede reeks was in de voorkeurstijl van de deelnemer.
+De tweede reeks was in de voorkeursstijl van de deelnemer.
 
 **Globale voorkeur**
 
 De deelnemers hadden een licht voorkeur voor een y-as met een index in plaats van een procentuele wijziging.
 Het merendeel vond de lijnen met de referentie, belangrijke toename en belangrijke afname een meerwaarde.
 De annotatie van deze lijnen was eveneens belangrijk.
-Driekwart van de deelnemers had een voorkeur voor de weergave van de onzekerheid, bijvoorkeur met een eenvoudig band in plaats van een gradient.
+Driekwart van de deelnemers koos voor de weergave van de onzekerheid, bij voorkeur met een eenvoudig band in plaats van een gradiënt.
 De indeling van de trends met behulp van symbolen werd door een derde van de deelnemers gesmaakt.
 
 Deelnemers die aangaven minder vertrouwd te zijn met cijfers en statistiek kiezen iets vaker voor een eenvoudigere figuur zonder referentielijnen en onzekerheid en met een index in plaats van procentuele wijziging op de y-as.
@@ -25,7 +25,7 @@ Aangezien meer dan 90% van de deelnemers zowel een betrouwbaarheidsinterval wens
 We hebben ze daarom samen genomen als het effect van de tweede reeks.
 
 Bij de eerste reeks met de eenvoudige figuur gaven slechts vier van de tien deelnemers een correcte interpretatie van de figuur.
-We stelden hierbij vooral een overinterpretatie van de trendfiguren vast: de deelnemers hadden de neiging om niet-significante effecten toch als een stijging te interpreteren.
+We stelden hierbij vooral een overinterpretatie van de trendfiguren vast: de deelnemers hadden de neiging om niet significante effecten toch als een stijging te interpreteren.
 Bij de tweede reeks was driekwart van de antwoorden correct.
 Hou hierbij in het achterhoofd dat de deelnemers bij deze reeks meestal zowel het betrouwbaarheidsinterval als de referentielijnen te zien kregen.
 Tijdens de tweede reeks was er veel minder overinterpretatie van de figuren.

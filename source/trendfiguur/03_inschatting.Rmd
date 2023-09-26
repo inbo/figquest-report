@@ -2,14 +2,14 @@
 
 Voor dat de deelnemers hun voorkeur konden aangeven, schotelden we hun eerste drie eenvoudige trendfiguren voor.
 Hierbij gebruikte we de stijl van figuur \@ref(fig:y-as) met de Y-as uitgedrukt als index (linkerfiguur).
-Bij elke figuur hebben we een specifiek jaar aangeduidt met een vertikale lijn.
+Bij elke figuur hebben we een specifiek jaar aangeduid met een verticale lijn.
 We vroegen de deelnemers om een inschatting te maken voor de vergelijking tussen dat jaar en het referentiejaar (2000, index = 100).
 De deelnemers konden kiezen tussen volgende mogelijkheden: 1) lager dan 2000; 2) vergelijkbaar met 2000; 3) hoger dan 2000; 4) onduidelijk of er een verschil is met 2000; 5) geen idee.
 De correcte inschatting van de drie figuren volgens de indeling (§\@ref(indeling)) was:
 
-1)  "mogelijke toename": niet-significante toename met betrouwbaarheidsinterval dat zowel de referentie als een belangrijke toename omvat.
+1)  "mogelijke toename": niet significante toename met betrouwbaarheidsinterval dat zowel de referentie als een belangrijke toename omvat.
 2)  "matige toename": significante toename met betrouwbaarheidsinterval volledig tussen de referentie en de belangrijke toename.
-3)  "stabiel": niet-significante wijziging die enkel de referentie omvat en volledig tussen een belangrijke afname en een belangrijke toename ligt.
+3)  "stabiel": niet significante wijziging die enkel de referentie omvat en volledig tussen een belangrijke afname en een belangrijke toename ligt.
 
 Nadat de deelnemers hun voorkeur konden opgeven, vroegen we hen om opnieuw drie figuren te interpreteren.
 Hierbij krijg elke deelnemer dezelfde drie tijdreeksen voorgeschoteld, ditmaal in de voorkeursstijl van de deelnemer zelf.
@@ -237,7 +237,7 @@ interpretation |>
 In §\@ref(voor-na) stelden we vast dat de stijl van de figuur de interpretatie van de deelnemers sterk beïnvloedde.
 In deze sectie onderzoeken we welke elementen belangrijk zijn opdat de deelnemers tot een correcte interpretatie komen.
 Met een correcte interpretatie bedoelen we dat de deelnemers tot een gelijkaardige interpretatie komen als de onderzoeker.
-We hebben daarom de correcte interpretatie aangeduidt in de figuren in §\@ref(voor-na).
+We hebben daarom de correcte interpretatie aangeduid in de figuren in §\@ref(voor-na).
 
 Alle deelnemers kregen tijdens de eerste reeks dezelfde figuren voorgeschoteld.
 Deze figuren tonen een "klassieke" trendfiguur: een lijn met index als schaal op de y-as zonder referentielijnen, betrouwbaarheidsinterval of symbolen.
@@ -426,7 +426,7 @@ model_fit |>
 ```
 
 Tijdens de eerste reeks gaven de deelnemers in gemiddeld vier van de tien keren het juiste antwoord (figuur \@ref(fig:verklaring-beste)).
-Tijdens de tweede reeks steegt dit tot drie kwart van de gevallen.
+Tijdens de tweede reeks steeg dit tot drie kwart van de gevallen.
 Vermoedelijk omdat het merendeel van de deelnemers tijdens de tweede reeks betrouwbaarheidsintervallen en referentielijnen verkoos.
 In mindere mate stellen we nog een effect vast van de schaal van de y-as: deelnemers die voor een procentuele wijziging kozen geven vaker een correct antwoord.
 Ook het tonen van de symbolen verhoogt de kans op een correct antwoord.

@@ -628,7 +628,7 @@ classification |>
   inner_join(background, by = "id") |>
   count(.data$type, .data$indeling) |>
   complete(
-    .data$type, .data$indeling,, fill = list(n = 0)
+    .data$type, .data$indeling, fill = list(n = 0)
   ) -> ds_indeling
 m0 <- inla(
   n ~ 0 + indeling,

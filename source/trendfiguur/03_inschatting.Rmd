@@ -172,7 +172,9 @@ interpretation |>
 
 ```{r interpretatie-mogelijk, fig.cap = "(ref:interpretatie-mogelijk)"}
 interpretation |>
-  filter(!.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename") |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename"
+  ) |>
   transmute(
     .data$score,
     reeks = factor(
@@ -266,7 +268,7 @@ interpretation |>
     .data$waarheid, .data$score, aangepast = 0,
     index = as.integer(.data$index == "index"),
     gradient = as.integer(.data$onzekerheid == "gradient"),
-    onzekerheid = as.integer(.data$onzekerheid != "geen"), 
+    onzekerheid = as.integer(.data$onzekerheid != "geen"),
     lijn = as.integer(.data$referentie != "geen"),
     lijn_tekst = as.integer(.data$referentie == "lijn + tekst"),
     symbool = as.integer(.data$indeling != "geen"),
@@ -274,9 +276,9 @@ interpretation |>
   ) -> ds_eigen
 ds_eigen |>
   distinct(
-    .data$id, .data$index, .data$gradient, .data$onzekerheid, lijnen = .data$lijn,
-    `geannoteerde lijnen` = .data$lijn_tekst, .data$symbool,
-    `gekleurd symbool` = .data$kleur
+    .data$id, .data$index, .data$gradient, .data$onzekerheid,
+    lijnen = .data$lijn, `geannoteerde lijnen` = .data$lijn_tekst,
+    .data$symbool, `gekleurd symbool` = .data$kleur
   ) |>
   mutate(
     `y-as` = factor(.data$index, 0:1, c("procentuele wijziging", "index")),
@@ -337,7 +339,7 @@ interpretation |>
     tweede_reeks = as.integer(.data$achteraf),
     index = as.integer(.data$index == "index"),
     gradient = as.integer(.data$onzekerheid == "gradient"),
-    onzekerheid = as.integer(.data$onzekerheid != "geen"), 
+    onzekerheid = as.integer(.data$onzekerheid != "geen"),
     lijn = as.integer(.data$referentie != "geen"),
     lijn_tekst = as.integer(.data$referentie == "lijn + tekst"),
     symbool = as.integer(.data$indeling != "geen"),

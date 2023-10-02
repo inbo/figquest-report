@@ -707,3 +707,40 @@ inla.posterior.sample(n = 1e3, m0) |>
   geom_point(position = position_dodge(width = 0.5)) +
   scale_x_continuous(labels = percent, limits = 0:1)
 ```
+
+(ref:voorkeur-sankey) Sankey diagram met de voorkeur van de deelnemers.
+
+```{r voorkeur-sankey, fig.cap = "(ref:voorkeur-sankey)", warning = FALSE}
+reference |>
+  filter(.data$trend == "sterk") |>
+  select(-"trend") |>
+  mutate(index = str_replace(.data$index, " ", "\n")) |>
+  inner_join(
+    uncertainty |>
+      filter(.data$trend == "sterke trend met hoge precisie") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(classification, by = "id") |>
+  inner_join(background, by = "id") |>
+  count(
+    `y-as` = .data$index, .data$referentie, .data$onzekerheid, .data$indeling,
+    .data$type
+  ) |>
+  ggplot(
+    aes(
+      axis1 = type, axis2 = referentie, axis3 = onzekerheid, axis4 = indeling,
+      y = n
+    )
+  ) +
+  geom_alluvium(aes(fill = `y-as`)) +
+  geom_stratum(aes(fill = `y-as`)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:4,
+    labels = c(
+      "type\ndeelnemer", "voorkeur\nreferentielijnen", "voorkeur\nonzekerheid",
+      "voorkeur\nsymbool"
+    )
+  )
+```

@@ -106,6 +106,38 @@ interpretation |>
   theme(axis.title = element_text())
 ```
 
+(ref:interpretatie-matig-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "matige toename" als correcte interpretatie.
+
+```{r interpretatie-matig-sankey, fig.cap = "(ref:interpretatie-matig-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "matige toename"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type)) +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
+```
+
 (ref:interpretatie-stabiel) Histogram van de antwoorden van de deelnemers voor beide reeksen voor de index met "stabiel" als correcte interpretatie.
 
 ```{r interpretatie-stabiel, fig.cap = "(ref:interpretatie-stabiel)"}
@@ -166,6 +198,38 @@ interpretation |>
     labels = c(levels(interpretation$score), "geen antwoord")
   ) +
   theme(axis.title = element_text())
+```
+
+(ref:interpretatie-stabiel-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "stabiel" als correcte interpretatie.
+
+```{r interpretatie-stabiel-sankey, fig.cap = "(ref:interpretatie-stabiel-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "stabiel"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type)) +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
 ```
 
 (ref:interpretatie-mogelijk) Histogram van de antwoorden van de deelnemers voor beide reeksen voor de index met "mogelijke toename" als correcte interpretatie.
@@ -230,6 +294,38 @@ interpretation |>
     labels = c(levels(interpretation$score), "geen antwoord")
   ) +
   theme(axis.title = element_text())
+```
+
+(ref:interpretatie-mogelijk-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "mogelijke toename" als correcte interpretatie.
+
+```{r interpretatie-mogelijk-sankey, fig.cap = "(ref:interpretatie-mogelijk-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type)) +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
 ```
 
 ## Factoren die een correcte interpretatie beïnvloeden

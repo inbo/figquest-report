@@ -547,7 +547,7 @@ In mindere mate stellen we nog een effect vast van de schaal van de y-as: deelne
 Ook het tonen van de symbolen verhoogt de kans op een correct antwoord.
 
 Strikt genomen onderzochten we met welke stijl van figuren de deelnemers het best instaat zijn om tot een gelijkwaardige interpretatie als de makers van de figuur te komen.
-Het correcte antwoord selecteren we bijvolg louter op basis van de volledige set van gegevens, inclusief de kennis over onzekerheid en referentielijnen.
+Het correcte antwoord selecteren we bijgevolg louter op basis van de volledige set van gegevens, inclusief de kennis over onzekerheid en referentielijnen.
 Indien we de stijl van de figuur in rekening brengen, zou de correctie interpretatie van de eerste reeks figuren steeds "geen idee" zijn.
 
 ```{r verklaring-beste, fig.cap = "Gemiddelde kans op een correcte interpretatie in functie van het gebruik van symbolen en de schaal van y-schaal. Het tweede reeks valt grotendeels samen met het toevoegen van referentielijnen en weergave van onzekerheid."}

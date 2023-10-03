@@ -29,4 +29,3 @@ Next we gave them a few options to improve the trend figure.
 4) adding a symbol with classification of the change.
 Finally we asked the participate again to interpret a few trend figures, now based on their preferences.
 <!-- description: end -->
-

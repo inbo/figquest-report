@@ -1,14 +1,14 @@
 # Conclusies
 
 Deelnemers aan deze studie gaven hun voorkeur aan voor trendfiguren.
-Daarnaast lieten we hen een twee reeksen van drie trendfiguren inschatten.
+Daarnaast lieten we hen twee reeksen van drie trendfiguren interpreteren.
 De eerste reeks was de meest eenvoudige figuur met de schaal van de y-as als een index.
 De tweede reeks was in de voorkeursstijl van de deelnemer.
 
 **Globale voorkeur**
 
-De deelnemers hadden een licht voorkeur voor een y-as met een index in plaats van een procentuele wijziging.
-Het merendeel vond de lijnen met de referentie, belangrijke toename en belangrijke afname een meerwaarde.
+De deelnemers hadden een lichte voorkeur voor een y-as met een index in plaats van een procentuele wijziging.
+Het merendeel vond de referentielijnen een meerwaarde.
 De annotatie van deze lijnen was eveneens belangrijk.
 Driekwart van de deelnemers koos voor de weergave van de onzekerheid, bij voorkeur met een eenvoudig band in plaats van een gradiënt.
 De indeling van de trends met behulp van symbolen werd door een derde van de deelnemers gesmaakt.
@@ -19,7 +19,7 @@ Qua voorkeur voor symbolen was er geen verschil tussen de types deelnemers.
 **Effect op correcte inschatting**
 
 Beide reeksen figuren die we de deelnemers voorschotelden, hadden dezelfde onderliggende gegevens.
-Ze verschilden enkel in de manier van weergeven.
+Ze verschilden enkel in de manier van weergave.
 Hierdoor kunnen we een eerste inschatting maken van het effect van de weergave op de mogelijkheid om de figuur juist te interpreteren.
 Aangezien meer dan 90% van de deelnemers zowel een betrouwbaarheidsinterval wensten als bijkomende referentielijnen, kunnen we deze effecten niet van elkaar onderscheiden.
 We hebben ze daarom samen genomen als het effect van de tweede reeks.
@@ -36,4 +36,3 @@ De meest voorkomende verkeerde interpretaties waren onduidelijk in plaats van ve
 Het is wenselijk om in de toekomst meer deelnemers aan te trekken die zich minder vertrouwd voelen met cijfers en of statistiek.
 Gezien het onderwerp zal geen eenvoudige klus zijn.
 Om het effect van betrouwbaarheidsintervallen en referentielijnen van elkaar te kunnen onderscheiden, moeten we een aangepaste vragenlijst opstellen.
-

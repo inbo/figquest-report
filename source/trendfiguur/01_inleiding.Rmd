@@ -9,11 +9,11 @@ Verder vroegen we aan alle INBO medewerkers om de vragenlijst in te vullen.
 Tenslotte vroegen we aan een aantal overheidsinstellingen waar we vaak mee samenwerken om de vragenlijst intern rond te sturen.
 
 In totaal vulden `r nrow(background)` personen onze vragenlijst (deels) in.
-De voorkennis van de deelnemer mogelijk een invloed heeft op de keuzes.
+De voorkennis van de deelnemer heeft mogelijk een invloed op de keuzes.
 Daarom vroegen we om een zelfinschatting van hun vertrouwdheid met cijfers en statistiek.
 Tabel \@ref(tab:achtergrond) geeft een kruistabel van deze zelfinschattingen.
 Zoals te verwachten voelen deelnemers die zich vertrouwd voelen met statistiek zich meestal ook vertrouwd met cijfers.
-Globaal kunnen we drie groepen onderscheiden: 1) deelnemers die zowel met cijfers als statistiek vertrouwd zijn; 2) deelnemers die wel vertrouwd zijn met cijfers en minder met statistiek; en 3) deelnemers zijn zich noch met cijfers noch met statistiek vertrouwd voelen.
+Globaal kunnen we drie groepen onderscheiden: 1) deelnemers die zowel met cijfers als statistiek vertrouwd zijn; 2) deelnemers die vertrouwd zijn met cijfers maar niet met statistiek; en 3) deelnemers zijn zich noch met cijfers noch met statistiek vertrouwd voelen.
 Verder in het rapport zullen drie groepen respectievelijk benoemen als "beide", "enkel cijfers" en "weinig vertrouwd".
 We gebruiken hiervoor de volgende criteria:
 
@@ -44,11 +44,13 @@ background |>
   kbl(
     caption = "Kruistabel van zelfinschatting van de deelnemers qua
       vertrouwdheid met cijfers (rijen) en statistiek (kolommen).",
-    booktabs = TRUE, align = "l|rr|rr|r"
+    booktabs = TRUE, align = "lrrrrr"
   ) |>
   row_spec(c(2, 4), hline_after = TRUE) |>
   row_spec(5, bold = TRUE) |>
-  column_spec(6, bold = TRUE)
+  column_spec(c(2, 4), border_left = TRUE) |>
+  column_spec(6, bold = TRUE, border_left = TRUE) |>
+  add_header_above(c(" " = 1, "statistiek" = 4, " " = 1))
 ```
 
 ```{r achtergrond-type}

@@ -1,7 +1,7 @@
 {
   "access_right": "open",
   "title": "Analysis of questionnaire on trend figures",
-  "description": "<p>We ran a questionnaire on the visualisation of trend figures. First,\nwe ask the participant to interpret a few simple trend figures\nconsisting of solely a trend line. Next, we gave them a few options to\nimprove the trend figure. 1) percentage change instead of an index\nnumber. 2) adding reference lines indicating the size of an important\neffect. 3) adding confidence intervals. 4) adding a symbol with\nclassification of the change. Finally, we asked the participant again to\ninterpret a few trend figures, now based on their preferences.<\/p>",
+  "description": "<p>We ran a questionnaire on the visualisation of trend figures. First\nwe ask the participant to interpret a few simple trend figures\nconsisting of solely a trend line. Next we gave them a few options to\nimprove the trend figure. 1) percentage change instead of an index\nnumber. 2) adding reference lines indicating the size of an important\neffect. 3) adding confidence intervals. 4) adding a symbol with\nclassification of the change. Finally we asked the participate again to\ninterpret a few trend figures, now based on their preferences.<\/p>",
   "keywords": [
     "trends figure",
     "uncertainty",

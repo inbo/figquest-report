@@ -25,7 +25,7 @@ Aangezien meer dan 90% van de deelnemers zowel een betrouwbaarheidsinterval wens
 We hebben ze daarom samen genomen als het effect van de tweede reeks.
 
 Bij de eerste reeks met de eenvoudige figuur gaven slechts vier van de tien deelnemers een correcte interpretatie van de figuur.
-We stelden hierbij vooral een overinterpretatie van de trendfiguren vast: de deelnemers hadden de neiging om niet significante effecten toch als een stijging te interpreteren.
+We stelden hierbij vooral een overinterpretatie van de trendfiguren vast: de deelnemers hadden de neiging om niet significante effecten toch als een significant te interpreteren.
 Bij de tweede reeks was driekwart van de antwoorden correct.
 Hou hierbij in het achterhoofd dat de deelnemers bij deze reeks meestal zowel het betrouwbaarheidsinterval als de referentielijnen te zien kregen.
 Tijdens de tweede reeks was er veel minder overinterpretatie van de figuren.
@@ -34,5 +34,5 @@ De meest voorkomende verkeerde interpretaties waren onduidelijk in plaats van ve
 **Aanbevelingen voor verder onderzoek**
 
 Het is wenselijk om in de toekomst meer deelnemers aan te trekken die zich minder vertrouwd voelen met cijfers en of statistiek.
-Gezien het onderwerp zal geen eenvoudige klus zijn.
+Gezien het onderwerp zal dat geen eenvoudige klus zijn.
 Om het effect van betrouwbaarheidsintervallen en referentielijnen van elkaar te kunnen onderscheiden, moeten we een aangepaste vragenlijst opstellen.

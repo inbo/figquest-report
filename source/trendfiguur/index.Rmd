@@ -41,8 +41,45 @@ output:
 
 <!-- description: start -->
 
-De tekst voor de verplichte samenvatting.
-Hou het [Heerlijk Helder](https://overheid.vlaanderen.be/communicatie/heerlijk-helder).
+Op basis van een bevraging zijn we op zoek gegaan naar welke stijlelementen de deelnemers verkiezen bij trendfiguren.
+De vier groepen elementen die we onderzochten zijn 1) de schaal op de y‐as; 2) referentielijnen; 3) aanduiding van de onzekerheid en 4) symbolen met een indeling van de wijzigingen.
+Daarnaast deden we eveneens een kort peiling van de interpretatie van trendfiguren door de deelnemer.
+Hierbij kregen de deelnemers zowel trendfiguren met de meest eenvoudige stijl te zien als in de stijl van hun voorkeur.
+Verder peilden we naar de voorkennis van de deelnemers.
+Ze konden aangeven in welke mate ze zich vertrouwd voelden met cijfers en met statistiek.
+Zowat driekwart van de deelnemers voelde zich vertrouwd met zowel cijfers als statistiek.
+Een op tien voelde zich weinig tot niet vertrouwd met cijfers en statistiek.
+Een op zes voelde zich wel betrouwd met cijfers en niet met statistiek.
+
+**Weergave van onzekerheid is toch gewenst?**
+
+De deelnemers waren verdeeld voor wat betreft de schaal van de y-as.
+De ene helft verkoos een index, terwijl de andere helft procentuele wijzigingen verkoos.
+Een ruime meerderheid vond bijkomende referentielijnen en de weergave van onzekerheid een meerwaarde.
+Ongeveer een derde van de deelnemers vond de indeling van de trends een meerwaarde.
+
+**Heeft een aangepaste stijl een invloed?**
+
+Wanneer we een significant toename lieten interpreteren zagen een beperkt verschil tussen de eenvoudige en de voorkeursfiguur.
+Zeven op de tien deelnemers gaf in beide gevallen de correcte interpretatie.
+Een op de zes deelnemers wijzigden hun interpretatie van "onduidelijk" naar het correcte "hoger".
+Bij een stabiele toestand gaf slechts een vijfde van de deelnemers in beide reeksen de correcte inschatting "vergelijkbaar".
+Drie op de tien wijzigden hun mening van "hoger" naar het correcte "vergelijkbaar".
+En nog drie op de tien gingen van "onduidelijk" naar het correcte "vergelijkbaar".
+Met figuren in de stijl van hun eigen voorkeur gaf uiteindelijk acht op de tien deelnemers een correcte interpretatie.
+
+Een gelijkaardig verhaal bij een "mogelijke toename" (niet significant toename).
+Slechts een op acht gaf hier in beide reeks het correcte "onduidelijk".
+Maar liefst een op drie wijzigde hun mening van "hoger" naar "onduidelijk".
+
+**Wat is het effect van de aanpassingen?**
+
+Omdat het merendeel van de deelnemers zowel referentie als de weergave van onzekerheid verkoos, kunnen we geen onderscheid maken tussen de invloed van beide.
+Het toevoegen van deze combinatie had de sterkste invloed op een correcte interpretatie.
+De schaal van de y-as en het tonen van symbolen hebben een beperktere invloed.
+Deelnemers die procentuele wijzigingen verkozen, gaven iets vaker het correcte antwoord.
+Hetzelfde gold voor deelnemers met een voorkeur voor de symbolen.
+
 <!-- description: end -->
 
 ```{r setup, include = FALSE}

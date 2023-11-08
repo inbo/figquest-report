@@ -98,21 +98,18 @@ m_index$summary.fixed |>
   mutate(
     type = factor(.data$type, levels = c("gemiddelde", levels(background$type)))
   ) |>
-  ggplot(
-    aes(
-      x = plogis(mean), xmin = plogis(`0.025quant`),
-      xmax = plogis(`0.975quant`), y = type, colour = type
-    )
+  ggplot(aes(x = type, y = plogis(mean), fill = type)) +
+  stat_fan(aes(link_sd = sd), geom = "rect", link = "logit") +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  scale_y_continuous(
+    "kans op voorkeur voor index", labels = label_percent(), limits = 0:1,
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1)
   ) +
-  geom_errorbarh(position = position_dodge(width = 0.5)) +
-  geom_vline(xintercept = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
-  geom_point() +
-  scale_x_continuous(
-    "kans op voorkeur voor index", labels = label_percent(), limits = 0:1
-  ) +
-  scale_y_discrete(limits = rev(c("gemiddelde", levels(background$type)))) +
-  theme(axis.title.x = element_text())
+  scale_x_discrete(limits = rev(c("gemiddelde", levels(background$type)))) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
 ```
 
 ## Het gebruik van referentielijnen op de grafiek
@@ -223,7 +220,7 @@ m0 <- inla(
 )
 m_type <- inla(
   n ~ 0 + referentie + referentie:type, family = "poisson",
-  data = ds_referentie, control.compute = list(waic = TRUE)
+  data = ds_referentie, control.compute = list(waic = TRUE, config = TRUE)
 )
 waic <- c(m0$waic$waic, m_type$waic$waic)
 ```
@@ -268,16 +265,22 @@ inla.posterior.sample(n = 1e3, m_type) |>
     mediaan = median(.data$estimate),
     lcl = quantile(.data$estimate, probs = 0.025),
     ucl = quantile(.data$estimate, probs = 0.975),
-    .groups = "drop"
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
   ) |>
-  ggplot(
-    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = referentie)
+  ggplot(aes(x = type, y = mediaan, fill = referentie)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
   ) +
-  geom_vline(xintercept = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
-  geom_errorbarh(position = position_dodge(width = 0.5)) +
-  geom_point(position = position_dodge(width = 0.5)) +
-  scale_x_continuous(labels = percent, limits = 0:1)
+  scale_y_continuous(
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1,
+    "kans op voorkeur voor referentielijnen"
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
 ```
 
 ## Aanduiding van onzekerheid
@@ -459,17 +462,22 @@ inla.posterior.sample(n = 1e3, m_type_trend) |>
     mediaan = median(.data$estimate),
     lcl = quantile(.data$estimate, probs = 0.025),
     ucl = quantile(.data$estimate, probs = 0.975),
-    .groups = "drop"
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
   ) |>
-  ggplot(
-    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = onzekerheid)
+  ggplot(aes(x = type, y = mediaan, fill = onzekerheid)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
   ) +
-  geom_vline(xintercept = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(0.1, 0.9), linetype = 4) +
-  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
-  geom_errorbarh(position = position_dodge(width = 0.5)) +
-  geom_point(position = position_dodge(width = 0.5)) +
-  scale_x_continuous(labels = percent, limits = 0:1)
+  scale_y_continuous(
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1,
+    "kans op voorkeur om onzekerheid te tonen"
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
 ```
 
 ## Indeling van indices {#indeling}
@@ -494,13 +502,17 @@ data.frame(
       "significant\nafname", "significant\ntoename"
     )
   ),
-  lcl = c(0.2, -0.5, -0.2, -0.5),
-  ucl = c(0.5, -0.2, 0.2, 0.5)
+  lcl = c(0.1, -0.5, -0.2, -0.5),
+  ucl = c(0.5, -0.1, 0.2, 0.5)
 ) |>
-  mutate(schatting = (.data$lcl + .data$ucl) / 2) |>
+  mutate(
+    schatting = (.data$lcl + .data$ucl) / 2,
+    sd = (.data$ucl - .data$schatting) / qnorm(0.95)
+  ) |>
   ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
-  stat_effect(threshold = 0.25, detailed = FALSE) +
   geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
+  stat_fan(aes(link_sd = sd), geom = "rect") +
+  stat_effect(threshold = 0.25, detailed = FALSE, errorbar = FALSE) +
   scale_effect(
     "indeling", detailed = FALSE,
     labels = class_labels(lang = "nl", detailed = FALSE)
@@ -536,16 +548,18 @@ data.frame(
     ) |>
       rev()
   ),
-  lcl = c(0.3, 0.2, 0.1, -0.1, -0.2, -0.3, -0.4, -0.1, -0.3, -0.3),
-  ucl = c(0.4, 0.3, 0.2,  0.1, -0.1, -0.2, -0.3,  0.3,  0.1,  0.3)
+  lcl = c(0.3, 0.05, 0.05, -0.2, -0.2, -0.4, -0.4, -0.2, -0.4, -0.4),
+  ucl = c(0.4, 0.4, 0.2,  0.2, -0.05, -0.2, -0.3,  0.4,  0.2,  0.4)
 ) |>
-  mutate(schatting = (.data$lcl + .data$ucl) / 2) |>
+  mutate(
+    schatting = (.data$lcl + .data$ucl) / 2,
+    sd = (.data$ucl - .data$schatting) / qnorm(0.95)
+  ) |>
   ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
-  stat_effect(threshold = 0.25) +
   geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
-  scale_effect(
-    "indeling", labels = class_labels(lang = "nl")
-  ) +
+  stat_fan(aes(link_sd = sd), geom = "rect") +
+  stat_effect(threshold = 0.25, errorbar = FALSE) +
+  scale_effect("indeling", labels = class_labels(lang = "nl")) +
   scale_y_continuous(
     breaks = c(-0.25, 0, 0.25),
     labels = c(
@@ -692,20 +706,25 @@ inla.posterior.sample(n = 1e3, m0) |>
     mediaan = median(.data$estimate),
     lcl = quantile(.data$estimate, probs = 0.025),
     ucl = quantile(.data$estimate, probs = 0.975),
-    .groups = "drop"
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
   ) |>
-  ggplot(
-    aes(x = mediaan, xmin = lcl, xmax = ucl, y = type, colour = indeling)
+  ggplot(aes(x = type, y = mediaan, fill = indeling)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
   ) +
-  geom_vline(xintercept = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(0.1, 0.9), linetype = 4) +
-  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
-  geom_errorbarh(position = position_dodge(width = 0.5)) +
-  geom_point(position = position_dodge(width = 0.5)) +
-  scale_x_continuous(labels = percent, limits = 0:1)
+  scale_y_continuous(
+    "kans op voorkeur voor symbolen",
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
 ```
 
-## Overzicht van individuele voorkeuren {#02_voorkeur-02_voorkeur-02_voorkeur-02_voorkeur-02_voorkeur-individuele-voorkeur}
+## Overzicht van individuele voorkeuren
 
 De figuren waaruit de deelnemers konden kiezen, hingen steeds af van hun antwoord op de eerdere vragen.
 In \@ref(fig:voorkeur-sankey) geven we een overzicht van de verschillende trajecten die de deelnemers volgden.

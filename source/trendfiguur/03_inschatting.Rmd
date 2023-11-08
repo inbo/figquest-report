@@ -554,24 +554,35 @@ Indien we de stijl van de figuur in rekening brengen, zou de correctie interpret
 voorspelling |>
   mutate(
     reeks = factor(.data$tweede_reeks, 0:1, c("eerste reeks", "tweede reeks")),
+    stijl = interaction(.data$index, .data$symbool) |>
+      factor(
+        levels = c("1.0", "1.1", "0.0", "0.1"),
+        labels = c(
+          "index\nzonder symbool", "index\nmet symbool",
+          "procentuele\nwijziging\nzonder symbool",
+          "procentuele\nwijziging\nmet symbool"
+        )
+      ),
     `y-as`  = factor(.data$index, 0:1, c("procentuele\nwijziging", "index")),
-    symbool = factor(.data$symbool, 0:1, c("geen", "wel"))
+    symbool = factor(.data$symbool, 0:1, c("geen", "wel")),
   ) |>
-  ggplot(
-    aes(
-      x = median, xmin = lcl, xmax = ucl, y = reeks, colour = symbool,
-      shape = `y-as`, linetype = `y-as`
-    )
+  ggplot(aes(x = reeks, y = median, fill = stijl, shape = `y-as`)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(width = 1),
+    link = "logit"
   ) +
-  geom_vline(xintercept = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(0.25, 0.75), linetype = 3) +
-  geom_vline(xintercept = c(0.1, 0.9), linetype = 4) +
-  geom_errorbarh(position = position_dodge(width = 0.5)) +
-  geom_point(position = position_dodge(width = 0.5), size = 2) +
-  scale_x_continuous(limits = 0:1, labels = percent)
+  scale_y_continuous(
+    "kans op een correct antwoord", breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1),
+    labels = percent, limits = 0:1
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
 ```
 
-```{r verklaring-parameter, fig.cap = "Gewogen effect van de modelparameters."}
+```{r verklaring-parameter, fig.cap = "Gewogen effect van de modelparameters.", eval = FALSE}
 model_fit |>
   transmute(
     .data$model_id,

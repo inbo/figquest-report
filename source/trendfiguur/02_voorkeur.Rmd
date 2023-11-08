@@ -118,7 +118,7 @@ Na de schaal van de Y-as bieden we de deelnemer de keuze tussen drie opties voor
 We illustreren de mogelijkheden in figuur \@ref(fig:referentie-sterk).
 Merk op dat we het type "index" gebruiken voor de Y-as.
 Tijdens de bevraging kreeg elke deelnemer de geselecteerde Y-as uit de vorige vraag.
-Zie §\@ref(individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 
 De "referentielijn" verwijst naar een relevant referentieniveau dat te kiezen is door de maker van de figuur.
 Een logische keuze is de toestand in een bepaald referentiejaar.
@@ -319,7 +319,7 @@ We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperkter zi
 
 We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) "band"; en 3) "gradiënt".
 De schaal en de aanwezigheid van referentielijnen ging af van de voorgaande keuzes van de deelnemers.
-Zie §\@ref(individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 Bij "geen" tonen we de onzekerheid rond de geschatte trend niet.
 Hoewel dit de eenvoudigste figuur oplevert, bieden we de gebruiker geen inzicht in de onzekerheid rond de geschatte trend.
 "Band" is een eenvoudige manier om de onzekerheid weer te geven.
@@ -575,7 +575,7 @@ data.frame(
 
 We boden de deelnemers die keuzemogelijkheden aan: 1) "geen"; 2) "symbool" of 3) "gekleurd symbool" (fig. \@ref(fig:indeling-keuze)).
 Opnieuw lieten we de schaal van de y-as, de aanwezigheid van referentielijnen en de weergave van de onzekerheid afhangen van de eerder gemaakte keuzes van de deelnemer.
-Zie §\@ref(individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 Bij "geen" tonen we enkel de trendlijn.
 Bij "symbool" plaatsen we een symbool ter hoogte van de trendlijn.
 Hierbij hebben alle symbolen dezelfde kleur.
@@ -724,7 +724,7 @@ inla.posterior.sample(n = 1e3, m0) |>
   coord_flip()
 ```
 
-## Overzicht van individuele voorkeuren
+## Overzicht van individuele voorkeuren {#02_voorkeur-02_voorkeur-individuele-voorkeur}
 
 De figuren waaruit de deelnemers konden kiezen, hingen steeds af van hun antwoord op de eerdere vragen.
 In \@ref(fig:voorkeur-sankey) geven we een overzicht van de verschillende trajecten die de deelnemers volgden.

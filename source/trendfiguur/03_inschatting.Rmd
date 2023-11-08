@@ -1,7 +1,7 @@
 # Interpretatie van trendfiguren
 
-Voor dat de deelnemers hun voorkeur konden aangeven, schotelden we hun eerste drie eenvoudige trendfiguren voor.
-Hierbij gebruikte we de stijl van figuur \@ref(fig:y-as) met de Y-as uitgedrukt als index (linkerfiguur).
+Voordat de deelnemers hun voorkeur konden aangeven, schotelden we hun eerste drie eenvoudige trendfiguren voor.
+Hierbij gebruikten we de stijl van figuur \@ref(fig:y-as) met de Y-as uitgedrukt als index (linkerfiguur).
 Bij elke figuur hebben we een specifiek jaar aangeduid met een verticale lijn.
 We vroegen de deelnemers om een inschatting te maken voor de vergelijking tussen dat jaar en het referentiejaar (2000, index = 100).
 De deelnemers konden kiezen tussen volgende mogelijkheden: 1) lager dan 2000; 2) vergelijkbaar met 2000; 3) hoger dan 2000; 4) onduidelijk of er een verschil is met 2000; 5) geen idee.
@@ -12,7 +12,7 @@ De correcte inschatting van de drie figuren volgens de indeling (§\@ref(indelin
 3)  "mogelijke toename": niet significante toename met betrouwbaarheidsinterval dat zowel de referentie als een belangrijke toename omvat.
 
 Aangezien dit eenvoudige figuren waren, zonder aanduiding van betrouwbaarheidsintervallen of referentielijnen, konden deelnemers onmogelijk met zekerheid weten wat de correcte indeling was.
-Nadat de deelnemers hun voorkeur konden opgeven, vroegen we hen om opnieuw drie figuren te interpreteren voor de stijl van de figuren.
+Nadat de deelnemers hun voorkeur konden opgeven, vroegen we hen om opnieuw drie figuren te interpreteren.
 Hierbij krijgt elke deelnemer dezelfde drie tijdreeksen voorgeschoteld, ditmaal in de voorkeursstijl van de deelnemer zelf.
 We vertelden de deelnemers niet dat ze exact dezelfde vragen kregen als bij de start van de bevraging.
 De deelnemers hebben bijgevolg zonder aankondiging dezelfde drie vragen twee keer beantwoord, met enkel het verschil in stijl van de figuur.
@@ -543,14 +543,14 @@ model_fit |>
 Tijdens de eerste reeks gaven de deelnemers in gemiddeld vier van de tien keren het juiste antwoord (figuur \@ref(fig:verklaring-beste)).
 Tijdens de tweede reeks steeg dit tot drie kwart van de gevallen.
 Vermoedelijk omdat het merendeel van de deelnemers tijdens de tweede reeks betrouwbaarheidsintervallen en referentielijnen verkoos.
-In mindere mate stellen we nog een effect vast van de schaal van de y-as: deelnemers die voor een procentuele wijziging kozen geven vaker een correct antwoord.
+In mindere mate stellen we nog een effect vast van de schaal van de y-as: deelnemers die voor een procentuele wijziging kozen, geven vaker een correct antwoord.
 Ook het tonen van de symbolen verhoogt de kans op een correct antwoord.
 
 Strikt genomen onderzochten we met welke stijl van figuren de deelnemers het best instaat zijn om tot een gelijkwaardige interpretatie als de makers van de figuur te komen.
 Het correcte antwoord selecteren we bijgevolg louter op basis van de volledige set van gegevens, inclusief de kennis over onzekerheid en referentielijnen.
-Indien we de stijl van de figuur in rekening brengen, zou de correctie interpretatie van de eerste reeks figuren steeds "geen idee" zijn.
+Indien we de stijl van de figuur in rekening brengen, zou de correcte interpretatie van de eerste reeks figuren steeds "geen idee" zijn.
 
-```{r verklaring-beste, fig.cap = "Gemiddelde kans op een correcte interpretatie in functie van het gebruik van symbolen en de schaal van y-schaal. Het tweede reeks valt grotendeels samen met het toevoegen van referentielijnen en weergave van onzekerheid."}
+```{r verklaring-beste, fig.cap = "Gemiddelde kans op een correcte interpretatie in functie van het gebruik van symbolen en de schaal van y-as. De tweede reeks valt grotendeels samen met het toevoegen van referentielijnen en weergave van onzekerheid."}
 voorspelling |>
   mutate(
     reeks = factor(.data$tweede_reeks, 0:1, c("eerste reeks", "tweede reeks")),

@@ -1,6 +1,6 @@
 # Voorkeur van de deelnemers
 
-In dit hoofdstuk gaan we vraag per vraag na welke voorkeur de deelnemers aangaven.
+In dit hoofdstuk onderzoeken we vraag per vraag de voorkeur van de deelnemers.
 
 ## Index of wijziging ten opzichte van referentie
 
@@ -78,9 +78,9 @@ delta_waic <- m_0$waic$waic - m_index$waic$waic
 ```
 
 Op basis van de ruwe data (tabel \@ref(tab:y-as-type)) stellen we over het algemeen een voorkeur vast voor een index.
-De voorkeur verschilt naargelang het type deelnemer (\@ref(fig:fig-y-as-type)).
-Deelnemers uit de groep "beide" hebben een lichte voorkeur voor een index.
-Deze uit de groep "enkel cijfers" hebben mogelijk een voorkeur voor een index.
+De voorkeur verschilt naargelang het type deelnemer (figuur \@ref(fig:fig-y-as-type)).
+Deelnemers uit de groep "beide" hebben een lichte voorkeur voor een procentuele y-as.
+Deze uit de groep "enkel cijfers" hebben mogelijk een voorkeur voor een procentuele y-as.
 Terwijl de groep "weinig vertrouwd" een voorkeur hebben voor een index.
 Merk dat de breedte van de intervallen samenhangt met het aantal deelnemers in elke groep.
 
@@ -114,13 +114,13 @@ m_index$summary.fixed |>
 
 ## Het gebruik van referentielijnen op de grafiek
 
-Na de schaal van de Y-as bieden we de deelnemer de keuze tussen drie opties voor referentielijnen: 1) geen referentielijnen, 2) enkel de referentielijnen en 3) geannoteerde referentielijnen.
+Na de schaal van de Y-as, bieden we de deelnemer de keuze tussen drie opties voor referentielijnen: 1) geen referentielijnen, 2) enkel de referentielijnen en 3) geannoteerde referentielijnen.
 We illustreren de mogelijkheden in figuur \@ref(fig:referentie-sterk).
 Merk op dat we het type "index" gebruiken voor de Y-as.
 Tijdens de bevraging kreeg elke deelnemer de geselecteerde Y-as uit de vorige vraag.
 Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 
-De "referentielijn" verwijst naar een relevant referentieniveau dat te kiezen is door de maker van de figuur.
+De "referentielijn" verwijst naar een relevant referentieniveau dat te kiezen is door de maker van de figuur of de betrokken expert.
 Een logische keuze is de toestand in een bepaald referentiejaar.
 Een andere mogelijkheid is het niveau van een bepaalde doelstelling uit een beleidsplan.
 Daarnaast gebruiken we nog twee bijkomende lijnen: "belangrijke toename" en "belangrijke afname".
@@ -167,7 +167,7 @@ De voorkeur verschilt naargelang de voorkennis van de deelnemers en de sterkte v
 Globaal kunnen we stellen dat er een duidelijke voorkeur is voor referentielijnen, zeker wanneer we deze expliciet benoemen in de figuur.
 Deelnemers uit de groep "weinig vertrouwd" verkiezen vaker om geen referentielijnen te zien.
 Zeker bij een matige trend zagen we dit fenomeen.
-Bij dergelijke figuren zijn de referentielijnen met een belangrijke toename of afname extremer dan de trendreeks.
+Bij figuren met een matige trend zijn de referentielijnen met een belangrijke toename of afname extremer dan de trendreeks.
 Hierdoor toont de trendreeks in de figuur een minder sterke schommeling.
 
 ```{r referentie}
@@ -318,7 +318,7 @@ Bij vals positieve uitspraken zullen we mogelijk te snel ingrijpen.
 We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperkter zijn
 
 We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) "band"; en 3) "gradiënt".
-De schaal en de aanwezigheid van referentielijnen ging af van de voorgaande keuzes van de deelnemers.
+De schaal van de y-as en de aanwezigheid van referentielijnen hing af van de voorgaande keuzes van de deelnemers.
 Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 Bij "geen" tonen we de onzekerheid rond de geschatte trend niet.
 Hoewel dit de eenvoudigste figuur oplevert, bieden we de gebruiker geen inzicht in de onzekerheid rond de geschatte trend.
@@ -573,7 +573,7 @@ data.frame(
   coord_flip()
 ```
 
-We boden de deelnemers die keuzemogelijkheden aan: 1) "geen"; 2) "symbool" of 3) "gekleurd symbool" (fig. \@ref(fig:indeling-keuze)).
+We boden de deelnemers drie keuzemogelijkheden aan: 1) "geen"; 2) "symbool" of 3) "gekleurd symbool" (fig. \@ref(fig:indeling-keuze)).
 Opnieuw lieten we de schaal van de y-as, de aanwezigheid van referentielijnen en de weergave van de onzekerheid afhangen van de eerder gemaakte keuzes van de deelnemer.
 Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
 Bij "geen" tonen we enkel de trendlijn.
@@ -586,7 +586,7 @@ Voor de kleuren kozen we een kleurgradiënt van donkerrood naar lichtgroen.
 Een aantal deelnemers attendeerde ons op het feit dat deze kleuren mogelijk moeilijk te onderscheiden zijn voor mensen met een gestoord kleurenzicht.
 De gekozen symbolen proberen maximaal rekening te houden met deze mensen.
 Ten eerste bevat elk symbool tekens die dezelfde informatie bevatten als "symbool".
-De lezers heeft bijgevolg de kleur niet nodig om de figuur te interpreteren.
+De lezer heeft bijgevolg de kleur niet nodig om de figuur te interpreteren.
 Ten tweede hebben we bewust gekozen voor een kleurgradiënt die van donker naar licht gaat.
 Mensen die het moeilijker hebben om rood en groen van elkaar te onderscheiden kunnen meestal wel het verschil maken tussen licht en donker.
 Op die manier denken we voor personen die kleur kunnen waarnemen extra ondersteuning te bieden, zonder de overige mensen te beperken.
@@ -668,7 +668,7 @@ Mogelijk vonden de deelnemers het symbool te groot ten opzichte van de trendlijn
 Een kleiner symbool zou het symbool dan weer onleesbaar maken.
 Driekwart van de deelnemers die een symbool verkiezen, hebben een voorkeur voor een gekleurd symbool.
 
-```{r indeling-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om symbolen te tonen, al dan niet als gekleurd."}
+```{r indeling-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om symbolen te tonen, al dan niet gekleurd."}
 inla.posterior.sample(n = 1e3, m0) |>
   map("latent") |>
   map(data.frame) |>
@@ -730,8 +730,8 @@ De figuren waaruit de deelnemers konden kiezen, hingen steeds af van hun antwoor
 In \@ref(fig:voorkeur-sankey) geven we een overzicht van de verschillende trajecten die de deelnemers volgden.
 Het traject kan u aflezen door te kijken naar de kleur van het lint en door welke rechthoeken het lint gaat.
 De breedte van het lint geeft aan hoeveel deelnemers een bepaald traject volgden.
-De breedste lint omvat deelnemers die vertrouwd voelen met statistiek en cijfers en een voorkeur hebben voor een procentuele wijziging op de y-as, geannoteerde referentielijnen, onzekerheid als een band en geen symbolen.
-De tweede breedste lint is een gelijkaardige groep maar met een voorkeur voor een index op de y-as.
+Het breedste lint omvat deelnemers die zich vertrouwd voelen met statistiek en cijfers en een voorkeur hebben voor een procentuele wijziging op de y-as, geannoteerde referentielijnen, onzekerheid als een band en geen symbolen.
+Het tweede breedste lint maakt gelijkaardige keuzes maar verkiest een index op de y-as.
 
 (ref:voorkeur-sankey) Sankey diagram met de voorkeur van de deelnemers.
 

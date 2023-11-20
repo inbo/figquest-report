@@ -13,7 +13,7 @@ De correcte inschatting van de drie figuren volgens de indeling (§\@ref(indelin
 
 Aangezien dit eenvoudige figuren waren, zonder aanduiding van betrouwbaarheidsintervallen of referentielijnen, konden deelnemers onmogelijk met zekerheid weten wat de correcte indeling was.
 Nadat de deelnemers hun voorkeur konden opgeven, vroegen we hen om opnieuw drie figuren te interpreteren.
-Hierbij krijgt elke deelnemer dezelfde drie tijdreeksen voorgeschoteld, ditmaal in de voorkeursstijl van de deelnemer zelf.
+Hierbij kreeg elke deelnemer dezelfde drie tijdreeksen voorgeschoteld, ditmaal in de voorkeursstijl van de deelnemer zelf.
 We vertelden de deelnemers niet dat ze exact dezelfde vragen kregen als bij de start van de bevraging.
 De deelnemers hebben bijgevolg zonder aankondiging dezelfde drie vragen twee keer beantwoord, met enkel het verschil in stijl van de figuur.
 De ruime meerderheid van de deelnemers heeft beide vragenreeksen beantwoord (tab. \@ref(tab:interpretatie-deelname)).

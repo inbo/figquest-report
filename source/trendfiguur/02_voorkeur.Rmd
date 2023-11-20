@@ -291,14 +291,14 @@ In dat geval maken we gebruik van een zogenaamde steekproef: het gedeelte van de
 We gaan er vanuit dat het om een representatieve steekproef gaat: een deel van de populatie waarvan we verwachten dat ze gelijkaardige kenmerken heeft als de volledige populatie.
 Op die manier kunnen we de kenmerken van de steekproef gebruiken als een benadering van deze kenmerken voor de volledige populatie.
 
-Telkens we een andere aselecte representatieve steekproef trekken uit de populatie zullen we een iets andere schatting krijgen van het kenmerk waarin we geïnteresseerd zijn.
+Telkens als we een andere aselecte representatieve steekproef trekken uit de populatie, zullen we een iets andere schatting krijgen van het kenmerk waarin we geïnteresseerd zijn.
 Er is bijgevolg onvermijdelijk een zekere mate van onzekerheid rond de schatting op basis van een steekproef.
 Met statistiek kunnen we op basis van een enkele steekproef inschatten hoe groot deze onzekerheid is, het zogenaamde betrouwbaarheidsinterval.
 Kort door de bocht is er 95% kans dat de werkelijke waarde (van de populatie) binnen het 95% betrouwbaarheidsinterval ligt.
 Bijgevolg is er 5% kans dat de werkelijke waarde buiten het 95% betrouwbaarheidsinterval ligt.
-Meestal zorgen we dat de grenzen symmetrisch zijn zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
+Meestal zorgen we dat de grenzen symmetrisch zijn, zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
 
-Hoe groter het verschil tussen de onder- en bovengrens van het interval, hoe breder het interval en hoe groter de onzekerheid (en kleiner de precisie).
+Hoe groter het verschil tussen de onder- en bovengrens van het interval, hoe breder het interval en hoe groter de onzekerheid (en hoe kleiner de precisie).
 Hoe meer (niet verklaarde) variabiliteit in de gegevens, hoe breder het betrouwbaarheidsinterval.
 Het vergroten dan de steekproef zorgt dan weer voor een smaller betrouwbaarheidsinterval.
 
@@ -307,12 +307,12 @@ Wanneer een dekking van 90% voldoende is, volstaat een smaller interval in verge
 De dekking van het interval aanpassen is een tweesnijdend zwaard.
 Vaak vergelijken we de grenzen van het interval met een referentie.
 Ligt het interval volledig boven of onder de referentie, dan stellen we dat er een (significant) effect is.
-Een lagere dekking geeft een hogere kans op vals positieven; op basis van de steekproef stellen we dat er een verschil is, terwijl er op populatieniveau geen verschil is.
+Een lagere dekking geeft een hogere kans op vals positieven: op basis van de steekproef stellen we dat er een verschil is, terwijl er op populatieniveau geen verschil is.
 Het waargenomen verschil in de steekproef is dan het gevolg van toeval.
-Een hogere dekking geeft dan weer een hogere kans op vals negatieven; door het brede interval kunnen we het werkelijke verschil in de populatie niet aantonen.
+Een hogere dekking geeft dan weer een hogere kans op vals negatieven: door het brede interval kunnen we het werkelijke verschil in de populatie niet aantonen.
 
 In de ecologie zijn vals positieven meestal minder erg dan vals negatieven.
-Bij vals negatieve uitspraken kunnen we bijvoorbeeld te lang blijven veronderstellen dat de toestand voldoende is.
+Bij vals negatieve uitspraken kunnen we bijvoorbeeld te lang blijven veronderstellen dat de toestand stabiel is.
 Hierdoor kunnen we te laat beginnen ingrijpen waardoor we drastischere en duurdere maatregelen nodig hebben.
 Bij vals positieve uitspraken zullen we mogelijk te snel ingrijpen.
 We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperkter zijn
@@ -351,7 +351,7 @@ grid.arrange(
 ```
 
 Tabel \@ref(tab:onzekerheid) geeft een overzicht van de voorkeur van de deelnemers.
-Negen op tien van de deelnemers die zich vertrouwd voelen met cijfers verkiezen om de onzekerheid te zien op de figuur \@ref(fig:onzekerheid-model).
+Negen op tien van de deelnemers die zich vertrouwd voelen met cijfers verkiezen om de onzekerheid te zien (figuur \@ref(fig:onzekerheid-model)).
 Driekwart van wie zich minder vertrouwd voelt, heeft een voorkeur voor de weergave van onzekerheid.
 Globaal verkiezen de deelnemers de stijl "band" boven "gradiënt".
 

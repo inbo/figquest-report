@@ -1,0 +1,880 @@
+id,score,truth,after,participant
+118246252675,no idea,potential increase,FALSE,FALSE
+118246252675,unclear,potential increase,TRUE,TRUE
+118246252675,no idea,moderate increase,FALSE,FALSE
+118246252675,higher,moderate increase,TRUE,TRUE
+118246252675,no idea,stable,FALSE,FALSE
+118246252675,comparable,stable,TRUE,TRUE
+118248526710,higher,potential increase,FALSE,FALSE
+118248526710,higher,moderate increase,FALSE,FALSE
+118248526710,higher,stable,FALSE,FALSE
+118248526857,unclear,potential increase,FALSE,FALSE
+118248526857,unclear,potential increase,TRUE,TRUE
+118248526857,unclear,moderate increase,FALSE,FALSE
+118248526857,higher,moderate increase,TRUE,TRUE
+118248526857,comparable,stable,FALSE,FALSE
+118248526857,comparable,stable,TRUE,TRUE
+118248577928,unclear,potential increase,FALSE,FALSE
+118248577928,unclear,potential increase,TRUE,TRUE
+118248577928,unclear,moderate increase,FALSE,FALSE
+118248577928,higher,moderate increase,TRUE,TRUE
+118248577928,unclear,stable,FALSE,FALSE
+118248577928,comparable,stable,TRUE,TRUE
+118249067082,unclear,potential increase,FALSE,FALSE
+118249067082,unclear,potential increase,TRUE,TRUE
+118249067082,unclear,moderate increase,FALSE,FALSE
+118249067082,higher,moderate increase,TRUE,TRUE
+118249067082,unclear,stable,FALSE,FALSE
+118249067082,comparable,stable,TRUE,TRUE
+118249169744,higher,potential increase,FALSE,FALSE
+118249169744,higher,moderate increase,FALSE,FALSE
+118249169744,higher,stable,FALSE,FALSE
+118249191442,unclear,potential increase,FALSE,FALSE
+118249191442,unclear,potential increase,TRUE,TRUE
+118249191442,unclear,moderate increase,FALSE,FALSE
+118249191442,higher,moderate increase,TRUE,TRUE
+118249191442,unclear,stable,FALSE,FALSE
+118249191442,unclear,stable,TRUE,TRUE
+118249225351,unclear,potential increase,FALSE,FALSE
+118249225351,unclear,potential increase,TRUE,TRUE
+118249225351,unclear,moderate increase,FALSE,FALSE
+118249225351,higher,moderate increase,TRUE,TRUE
+118249225351,unclear,stable,FALSE,FALSE
+118249225351,comparable,stable,TRUE,TRUE
+118249251454,no idea,potential increase,FALSE,FALSE
+118249251454,unclear,potential increase,TRUE,TRUE
+118249251454,no idea,moderate increase,FALSE,FALSE
+118249251454,higher,moderate increase,TRUE,TRUE
+118249251454,unclear,stable,FALSE,FALSE
+118249251454,comparable,stable,TRUE,TRUE
+118263511335,unclear,potential increase,FALSE,FALSE
+118263511335,unclear,potential increase,TRUE,TRUE
+118263511335,unclear,moderate increase,FALSE,FALSE
+118263511335,higher,moderate increase,TRUE,TRUE
+118263511335,unclear,stable,FALSE,FALSE
+118263511335,unclear,stable,TRUE,TRUE
+118264559669,higher,potential increase,FALSE,FALSE
+118264559669,unclear,potential increase,TRUE,TRUE
+118264559669,higher,moderate increase,FALSE,FALSE
+118264559669,higher,moderate increase,TRUE,TRUE
+118264559669,comparable,stable,FALSE,FALSE
+118264559669,comparable,stable,TRUE,TRUE
+118267892739,unclear,potential increase,FALSE,FALSE
+118267892739,unclear,potential increase,TRUE,TRUE
+118267892739,unclear,moderate increase,FALSE,FALSE
+118267892739,higher,moderate increase,TRUE,TRUE
+118267892739,unclear,stable,FALSE,FALSE
+118267892739,unclear,stable,TRUE,TRUE
+118270946823,unclear,potential increase,FALSE,FALSE
+118270946823,unclear,potential increase,TRUE,TRUE
+118270946823,higher,moderate increase,FALSE,FALSE
+118270946823,higher,moderate increase,TRUE,TRUE
+118270946823,comparable,stable,FALSE,FALSE
+118270946823,comparable,stable,TRUE,TRUE
+118297509148,unclear,potential increase,FALSE,FALSE
+118297509148,unclear,potential increase,TRUE,TRUE
+118297509148,unclear,moderate increase,FALSE,FALSE
+118297509148,higher,moderate increase,TRUE,TRUE
+118297509148,unclear,stable,FALSE,FALSE
+118297509148,comparable,stable,TRUE,TRUE
+118300652865,unclear,potential increase,FALSE,FALSE
+118300652865,comparable,potential increase,TRUE,TRUE
+118300652865,unclear,moderate increase,FALSE,FALSE
+118300652865,higher,moderate increase,TRUE,TRUE
+118300652865,unclear,stable,FALSE,FALSE
+118300652865,comparable,stable,TRUE,TRUE
+118302292087,higher,potential increase,FALSE,FALSE
+118302292087,higher,potential increase,TRUE,FALSE
+118302292087,unclear,potential increase,TRUE,TRUE
+118302292087,higher,moderate increase,FALSE,FALSE
+118302292087,higher,moderate increase,TRUE,FALSE
+118302292087,higher,moderate increase,TRUE,TRUE
+118302292087,comparable,stable,FALSE,FALSE
+118302292087,comparable,stable,TRUE,FALSE
+118302292087,unclear,stable,TRUE,TRUE
+118303344527,higher,potential increase,FALSE,FALSE
+118303344527,comparable,potential increase,TRUE,TRUE
+118303344527,higher,moderate increase,FALSE,FALSE
+118303344527,higher,moderate increase,TRUE,TRUE
+118303344527,higher,stable,FALSE,FALSE
+118303344527,comparable,stable,TRUE,TRUE
+118303345427,higher,potential increase,FALSE,FALSE
+118303345427,comparable,potential increase,TRUE,TRUE
+118303345427,higher,moderate increase,FALSE,FALSE
+118303345427,comparable,moderate increase,TRUE,TRUE
+118303345427,comparable,stable,FALSE,FALSE
+118303345427,comparable,stable,TRUE,TRUE
+118303346413,higher,potential increase,FALSE,FALSE
+118303346413,higher,potential increase,TRUE,FALSE
+118303346413,comparable,potential increase,TRUE,TRUE
+118303346413,higher,moderate increase,FALSE,FALSE
+118303346413,higher,moderate increase,TRUE,FALSE
+118303346413,higher,moderate increase,TRUE,TRUE
+118303346413,comparable,stable,FALSE,FALSE
+118303346413,comparable,stable,TRUE,FALSE
+118303346413,comparable,stable,TRUE,TRUE
+118303348380,higher,potential increase,FALSE,FALSE
+118303348380,comparable,potential increase,TRUE,TRUE
+118303348380,higher,moderate increase,FALSE,FALSE
+118303348380,higher,moderate increase,TRUE,TRUE
+118303348380,higher,stable,FALSE,FALSE
+118303348380,comparable,stable,TRUE,TRUE
+118303348608,higher,potential increase,FALSE,FALSE
+118303348608,unclear,potential increase,TRUE,TRUE
+118303348608,higher,moderate increase,FALSE,FALSE
+118303348608,higher,moderate increase,TRUE,TRUE
+118303348608,comparable,stable,FALSE,FALSE
+118303348608,comparable,stable,TRUE,TRUE
+118303355620,unclear,potential increase,FALSE,FALSE
+118303355620,comparable,potential increase,TRUE,TRUE
+118303355620,unclear,moderate increase,FALSE,FALSE
+118303355620,higher,moderate increase,TRUE,TRUE
+118303355620,unclear,stable,FALSE,FALSE
+118303355620,comparable,stable,TRUE,TRUE
+118303368417,higher,potential increase,FALSE,FALSE
+118303368417,comparable,potential increase,TRUE,TRUE
+118303368417,higher,moderate increase,FALSE,FALSE
+118303368417,higher,moderate increase,TRUE,TRUE
+118303368417,higher,stable,FALSE,FALSE
+118303368417,comparable,stable,TRUE,TRUE
+118303375496,higher,potential increase,FALSE,FALSE
+118303375496,higher,moderate increase,FALSE,FALSE
+118303375496,higher,stable,FALSE,FALSE
+118303378932,unclear,potential increase,FALSE,FALSE
+118303378932,comparable,potential increase,TRUE,TRUE
+118303378932,unclear,moderate increase,FALSE,FALSE
+118303378932,unclear,moderate increase,TRUE,TRUE
+118303378932,unclear,stable,FALSE,FALSE
+118303378932,comparable,stable,TRUE,TRUE
+118303417099,higher,potential increase,FALSE,FALSE
+118303417099,unclear,potential increase,TRUE,TRUE
+118303417099,higher,moderate increase,FALSE,FALSE
+118303417099,higher,moderate increase,TRUE,TRUE
+118303417099,higher,stable,FALSE,FALSE
+118303417099,comparable,stable,TRUE,TRUE
+118303428662,higher,potential increase,FALSE,FALSE
+118303428662,unclear,potential increase,TRUE,FALSE
+118303428662,unclear,potential increase,TRUE,TRUE
+118303428662,higher,moderate increase,FALSE,FALSE
+118303428662,higher,moderate increase,TRUE,FALSE
+118303428662,higher,moderate increase,TRUE,TRUE
+118303428662,higher,stable,FALSE,FALSE
+118303428662,unclear,stable,TRUE,FALSE
+118303428662,unclear,stable,TRUE,TRUE
+118303433687,no idea,potential increase,FALSE,FALSE
+118303433687,higher,potential increase,TRUE,TRUE
+118303433687,no idea,moderate increase,FALSE,FALSE
+118303433687,higher,moderate increase,TRUE,TRUE
+118303433687,no idea,stable,FALSE,FALSE
+118303433687,comparable,stable,TRUE,TRUE
+118303454200,higher,potential increase,FALSE,FALSE
+118303454200,unclear,potential increase,TRUE,TRUE
+118303454200,higher,moderate increase,FALSE,FALSE
+118303454200,higher,moderate increase,TRUE,TRUE
+118303454200,comparable,stable,FALSE,FALSE
+118303454200,comparable,stable,TRUE,TRUE
+118303454522,unclear,potential increase,FALSE,FALSE
+118303454522,unclear,potential increase,TRUE,TRUE
+118303454522,unclear,moderate increase,FALSE,FALSE
+118303454522,higher,moderate increase,TRUE,TRUE
+118303454522,unclear,stable,FALSE,FALSE
+118303454522,comparable,stable,TRUE,TRUE
+118303459660,higher,potential increase,FALSE,FALSE
+118303459660,comparable,potential increase,TRUE,TRUE
+118303459660,higher,moderate increase,FALSE,FALSE
+118303459660,higher,moderate increase,TRUE,TRUE
+118303459660,higher,stable,FALSE,FALSE
+118303459660,comparable,stable,TRUE,TRUE
+118303488219,unclear,potential increase,FALSE,FALSE
+118303488219,comparable,potential increase,TRUE,TRUE
+118303488219,unclear,moderate increase,FALSE,FALSE
+118303488219,higher,moderate increase,TRUE,TRUE
+118303488219,unclear,stable,FALSE,FALSE
+118303488219,comparable,stable,TRUE,TRUE
+118303496344,unclear,potential increase,FALSE,FALSE
+118303496344,comparable,potential increase,TRUE,TRUE
+118303496344,unclear,moderate increase,FALSE,FALSE
+118303496344,higher,moderate increase,TRUE,TRUE
+118303496344,unclear,stable,FALSE,FALSE
+118303496344,comparable,stable,TRUE,TRUE
+118303511791,higher,potential increase,FALSE,FALSE
+118303511791,unclear,potential increase,TRUE,TRUE
+118303511791,higher,moderate increase,FALSE,FALSE
+118303511791,higher,moderate increase,TRUE,TRUE
+118303511791,unclear,stable,FALSE,FALSE
+118303511791,comparable,stable,TRUE,TRUE
+118303712989,higher,potential increase,FALSE,FALSE
+118303712989,unclear,potential increase,TRUE,TRUE
+118303712989,higher,moderate increase,FALSE,FALSE
+118303712989,higher,moderate increase,TRUE,TRUE
+118303712989,higher,stable,FALSE,FALSE
+118303712989,comparable,stable,TRUE,TRUE
+118303771647,higher,potential increase,FALSE,FALSE
+118303771647,unclear,potential increase,TRUE,TRUE
+118303771647,higher,moderate increase,FALSE,FALSE
+118303771647,higher,moderate increase,TRUE,TRUE
+118303771647,unclear,stable,FALSE,FALSE
+118303771647,comparable,stable,TRUE,TRUE
+118304161439,higher,potential increase,FALSE,FALSE
+118304161439,unclear,potential increase,TRUE,TRUE
+118304161439,higher,moderate increase,FALSE,FALSE
+118304161439,unclear,moderate increase,TRUE,TRUE
+118304161439,comparable,stable,FALSE,FALSE
+118304161439,unclear,stable,TRUE,TRUE
+118304170782,higher,potential increase,FALSE,FALSE
+118304170782,unclear,potential increase,TRUE,TRUE
+118304170782,higher,moderate increase,FALSE,FALSE
+118304170782,higher,moderate increase,TRUE,TRUE
+118304170782,higher,stable,FALSE,FALSE
+118304170782,comparable,stable,TRUE,TRUE
+118304174898,higher,potential increase,FALSE,FALSE
+118304174898,unclear,potential increase,TRUE,TRUE
+118304174898,higher,moderate increase,FALSE,FALSE
+118304174898,higher,moderate increase,TRUE,TRUE
+118304174898,comparable,stable,FALSE,FALSE
+118304174898,comparable,stable,TRUE,TRUE
+118304179643,unclear,potential increase,FALSE,FALSE
+118304179643,comparable,potential increase,TRUE,TRUE
+118304179643,unclear,moderate increase,FALSE,FALSE
+118304179643,higher,moderate increase,TRUE,TRUE
+118304179643,unclear,stable,FALSE,FALSE
+118304179643,comparable,stable,TRUE,TRUE
+118304266031,unclear,potential increase,FALSE,FALSE
+118304266031,unclear,moderate increase,FALSE,FALSE
+118304266031,unclear,stable,FALSE,FALSE
+118304335983,unclear,potential increase,FALSE,FALSE
+118304335983,comparable,potential increase,TRUE,TRUE
+118304335983,unclear,moderate increase,FALSE,FALSE
+118304335983,higher,moderate increase,TRUE,TRUE
+118304335983,unclear,stable,FALSE,FALSE
+118304335983,comparable,stable,TRUE,TRUE
+118305137727,lower,potential increase,FALSE,FALSE
+118305137727,higher,moderate increase,FALSE,FALSE
+118305137727,higher,stable,FALSE,FALSE
+118305138758,higher,potential increase,FALSE,FALSE
+118305138758,higher,potential increase,TRUE,TRUE
+118305138758,higher,moderate increase,FALSE,FALSE
+118305138758,higher,moderate increase,TRUE,TRUE
+118305138758,higher,stable,FALSE,FALSE
+118305138758,unclear,stable,TRUE,TRUE
+118305139621,higher,potential increase,FALSE,FALSE
+118305139621,unclear,potential increase,TRUE,TRUE
+118305139621,higher,moderate increase,FALSE,FALSE
+118305139621,higher,moderate increase,TRUE,TRUE
+118305139621,comparable,stable,FALSE,FALSE
+118305139621,comparable,stable,TRUE,TRUE
+118305139768,higher,potential increase,FALSE,FALSE
+118305139768,unclear,potential increase,TRUE,TRUE
+118305139768,higher,moderate increase,FALSE,FALSE
+118305139768,higher,moderate increase,TRUE,TRUE
+118305139768,higher,stable,FALSE,FALSE
+118305139768,comparable,stable,TRUE,TRUE
+118305140840,higher,potential increase,FALSE,FALSE
+118305140840,higher,moderate increase,FALSE,FALSE
+118305140840,unclear,stable,FALSE,FALSE
+118305143091,higher,potential increase,FALSE,FALSE
+118305143091,higher,potential increase,TRUE,TRUE
+118305143091,higher,moderate increase,FALSE,FALSE
+118305143091,higher,moderate increase,TRUE,TRUE
+118305143091,higher,stable,FALSE,FALSE
+118305143091,unclear,stable,TRUE,TRUE
+118305143092,higher,potential increase,FALSE,FALSE
+118305143092,comparable,potential increase,TRUE,TRUE
+118305143092,higher,moderate increase,FALSE,FALSE
+118305143092,higher,moderate increase,TRUE,TRUE
+118305143092,higher,stable,FALSE,FALSE
+118305143092,comparable,stable,TRUE,TRUE
+118305143676,higher,potential increase,FALSE,FALSE
+118305143676,unclear,potential increase,TRUE,TRUE
+118305143676,higher,moderate increase,FALSE,FALSE
+118305143676,higher,moderate increase,TRUE,TRUE
+118305143676,unclear,stable,FALSE,FALSE
+118305143676,comparable,stable,TRUE,TRUE
+118305143815,higher,potential increase,FALSE,FALSE
+118305143815,higher,potential increase,TRUE,TRUE
+118305143815,higher,moderate increase,FALSE,FALSE
+118305143815,higher,moderate increase,TRUE,TRUE
+118305143815,comparable,stable,FALSE,FALSE
+118305143815,comparable,stable,TRUE,TRUE
+118305144285,unclear,potential increase,FALSE,FALSE
+118305144285,comparable,potential increase,TRUE,TRUE
+118305144285,higher,moderate increase,FALSE,FALSE
+118305144285,unclear,moderate increase,TRUE,TRUE
+118305144285,unclear,stable,FALSE,FALSE
+118305144285,comparable,stable,TRUE,TRUE
+118305145705,higher,potential increase,FALSE,FALSE
+118305145705,higher,potential increase,TRUE,TRUE
+118305145705,higher,moderate increase,FALSE,FALSE
+118305145705,higher,moderate increase,TRUE,TRUE
+118305145705,higher,stable,FALSE,FALSE
+118305145705,comparable,stable,TRUE,TRUE
+118305147172,higher,potential increase,FALSE,FALSE
+118305147172,unclear,potential increase,TRUE,TRUE
+118305147172,higher,moderate increase,FALSE,FALSE
+118305147172,higher,moderate increase,TRUE,TRUE
+118305147172,comparable,stable,FALSE,FALSE
+118305147172,comparable,stable,TRUE,TRUE
+118305148813,higher,potential increase,FALSE,FALSE
+118305148813,higher,potential increase,TRUE,TRUE
+118305148813,higher,moderate increase,FALSE,FALSE
+118305148813,higher,moderate increase,TRUE,TRUE
+118305148813,lower,stable,FALSE,FALSE
+118305148813,lower,stable,TRUE,TRUE
+118305149706,higher,potential increase,FALSE,FALSE
+118305149706,higher,potential increase,TRUE,TRUE
+118305149706,higher,moderate increase,FALSE,FALSE
+118305149706,higher,moderate increase,TRUE,TRUE
+118305149706,comparable,stable,FALSE,FALSE
+118305149706,comparable,stable,TRUE,TRUE
+118305155839,higher,potential increase,FALSE,FALSE
+118305155839,comparable,potential increase,TRUE,TRUE
+118305155839,higher,moderate increase,FALSE,FALSE
+118305155839,higher,moderate increase,TRUE,TRUE
+118305155839,comparable,stable,FALSE,FALSE
+118305155839,comparable,stable,TRUE,TRUE
+118305163320,higher,potential increase,FALSE,FALSE
+118305163320,comparable,potential increase,TRUE,TRUE
+118305163320,higher,moderate increase,FALSE,FALSE
+118305163320,higher,moderate increase,TRUE,TRUE
+118305163320,higher,stable,FALSE,FALSE
+118305163320,comparable,stable,TRUE,TRUE
+118305170096,unclear,potential increase,FALSE,FALSE
+118305170096,comparable,potential increase,TRUE,TRUE
+118305170096,unclear,moderate increase,FALSE,FALSE
+118305170096,higher,moderate increase,TRUE,TRUE
+118305170096,unclear,stable,FALSE,FALSE
+118305170096,comparable,stable,TRUE,TRUE
+118305173273,higher,potential increase,FALSE,FALSE
+118305173273,higher,potential increase,TRUE,TRUE
+118305173273,higher,moderate increase,FALSE,FALSE
+118305173273,higher,moderate increase,TRUE,TRUE
+118305173273,higher,stable,FALSE,FALSE
+118305173273,comparable,stable,TRUE,TRUE
+118305180447,higher,potential increase,FALSE,FALSE
+118305180447,unclear,potential increase,TRUE,TRUE
+118305180447,higher,moderate increase,FALSE,FALSE
+118305180447,higher,moderate increase,TRUE,TRUE
+118305180447,comparable,stable,FALSE,FALSE
+118305180447,comparable,stable,TRUE,TRUE
+118305181599,higher,potential increase,FALSE,FALSE
+118305181599,comparable,potential increase,TRUE,TRUE
+118305181599,higher,moderate increase,FALSE,FALSE
+118305181599,higher,moderate increase,TRUE,TRUE
+118305181599,higher,stable,FALSE,FALSE
+118305181599,comparable,stable,TRUE,TRUE
+118305183955,higher,potential increase,FALSE,FALSE
+118305183955,unclear,potential increase,TRUE,TRUE
+118305183955,higher,moderate increase,FALSE,FALSE
+118305183955,higher,moderate increase,TRUE,TRUE
+118305183955,higher,stable,FALSE,FALSE
+118305183955,comparable,stable,TRUE,TRUE
+118305187716,higher,potential increase,FALSE,FALSE
+118305187716,unclear,potential increase,TRUE,TRUE
+118305187716,higher,moderate increase,FALSE,FALSE
+118305187716,higher,moderate increase,TRUE,TRUE
+118305187716,higher,stable,FALSE,FALSE
+118305187716,unclear,stable,TRUE,TRUE
+118305200396,higher,potential increase,FALSE,FALSE
+118305200396,unclear,potential increase,TRUE,FALSE
+118305200396,unclear,potential increase,TRUE,TRUE
+118305200396,higher,moderate increase,FALSE,FALSE
+118305200396,higher,moderate increase,TRUE,FALSE
+118305200396,higher,moderate increase,TRUE,TRUE
+118305200396,higher,stable,FALSE,FALSE
+118305200396,comparable,stable,TRUE,FALSE
+118305200396,comparable,stable,TRUE,TRUE
+118305202668,higher,potential increase,FALSE,FALSE
+118305202668,unclear,potential increase,TRUE,TRUE
+118305202668,higher,moderate increase,FALSE,FALSE
+118305202668,unclear,moderate increase,TRUE,TRUE
+118305202668,higher,stable,FALSE,FALSE
+118305202668,comparable,stable,TRUE,TRUE
+118305203818,higher,potential increase,FALSE,FALSE
+118305203818,higher,potential increase,TRUE,TRUE
+118305203818,higher,moderate increase,FALSE,FALSE
+118305203818,higher,moderate increase,TRUE,TRUE
+118305203818,higher,stable,FALSE,FALSE
+118305203818,higher,stable,TRUE,TRUE
+118305207407,higher,potential increase,FALSE,FALSE
+118305207407,comparable,potential increase,TRUE,TRUE
+118305207407,higher,moderate increase,FALSE,FALSE
+118305207407,higher,moderate increase,TRUE,TRUE
+118305207407,higher,stable,FALSE,FALSE
+118305207407,comparable,stable,TRUE,TRUE
+118305226456,higher,potential increase,FALSE,FALSE
+118305226456,higher,potential increase,TRUE,TRUE
+118305226456,higher,moderate increase,FALSE,FALSE
+118305226456,higher,moderate increase,TRUE,TRUE
+118305226456,comparable,stable,FALSE,FALSE
+118305226456,comparable,stable,TRUE,TRUE
+118305242383,higher,potential increase,FALSE,FALSE
+118305242383,unclear,potential increase,TRUE,TRUE
+118305242383,higher,moderate increase,FALSE,FALSE
+118305242383,higher,moderate increase,TRUE,TRUE
+118305242383,higher,stable,FALSE,FALSE
+118305242383,comparable,stable,TRUE,TRUE
+118305245044,higher,potential increase,FALSE,FALSE
+118305245044,higher,moderate increase,FALSE,FALSE
+118305245044,unclear,stable,FALSE,FALSE
+118305255277,higher,potential increase,FALSE,FALSE
+118305255277,higher,potential increase,TRUE,TRUE
+118305255277,higher,moderate increase,FALSE,FALSE
+118305255277,higher,moderate increase,TRUE,TRUE
+118305255277,higher,stable,FALSE,FALSE
+118305255277,higher,stable,TRUE,TRUE
+118305270478,higher,potential increase,FALSE,FALSE
+118305270478,unclear,potential increase,TRUE,TRUE
+118305270478,higher,moderate increase,FALSE,FALSE
+118305270478,higher,moderate increase,TRUE,TRUE
+118305270478,higher,stable,FALSE,FALSE
+118305270478,unclear,stable,TRUE,TRUE
+118305323137,higher,potential increase,FALSE,FALSE
+118305323137,higher,moderate increase,FALSE,FALSE
+118305323137,higher,stable,FALSE,FALSE
+118305369432,higher,potential increase,FALSE,FALSE
+118305369432,unclear,potential increase,TRUE,TRUE
+118305369432,higher,moderate increase,FALSE,FALSE
+118305369432,higher,moderate increase,TRUE,TRUE
+118305369432,unclear,stable,FALSE,FALSE
+118305369432,comparable,stable,TRUE,TRUE
+118305384690,higher,potential increase,FALSE,FALSE
+118305384690,unclear,potential increase,TRUE,TRUE
+118305384690,higher,moderate increase,FALSE,FALSE
+118305384690,higher,moderate increase,TRUE,TRUE
+118305384690,unclear,stable,FALSE,FALSE
+118305384690,comparable,stable,TRUE,TRUE
+118305396374,higher,potential increase,FALSE,FALSE
+118305396374,higher,potential increase,TRUE,TRUE
+118305396374,higher,moderate increase,FALSE,FALSE
+118305396374,higher,moderate increase,TRUE,TRUE
+118305396374,higher,stable,FALSE,FALSE
+118305396374,comparable,stable,TRUE,TRUE
+118305455349,higher,potential increase,FALSE,FALSE
+118305455349,unclear,potential increase,TRUE,TRUE
+118305455349,higher,moderate increase,FALSE,FALSE
+118305455349,higher,moderate increase,TRUE,TRUE
+118305455349,unclear,stable,FALSE,FALSE
+118305455349,comparable,stable,TRUE,TRUE
+118305498335,higher,potential increase,FALSE,FALSE
+118305498335,higher,moderate increase,FALSE,FALSE
+118305498335,higher,stable,FALSE,FALSE
+118305545246,higher,potential increase,FALSE,FALSE
+118305545246,unclear,potential increase,TRUE,TRUE
+118305545246,higher,moderate increase,FALSE,FALSE
+118305545246,higher,moderate increase,TRUE,TRUE
+118305545246,comparable,stable,FALSE,FALSE
+118305545246,comparable,stable,TRUE,TRUE
+118305638011,higher,potential increase,FALSE,FALSE
+118305638011,higher,moderate increase,FALSE,FALSE
+118305638011,unclear,stable,FALSE,FALSE
+118305688588,higher,potential increase,FALSE,FALSE
+118305688588,unclear,potential increase,TRUE,TRUE
+118305688588,higher,moderate increase,FALSE,FALSE
+118305688588,higher,moderate increase,TRUE,TRUE
+118305688588,unclear,stable,FALSE,FALSE
+118305688588,comparable,stable,TRUE,TRUE
+118305847535,higher,potential increase,FALSE,FALSE
+118305847535,higher,potential increase,TRUE,TRUE
+118305847535,higher,moderate increase,FALSE,FALSE
+118305847535,higher,moderate increase,TRUE,TRUE
+118305847535,higher,stable,FALSE,FALSE
+118305847535,comparable,stable,TRUE,TRUE
+118306074232,unclear,potential increase,FALSE,FALSE
+118306074232,comparable,potential increase,TRUE,TRUE
+118306074232,unclear,moderate increase,FALSE,FALSE
+118306074232,comparable,moderate increase,TRUE,TRUE
+118306074232,unclear,stable,FALSE,FALSE
+118306074232,comparable,stable,TRUE,TRUE
+118306093495,unclear,potential increase,FALSE,FALSE
+118306093495,comparable,potential increase,TRUE,TRUE
+118306093495,unclear,moderate increase,FALSE,FALSE
+118306093495,higher,moderate increase,TRUE,TRUE
+118306093495,unclear,stable,FALSE,FALSE
+118306093495,comparable,stable,TRUE,TRUE
+118306104434,higher,potential increase,FALSE,FALSE
+118306104434,unclear,potential increase,TRUE,TRUE
+118306104434,higher,moderate increase,FALSE,FALSE
+118306104434,higher,moderate increase,TRUE,TRUE
+118306104434,comparable,stable,FALSE,FALSE
+118306104434,comparable,stable,TRUE,TRUE
+118306109325,higher,potential increase,FALSE,FALSE
+118306109325,higher,moderate increase,FALSE,FALSE
+118306109325,higher,stable,FALSE,FALSE
+118306117526,higher,potential increase,FALSE,FALSE
+118306117526,unclear,potential increase,TRUE,TRUE
+118306117526,higher,moderate increase,FALSE,FALSE
+118306117526,higher,moderate increase,TRUE,TRUE
+118306117526,unclear,stable,FALSE,FALSE
+118306117526,comparable,stable,TRUE,TRUE
+118306154638,higher,potential increase,FALSE,FALSE
+118306154638,higher,potential increase,TRUE,TRUE
+118306154638,higher,moderate increase,FALSE,FALSE
+118306154638,higher,moderate increase,TRUE,TRUE
+118306154638,comparable,stable,FALSE,FALSE
+118306154638,comparable,stable,TRUE,TRUE
+118306184050,higher,potential increase,FALSE,FALSE
+118306184050,higher,potential increase,TRUE,TRUE
+118306184050,higher,moderate increase,FALSE,FALSE
+118306184050,higher,moderate increase,TRUE,TRUE
+118306184050,higher,stable,FALSE,FALSE
+118306184050,comparable,stable,TRUE,TRUE
+118306258728,higher,potential increase,FALSE,FALSE
+118306258728,higher,potential increase,TRUE,TRUE
+118306258728,higher,moderate increase,FALSE,FALSE
+118306258728,higher,moderate increase,TRUE,TRUE
+118306258728,higher,stable,FALSE,FALSE
+118306258728,comparable,stable,TRUE,TRUE
+118306292390,unclear,potential increase,FALSE,FALSE
+118306292390,unclear,potential increase,TRUE,TRUE
+118306292390,unclear,moderate increase,FALSE,FALSE
+118306292390,unclear,moderate increase,TRUE,TRUE
+118306292390,unclear,stable,FALSE,FALSE
+118306292390,unclear,stable,TRUE,TRUE
+118306342007,higher,potential increase,FALSE,FALSE
+118306342007,unclear,potential increase,TRUE,TRUE
+118306342007,higher,moderate increase,FALSE,FALSE
+118306342007,higher,moderate increase,TRUE,TRUE
+118306342007,comparable,stable,FALSE,FALSE
+118306342007,comparable,stable,TRUE,TRUE
+118306568786,unclear,potential increase,FALSE,FALSE
+118306568786,comparable,potential increase,TRUE,TRUE
+118306568786,unclear,moderate increase,FALSE,FALSE
+118306568786,higher,moderate increase,TRUE,TRUE
+118306568786,unclear,stable,FALSE,FALSE
+118306568786,comparable,stable,TRUE,TRUE
+118307148498,higher,potential increase,FALSE,FALSE
+118307148498,no idea,potential increase,TRUE,TRUE
+118307148498,higher,moderate increase,FALSE,FALSE
+118307148498,higher,moderate increase,TRUE,TRUE
+118307148498,higher,stable,FALSE,FALSE
+118307148498,unclear,stable,TRUE,TRUE
+118308607939,higher,potential increase,FALSE,FALSE
+118308607939,comparable,potential increase,TRUE,TRUE
+118308607939,unclear,moderate increase,FALSE,FALSE
+118308607939,unclear,moderate increase,TRUE,TRUE
+118308607939,higher,stable,FALSE,FALSE
+118308607939,comparable,stable,TRUE,TRUE
+118308618904,unclear,potential increase,FALSE,FALSE
+118308618904,unclear,potential increase,TRUE,TRUE
+118308618904,unclear,moderate increase,FALSE,FALSE
+118308618904,higher,moderate increase,TRUE,TRUE
+118308618904,unclear,stable,FALSE,FALSE
+118308618904,comparable,stable,TRUE,TRUE
+118309638922,higher,potential increase,FALSE,FALSE
+118309638922,unclear,potential increase,TRUE,TRUE
+118309638922,higher,moderate increase,FALSE,FALSE
+118309638922,higher,moderate increase,TRUE,TRUE
+118309638922,comparable,stable,FALSE,FALSE
+118309638922,comparable,stable,TRUE,TRUE
+118310828804,higher,potential increase,FALSE,FALSE
+118310828804,unclear,potential increase,TRUE,TRUE
+118310828804,higher,moderate increase,FALSE,FALSE
+118310828804,unclear,moderate increase,TRUE,TRUE
+118310828804,higher,stable,FALSE,FALSE
+118310828804,unclear,stable,TRUE,TRUE
+118310848480,unclear,potential increase,FALSE,FALSE
+118310848480,unclear,potential increase,TRUE,TRUE
+118310848480,higher,moderate increase,FALSE,FALSE
+118310848480,higher,moderate increase,TRUE,TRUE
+118310848480,unclear,stable,FALSE,FALSE
+118310848480,comparable,stable,TRUE,TRUE
+118310882271,higher,potential increase,FALSE,FALSE
+118310882271,higher,potential increase,TRUE,TRUE
+118310882271,higher,moderate increase,FALSE,FALSE
+118310882271,higher,moderate increase,TRUE,TRUE
+118310882271,higher,stable,FALSE,FALSE
+118310882271,comparable,stable,TRUE,TRUE
+118311876056,higher,potential increase,FALSE,FALSE
+118311876056,higher,potential increase,TRUE,TRUE
+118311876056,higher,moderate increase,FALSE,FALSE
+118311876056,higher,moderate increase,TRUE,TRUE
+118311876056,higher,stable,FALSE,FALSE
+118311876056,comparable,stable,TRUE,TRUE
+118312594613,unclear,potential increase,FALSE,FALSE
+118312594613,comparable,potential increase,TRUE,TRUE
+118312594613,unclear,moderate increase,FALSE,FALSE
+118312594613,higher,moderate increase,TRUE,TRUE
+118312594613,comparable,stable,FALSE,FALSE
+118312594613,comparable,stable,TRUE,TRUE
+118314335807,comparable,potential increase,FALSE,FALSE
+118314335807,comparable,potential increase,TRUE,TRUE
+118314335807,comparable,moderate increase,FALSE,FALSE
+118314335807,higher,moderate increase,TRUE,TRUE
+118314335807,comparable,stable,FALSE,FALSE
+118314335807,comparable,stable,TRUE,TRUE
+118314823881,no idea,potential increase,FALSE,FALSE
+118314823881,unclear,potential increase,TRUE,FALSE
+118314823881,higher,potential increase,TRUE,TRUE
+118314823881,no idea,moderate increase,FALSE,FALSE
+118314823881,higher,moderate increase,TRUE,FALSE
+118314823881,higher,moderate increase,TRUE,TRUE
+118314823881,no idea,stable,FALSE,FALSE
+118314823881,comparable,stable,TRUE,FALSE
+118314823881,higher,stable,TRUE,TRUE
+118316667053,higher,potential increase,FALSE,FALSE
+118316667053,higher,moderate increase,FALSE,FALSE
+118316667053,higher,stable,FALSE,FALSE
+118317754684,unclear,potential increase,FALSE,FALSE
+118317754684,unclear,potential increase,TRUE,TRUE
+118317754684,unclear,moderate increase,FALSE,FALSE
+118317754684,higher,moderate increase,TRUE,TRUE
+118317754684,unclear,stable,FALSE,FALSE
+118317754684,comparable,stable,TRUE,TRUE
+118320370733,higher,potential increase,FALSE,FALSE
+118320370733,comparable,potential increase,TRUE,TRUE
+118320370733,higher,moderate increase,FALSE,FALSE
+118320370733,higher,moderate increase,TRUE,TRUE
+118320370733,comparable,stable,FALSE,FALSE
+118320370733,comparable,stable,TRUE,TRUE
+118325674575,higher,potential increase,FALSE,FALSE
+118325674575,unclear,potential increase,TRUE,TRUE
+118325674575,higher,moderate increase,FALSE,FALSE
+118325674575,higher,moderate increase,TRUE,TRUE
+118325674575,unclear,stable,FALSE,FALSE
+118325674575,comparable,stable,TRUE,TRUE
+118328614031,higher,potential increase,FALSE,FALSE
+118328614031,unclear,potential increase,TRUE,TRUE
+118328614031,higher,moderate increase,FALSE,FALSE
+118328614031,higher,moderate increase,TRUE,TRUE
+118328614031,comparable,stable,FALSE,FALSE
+118328614031,comparable,stable,TRUE,TRUE
+118328651355,unclear,potential increase,FALSE,FALSE
+118328651355,comparable,potential increase,TRUE,TRUE
+118328651355,unclear,moderate increase,FALSE,FALSE
+118328651355,unclear,moderate increase,TRUE,TRUE
+118328651355,unclear,stable,FALSE,FALSE
+118328651355,comparable,stable,TRUE,TRUE
+118328651513,higher,potential increase,FALSE,FALSE
+118328651513,unclear,potential increase,TRUE,TRUE
+118328651513,higher,moderate increase,FALSE,FALSE
+118328651513,higher,moderate increase,TRUE,TRUE
+118328651513,higher,stable,FALSE,FALSE
+118328651513,comparable,stable,TRUE,TRUE
+118328652299,higher,potential increase,FALSE,FALSE
+118328652299,higher,potential increase,TRUE,TRUE
+118328652299,higher,moderate increase,FALSE,FALSE
+118328652299,higher,moderate increase,TRUE,TRUE
+118328652299,comparable,stable,FALSE,FALSE
+118328652299,comparable,stable,TRUE,TRUE
+118328653718,higher,potential increase,FALSE,FALSE
+118328653718,unclear,potential increase,TRUE,TRUE
+118328653718,higher,moderate increase,FALSE,FALSE
+118328653718,higher,moderate increase,TRUE,TRUE
+118328653718,higher,stable,FALSE,FALSE
+118328653718,comparable,stable,TRUE,TRUE
+118328657222,higher,potential increase,FALSE,FALSE
+118328657222,unclear,potential increase,TRUE,TRUE
+118328657222,higher,moderate increase,FALSE,FALSE
+118328657222,higher,moderate increase,TRUE,TRUE
+118328657222,comparable,stable,FALSE,FALSE
+118328657222,comparable,stable,TRUE,TRUE
+118329108685,higher,potential increase,FALSE,FALSE
+118329108685,comparable,potential increase,TRUE,TRUE
+118329108685,higher,moderate increase,FALSE,FALSE
+118329108685,higher,moderate increase,TRUE,TRUE
+118329108685,higher,stable,FALSE,FALSE
+118329108685,comparable,stable,TRUE,TRUE
+118329505999,higher,potential increase,FALSE,FALSE
+118329505999,unclear,potential increase,TRUE,TRUE
+118329505999,higher,moderate increase,FALSE,FALSE
+118329505999,higher,moderate increase,TRUE,TRUE
+118329505999,higher,stable,FALSE,FALSE
+118329505999,comparable,stable,TRUE,TRUE
+118329511509,higher,potential increase,FALSE,FALSE
+118329511509,higher,moderate increase,FALSE,FALSE
+118329511509,comparable,stable,FALSE,FALSE
+118331903786,higher,potential increase,FALSE,FALSE
+118331903786,comparable,potential increase,TRUE,TRUE
+118331903786,higher,moderate increase,FALSE,FALSE
+118331903786,higher,moderate increase,TRUE,TRUE
+118331903786,higher,stable,FALSE,FALSE
+118331903786,comparable,stable,TRUE,TRUE
+118331956120,comparable,potential increase,FALSE,FALSE
+118331956120,higher,moderate increase,FALSE,FALSE
+118331956120,comparable,stable,FALSE,FALSE
+118331973808,higher,potential increase,FALSE,FALSE
+118331973808,unclear,potential increase,TRUE,TRUE
+118331973808,higher,moderate increase,FALSE,FALSE
+118331973808,unclear,moderate increase,TRUE,TRUE
+118331973808,higher,stable,FALSE,FALSE
+118331973808,unclear,stable,TRUE,TRUE
+118333066099,higher,potential increase,FALSE,FALSE
+118333066099,unclear,potential increase,TRUE,TRUE
+118333066099,higher,moderate increase,FALSE,FALSE
+118333066099,higher,moderate increase,TRUE,TRUE
+118333066099,unclear,stable,FALSE,FALSE
+118333066099,comparable,stable,TRUE,TRUE
+118334261960,higher,potential increase,FALSE,FALSE
+118334261960,unclear,potential increase,TRUE,TRUE
+118334261960,higher,moderate increase,FALSE,FALSE
+118334261960,unclear,moderate increase,TRUE,TRUE
+118334261960,unclear,stable,FALSE,FALSE
+118334261960,comparable,stable,TRUE,TRUE
+118334391101,higher,potential increase,FALSE,FALSE
+118334391101,unclear,potential increase,TRUE,TRUE
+118334391101,higher,moderate increase,FALSE,FALSE
+118334391101,higher,moderate increase,TRUE,TRUE
+118334391101,higher,stable,FALSE,FALSE
+118334391101,unclear,stable,TRUE,TRUE
+118335200400,comparable,potential increase,FALSE,FALSE
+118335200400,unclear,potential increase,TRUE,TRUE
+118335200400,higher,moderate increase,FALSE,FALSE
+118335200400,higher,moderate increase,TRUE,TRUE
+118335200400,higher,stable,FALSE,FALSE
+118335200400,comparable,stable,TRUE,TRUE
+118336960537,higher,potential increase,FALSE,FALSE
+118336960537,unclear,potential increase,TRUE,TRUE
+118336960537,higher,moderate increase,FALSE,FALSE
+118336960537,higher,moderate increase,TRUE,TRUE
+118336960537,comparable,stable,FALSE,FALSE
+118336960537,comparable,stable,TRUE,TRUE
+118338868043,higher,potential increase,FALSE,FALSE
+118338868043,unclear,potential increase,TRUE,TRUE
+118338868043,higher,moderate increase,FALSE,FALSE
+118338868043,higher,moderate increase,TRUE,TRUE
+118338868043,higher,stable,FALSE,FALSE
+118338868043,comparable,stable,TRUE,TRUE
+118339966824,unclear,potential increase,FALSE,FALSE
+118339966824,unclear,potential increase,TRUE,TRUE
+118339966824,higher,moderate increase,FALSE,FALSE
+118339966824,higher,moderate increase,TRUE,TRUE
+118339966824,unclear,stable,FALSE,FALSE
+118339966824,comparable,stable,TRUE,TRUE
+118339991268,unclear,potential increase,FALSE,FALSE
+118339991268,unclear,potential increase,TRUE,TRUE
+118339991268,higher,moderate increase,FALSE,FALSE
+118339991268,unclear,moderate increase,TRUE,TRUE
+118339991268,comparable,stable,FALSE,FALSE
+118339991268,unclear,stable,TRUE,TRUE
+118340035180,higher,potential increase,FALSE,FALSE
+118340035180,comparable,potential increase,TRUE,TRUE
+118340035180,higher,moderate increase,FALSE,FALSE
+118340035180,higher,moderate increase,TRUE,TRUE
+118340035180,higher,stable,FALSE,FALSE
+118340035180,comparable,stable,TRUE,TRUE
+118340038205,higher,potential increase,FALSE,FALSE
+118340038205,higher,potential increase,TRUE,TRUE
+118340038205,higher,moderate increase,FALSE,FALSE
+118340038205,higher,moderate increase,TRUE,TRUE
+118340038205,higher,stable,FALSE,FALSE
+118340038205,comparable,stable,TRUE,TRUE
+118340042120,unclear,potential increase,FALSE,FALSE
+118340042120,unclear,potential increase,TRUE,TRUE
+118340042120,unclear,moderate increase,FALSE,FALSE
+118340042120,higher,moderate increase,TRUE,TRUE
+118340042120,unclear,stable,FALSE,FALSE
+118340042120,comparable,stable,TRUE,TRUE
+118340122822,higher,potential increase,FALSE,FALSE
+118340122822,comparable,potential increase,TRUE,TRUE
+118340122822,higher,moderate increase,FALSE,FALSE
+118340122822,higher,moderate increase,TRUE,TRUE
+118340122822,unclear,stable,FALSE,FALSE
+118340122822,comparable,stable,TRUE,TRUE
+118340220490,higher,potential increase,FALSE,FALSE
+118340220490,higher,moderate increase,FALSE,FALSE
+118340220490,higher,stable,FALSE,FALSE
+118341052602,higher,potential increase,FALSE,FALSE
+118341052602,unclear,potential increase,TRUE,TRUE
+118341052602,higher,moderate increase,FALSE,FALSE
+118341052602,higher,moderate increase,TRUE,TRUE
+118341052602,comparable,stable,FALSE,FALSE
+118341052602,unclear,stable,TRUE,TRUE
+118342245149,higher,potential increase,FALSE,FALSE
+118342245149,unclear,potential increase,TRUE,TRUE
+118342245149,higher,moderate increase,FALSE,FALSE
+118342245149,higher,moderate increase,TRUE,TRUE
+118342245149,unclear,stable,FALSE,FALSE
+118342245149,comparable,stable,TRUE,TRUE
+118342662124,higher,potential increase,FALSE,FALSE
+118342662124,unclear,potential increase,TRUE,TRUE
+118342662124,higher,moderate increase,FALSE,FALSE
+118342662124,higher,moderate increase,TRUE,TRUE
+118342662124,unclear,stable,FALSE,FALSE
+118342662124,comparable,stable,TRUE,TRUE
+118342676831,higher,potential increase,FALSE,FALSE
+118342676831,unclear,potential increase,TRUE,TRUE
+118342676831,higher,moderate increase,FALSE,FALSE
+118342676831,higher,moderate increase,TRUE,TRUE
+118342676831,higher,stable,FALSE,FALSE
+118342676831,comparable,stable,TRUE,TRUE
+118342739603,higher,potential increase,FALSE,FALSE
+118342739603,higher,potential increase,TRUE,TRUE
+118342739603,higher,moderate increase,FALSE,FALSE
+118342739603,higher,moderate increase,TRUE,TRUE
+118342739603,comparable,stable,FALSE,FALSE
+118342739603,comparable,stable,TRUE,TRUE
+118342786933,higher,potential increase,FALSE,FALSE
+118342786933,higher,moderate increase,FALSE,FALSE
+118342786933,unclear,stable,FALSE,FALSE
+118343038223,unclear,potential increase,FALSE,FALSE
+118343038223,comparable,potential increase,TRUE,TRUE
+118343038223,unclear,moderate increase,FALSE,FALSE
+118343038223,higher,moderate increase,TRUE,TRUE
+118343038223,unclear,stable,FALSE,FALSE
+118343038223,comparable,stable,TRUE,TRUE
+118349273154,higher,potential increase,FALSE,FALSE
+118349273154,unclear,potential increase,TRUE,TRUE
+118349273154,higher,moderate increase,FALSE,FALSE
+118349273154,higher,moderate increase,TRUE,TRUE
+118349273154,higher,stable,FALSE,FALSE
+118349273154,unclear,stable,TRUE,TRUE
+118349352774,higher,potential increase,FALSE,FALSE
+118349352774,higher,potential increase,TRUE,FALSE
+118349352774,higher,potential increase,TRUE,TRUE
+118349352774,higher,moderate increase,FALSE,FALSE
+118349352774,higher,moderate increase,TRUE,FALSE
+118349352774,higher,moderate increase,TRUE,TRUE
+118349352774,higher,stable,FALSE,FALSE
+118349352774,comparable,stable,TRUE,FALSE
+118349352774,comparable,stable,TRUE,TRUE
+118349445762,unclear,potential increase,FALSE,FALSE
+118349445762,higher,potential increase,TRUE,TRUE
+118349445762,higher,moderate increase,FALSE,FALSE
+118349445762,higher,moderate increase,TRUE,TRUE
+118349445762,higher,stable,FALSE,FALSE
+118349445762,unclear,stable,TRUE,TRUE
+118350150336,higher,potential increase,FALSE,FALSE
+118350150336,higher,potential increase,TRUE,TRUE
+118350150336,higher,moderate increase,FALSE,FALSE
+118350150336,higher,moderate increase,TRUE,TRUE
+118350150336,higher,stable,FALSE,FALSE
+118350150336,higher,stable,TRUE,TRUE
+118350154129,higher,potential increase,FALSE,FALSE
+118350154129,higher,moderate increase,FALSE,FALSE
+118350154129,higher,stable,FALSE,FALSE
+118351175530,higher,potential increase,FALSE,FALSE
+118351175530,comparable,potential increase,TRUE,TRUE
+118351175530,higher,moderate increase,FALSE,FALSE
+118351175530,comparable,moderate increase,TRUE,TRUE
+118351175530,higher,stable,FALSE,FALSE
+118351175530,comparable,stable,TRUE,TRUE
+118351314678,higher,potential increase,FALSE,FALSE
+118351314678,higher,potential increase,TRUE,TRUE
+118351314678,higher,moderate increase,FALSE,FALSE
+118351314678,higher,moderate increase,TRUE,TRUE
+118351314678,comparable,stable,FALSE,FALSE
+118351314678,comparable,stable,TRUE,TRUE
+118351333801,higher,potential increase,FALSE,FALSE
+118351333801,higher,potential increase,TRUE,TRUE
+118351333801,higher,moderate increase,FALSE,FALSE
+118351333801,higher,moderate increase,TRUE,TRUE
+118351333801,higher,stable,FALSE,FALSE
+118351333801,comparable,stable,TRUE,TRUE
+118352134458,unclear,potential increase,FALSE,FALSE
+118352134458,comparable,potential increase,TRUE,TRUE
+118352134458,unclear,moderate increase,FALSE,FALSE
+118352134458,higher,moderate increase,TRUE,TRUE
+118352134458,unclear,stable,FALSE,FALSE
+118352134458,comparable,stable,TRUE,TRUE
+118352154730,higher,potential increase,FALSE,FALSE
+118352154730,unclear,potential increase,TRUE,TRUE
+118352154730,higher,moderate increase,FALSE,FALSE
+118352154730,higher,moderate increase,TRUE,TRUE
+118352154730,comparable,stable,FALSE,FALSE
+118352154730,comparable,stable,TRUE,TRUE
+118353626025,higher,potential increase,FALSE,FALSE
+118353626025,unclear,potential increase,TRUE,TRUE
+118353626025,higher,moderate increase,FALSE,FALSE
+118353626025,higher,moderate increase,TRUE,TRUE
+118353626025,higher,stable,FALSE,FALSE
+118353626025,comparable,stable,TRUE,TRUE

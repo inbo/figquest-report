@@ -1,0 +1,771 @@
+# Voorkeur van de deelnemers
+
+In dit hoofdstuk onderzoeken we vraag per vraag de voorkeur van de deelnemers.
+
+## Index of wijziging ten opzichte van referentie
+
+De eerste aanpassingsmogelijkheid die we de deelnemers aanboden, betrof de Y-as.
+De deelnemer moest kiezen tussen "index" of "procentuele wijziging".
+Bij "index" vermenigvuldigen we alle waarden met dezelfde constante zodat de waarde voor het referentiejaar gelijk is aan 100.
+Bij "procentuele wijziging" berekenen we procentuele wijziging ten opzichte van het referentiejaar.
+De wijziging van het referentiejaar ten opzichte van zichzelf is dan uiteraard per definitie +0%.
+In figuur \@ref(fig:y-as) tonen we beide figuren naast elkaar.
+
+```{r y-as, fig.cap = "Keuzemogelijkheden voor de Y-as."}
+set.seed(20230811)
+ds <- generate_data(size = "strong")
+grid.arrange(
+  create_figure(dataset = ds) +
+    ggtitle("index"),
+  create_figure(dataset = ds, y_label = "change") +
+    ggtitle("procentuele wijziging"),
+  nrow = 1
+)
+```
+
+```{r y-as-type}
+reference |>
+  filter(.data$trend == "sterk") |>
+  inner_join(background, by = "id") |>
+  mutate(
+    `Y-as` = .data$index, index = as.integer(.data$`Y-as` == "index")
+  ) -> ds_referentie
+ds_referentie |>
+  count(.data$`Y-as`, .data$type, name = "aantal") |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "aantal",
+    values_fill = list(aantal = 0)
+  ) %>%
+  bind_rows(
+    summarise(
+      ., across(-"Y-as", sum), across("Y-as", ~"totaal")
+    )
+  ) %>%
+  bind_cols(
+    select(., -"Y-as") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor schaal Y-as per type deelnemer.", align = "lrrr",
+    booktabs = TRUE
+  ) |>
+  row_spec(2, hline_after = TRUE) |>
+  row_spec(3, bold = TRUE) |>
+  column_spec(5, bold = TRUE)
+```
+
+```{r y-as-model}
+tribble(
+  ~"typeweinig vertrouwd", ~"typeenkel cijfers", ~"typebeide",
+  1, -1,  0,
+  1,  0, -1,
+  0,  1, -1,
+  1 / 3, 1 / 3, 1 / 3
+) |>
+  inla.make.lincombs() |>
+  setNames(
+    c("weinig vs cijfers", "weinig vs beide", "cijfers vs beide", "gemiddelde")
+  ) -> lc
+m_0 <- inla(
+  index ~ 1, family = "binomial", data = ds_referentie,
+  control.compute = list(waic = TRUE)
+)
+m_index <- inla(
+  index ~ 0 + type, family = "binomial", data = ds_referentie, lincomb = lc,
+  control.compute = list(waic = TRUE)
+)
+delta_waic <- m_0$waic$waic - m_index$waic$waic
+```
+
+Op basis van de ruwe data (tabel \@ref(tab:y-as-type)) stellen we over het algemeen een voorkeur vast voor een index.
+De voorkeur verschilt naargelang het type deelnemer (figuur \@ref(fig:fig-y-as-type)).
+Deelnemers uit de groep "beide" hebben een lichte voorkeur voor een procentuele y-as.
+Deze uit de groep "enkel cijfers" hebben mogelijk een voorkeur voor een procentuele y-as.
+Terwijl de groep "weinig vertrouwd" een voorkeur hebben voor een index.
+Merk dat de breedte van de intervallen samenhangt met het aantal deelnemers in elke groep.
+
+```{r fig-y-as-type, fig.cap = "Kans dat een deelnemer een Y-as met index verkiest boven een procentuele wijziging, opgesplitst per type deelnemer."}
+m_index$summary.fixed |>
+  rownames_to_column("type") |>
+  mutate(
+    type = str_remove(.data$type, "type")
+  ) |>
+  bind_rows(
+    m_index$summary.lincomb.derived |>
+      rownames_to_column(var = "type") |>
+      filter(.data$type == "gemiddelde")
+  ) |>
+  mutate(
+    type = factor(.data$type, levels = c("gemiddelde", levels(background$type)))
+  ) |>
+  ggplot(aes(x = type, y = plogis(mean), fill = type)) +
+  stat_fan(aes(link_sd = sd), geom = "rect", link = "logit") +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  scale_y_continuous(
+    "kans op voorkeur voor index", labels = label_percent(), limits = 0:1,
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1)
+  ) +
+  scale_x_discrete(limits = rev(c("gemiddelde", levels(background$type)))) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
+```
+
+## Het gebruik van referentielijnen op de grafiek
+
+Na de schaal van de Y-as, bieden we de deelnemer de keuze tussen drie opties voor referentielijnen: 1) geen referentielijnen, 2) enkel de referentielijnen en 3) geannoteerde referentielijnen.
+We illustreren de mogelijkheden in figuur \@ref(fig:referentie-sterk).
+Merk op dat we het type "index" gebruiken voor de Y-as.
+Tijdens de bevraging kreeg elke deelnemer de geselecteerde Y-as uit de vorige vraag.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+
+De "referentielijn" verwijst naar een relevant referentieniveau dat te kiezen is door de maker van de figuur of de betrokken expert.
+Een logische keuze is de toestand in een bepaald referentiejaar.
+Een andere mogelijkheid is het niveau van een bepaalde doelstelling uit een beleidsplan.
+Daarnaast gebruiken we nog twee bijkomende lijnen: "belangrijke toename" en "belangrijke afname".
+Deze lijnen kunnen de lezer van de figuur helpen bij de interpretatie.
+Het is aan de betrokken expert om te bepalen wat een "belangrijke toename" en "belangrijke afname" is én om deze keuze te motiveren.
+Vaak kan de expert relatief eenvoudig een van beiden bepalen.
+Gebruik in dat geval het tegengestelde effect voor de andere lijn.
+Stel dat de expert stelt dat -50% (een halvering) een belangrijke afname is.
+Het tegengestelde effect is dan +100% (een verdubbeling).
+
+Een bijkomend voordeel van het weergeven van een belangrijke toename en afname is dat we vermijden van te sterk in te zoomen wanneer enkel beperkte verschillen aanwezig zijn.
+We illustreren dit in figuur \@ref(fig:referentie-matig).
+Merk op dat de deelfiguur zonder referentielijnen sterkere verschillen lijkt te vertonen dan de andere figuren, hoewel alle figuren dezelfde tijdreeks tonen.
+
+```{r referentie-sterk, fig.cap = "Keuzemogelijkheden voor de referentie met een sterke trend als voorbeeld.", fig.height = 5}
+grid.arrange(
+  create_figure(dataset = ds) +
+    ggtitle("geen"),
+  create_figure(dataset = ds, reference = "lines") +
+    ggtitle("lijnen"),
+  create_figure(dataset = ds, reference = "lines + text") +
+    ggtitle("geannoteerde lijnen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+```{r referentie-matig, fig.cap = "Keuzemogelijkheden voor de referentie met een stabiele trend als voorbeeld.", fig.height = 5}
+ds_moderate <- generate_data(size = "stable")
+grid.arrange(
+  create_figure(dataset = ds_moderate) +
+    ggtitle("geen"),
+  create_figure(dataset = ds_moderate, reference = "lines") +
+    ggtitle("lijnen"),
+  create_figure(dataset = ds_moderate, reference = "lines + text") +
+    ggtitle("geannoteerde lijnen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+In tabel \@ref(tab:referentie) geven we een overzicht van de waargenomen voorkeuren.
+De voorkeur verschilt naargelang de voorkennis van de deelnemers en de sterkte van de getoonde trend (fig. \@ref(fig:referentie-model)).
+Globaal kunnen we stellen dat er een duidelijke voorkeur is voor referentielijnen, zeker wanneer we deze expliciet benoemen in de figuur.
+Deelnemers uit de groep "weinig vertrouwd" verkiezen vaker om geen referentielijnen te zien.
+Zeker bij een matige trend zagen we dit fenomeen.
+Bij figuren met een matige trend zijn de referentielijnen met een belangrijke toename of afname extremer dan de trendreeks.
+Hierdoor toont de trendreeks in de figuur een minder sterke schommeling.
+
+```{r referentie}
+reference |>
+  filter(.data$trend == "sterk") |>
+  inner_join(background, by = "id") |>
+  count(.data$referentie, .data$type) |>
+  mutate(
+    referentie = factor(
+      .data$referentie, levels = c("geen", "lijn", "lijn + tekst"),
+      labels = c("geen", "lijnen zonder annotatie", "geannoteerde lijnen")
+    )
+  ) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(., referentie = "totaal", across(-"referentie", sum))
+  ) %>%
+  bind_cols(
+    select(., -"referentie") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor referentielijnen per type deelnemer.",
+    align = "lrrrr", booktabs = TRUE
+  ) |>
+  row_spec(4, bold = TRUE) |>
+  column_spec(5, bold = TRUE)
+```
+
+```{r referentie-model-fit}
+reference |>
+  filter(.data$trend == "sterk") |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$referentie) |>
+  complete(
+    .data$type, .data$referentie, fill = list(n = 0)
+  ) -> ds_referentie
+m_type <- inla(
+  n ~ 0 + referentie + referentie:type, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r referentie-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + referentie, family = "poisson", data = ds_referentie,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + referentie + referentie:type, family = "poisson",
+  data = ds_referentie, control.compute = list(waic = TRUE, config = TRUE)
+)
+waic <- c(m0$waic$waic, m_type$waic$waic)
+```
+
+```{r referentie-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om referentielijnen te tonen, al dan niet geannoteerd."}
+inla.posterior.sample(n = 1e3, m_type) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_referentie |>
+      select("type", "referentie")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"referentie"), names_to = "sim",
+    values_to = "estimate"
+  ) |>
+  group_by(.data$referentie, .data$type, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(), .groups = "drop"
+  ) |>
+  mutate(
+    referentie = factor(
+      .data$referentie, levels = c("lijn + tekst", "lijn", "geen"),
+      labels = c(
+        "geannoteerde\nlijnen\n", "lijnen\nmet en zonder\nannotatie", "geen"
+      )
+    )
+  ) |>
+  arrange(.data$referentie) |>
+  group_by(.data$type, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$referentie != "geen") |>
+  group_by(.data$type, .data$referentie) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
+  ) |>
+  ggplot(aes(x = type, y = mediaan, fill = referentie)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
+  ) +
+  scale_y_continuous(
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1,
+    "kans op voorkeur voor referentielijnen"
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
+```
+
+## Aanduiding van onzekerheid
+
+We beschouwen in dit geval enkel de onzekerheid veroorzaakt door de steekproeftrekking.
+Vaak is het onmogelijk om alle elementen van de volledige populatie te meten.
+In dat geval maken we gebruik van een zogenaamde steekproef: het gedeelte van de populatie dat we effectief meten.
+We gaan er vanuit dat het om een representatieve steekproef gaat: een deel van de populatie waarvan we verwachten dat ze gelijkaardige kenmerken heeft als de volledige populatie.
+Op die manier kunnen we de kenmerken van de steekproef gebruiken als een benadering van deze kenmerken voor de volledige populatie.
+
+Telkens als we een andere aselecte representatieve steekproef trekken uit de populatie, zullen we een iets andere schatting krijgen van het kenmerk waarin we geïnteresseerd zijn.
+Er is bijgevolg onvermijdelijk een zekere mate van onzekerheid rond de schatting op basis van een steekproef.
+Met statistiek kunnen we op basis van een enkele steekproef inschatten hoe groot deze onzekerheid is, het zogenaamde betrouwbaarheidsinterval.
+Kort door de bocht is er 95% kans dat de werkelijke waarde (van de populatie) binnen het 95% betrouwbaarheidsinterval ligt.
+Bijgevolg is er 5% kans dat de werkelijke waarde buiten het 95% betrouwbaarheidsinterval ligt.
+Meestal zorgen we dat de grenzen symmetrisch zijn, zodat er 2.5% kans is dat de werkelijke waarde kleiner is dan het interval en 2.5% kans dat het groter is.
+
+Hoe groter het verschil tussen de onder- en bovengrens van het interval, hoe breder het interval en hoe groter de onzekerheid (en hoe kleiner de precisie).
+Hoe meer (niet verklaarde) variabiliteit in de gegevens, hoe breder het betrouwbaarheidsinterval.
+Het vergroten dan de steekproef zorgt dan weer voor een smaller betrouwbaarheidsinterval.
+
+Het dekkingspercentage van het betrouwbaarheidsinterval heeft eveneens invloed op de breedte van het interval.
+Wanneer een dekking van 90% voldoende is, volstaat een smaller interval in vergelijking met een dekking van 95%.
+De dekking van het interval aanpassen is een tweesnijdend zwaard.
+Vaak vergelijken we de grenzen van het interval met een referentie.
+Ligt het interval volledig boven of onder de referentie, dan stellen we dat er een (significant) effect is.
+Een lagere dekking geeft een hogere kans op vals positieven: op basis van de steekproef stellen we dat er een verschil is, terwijl er op populatieniveau geen verschil is.
+Het waargenomen verschil in de steekproef is dan het gevolg van toeval.
+Een hogere dekking geeft dan weer een hogere kans op vals negatieven: door het brede interval kunnen we het werkelijke verschil in de populatie niet aantonen.
+
+In de ecologie zijn vals positieven meestal minder erg dan vals negatieven.
+Bij vals negatieve uitspraken kunnen we bijvoorbeeld te lang blijven veronderstellen dat de toestand stabiel is.
+Hierdoor kunnen we te laat beginnen ingrijpen waardoor we drastischere en duurdere maatregelen nodig hebben.
+Bij vals positieve uitspraken zullen we mogelijk te snel ingrijpen.
+We hebben dan weliswaar onnodig middelen ingezet, doch de inzet zal beperkter zijn
+
+We boden de deelnemers drie mogelijkheid aan om de onzekerheid op de trendschatting weer te geven (fig. \@ref(fig:onzekerheid-keuze)): 1) "geen"; 2) "band"; en 3) "gradiënt".
+De schaal van de y-as en de aanwezigheid van referentielijnen hing af van de voorgaande keuzes van de deelnemers.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+Bij "geen" tonen we de onzekerheid rond de geschatte trend niet.
+Hoewel dit de eenvoudigste figuur oplevert, bieden we de gebruiker geen inzicht in de onzekerheid rond de geschatte trend.
+"Band" is een eenvoudige manier om de onzekerheid weer te geven.
+De band geeft de boven- en ondergrens van het 90% betrouwbaarheidsinterval weer.
+"Gradiënt" toont de onzekerheid als een combinatie van drie banden met verschillende transparantie.
+De breedste, meest transparante band toont de boven- en ondergrens van het 90% betrouwbaarheidsinterval (net zoals "band").
+De smalste, minst transparante band toont de boven- en ondergrens van het 30% betrouwbaarheidsinterval.
+De middelste band toont de boven- en ondergrens van het 60% betrouwbaarheidsinterval.
+De waarden met een hogere waarschijnlijkheidsdichtheid zijn hierdoor donkerder weergegeven.
+
+```{r onzekerheid-keuze, fig.cap = "Keuzemogelijkheden voor het aangeven van onzekerheid.", fig.height = 5}
+ds_potential <- generate_data("potential")
+grid.arrange(
+  create_figure(dataset = ds_potential, reference = "lines + text") +
+    ggtitle("geen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds_potential, reference = "lines + text", ci = "band"
+  ) +
+    ggtitle("band") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds_potential, reference = "lines + text", ci = "gradient"
+  ) +
+    ggtitle("gradiënt") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+Tabel \@ref(tab:onzekerheid) geeft een overzicht van de voorkeur van de deelnemers.
+Negen op tien van de deelnemers die zich vertrouwd voelen met cijfers verkiezen om de onzekerheid te zien (figuur \@ref(fig:onzekerheid-model)).
+Driekwart van wie zich minder vertrouwd voelt, heeft een voorkeur voor de weergave van onzekerheid.
+Globaal verkiezen de deelnemers de stijl "band" boven "gradiënt".
+
+```{r onzekerheid}
+uncertainty |>
+  inner_join(background, by = "id") |>
+  count(.data$onzekerheid, .data$trend, .data$type) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(
+      ., onzekerheid = "totaal", trend = "",
+      across(-c("onzekerheid", "trend"), sum)
+    )
+  ) %>%
+  bind_cols(
+    select(., -c("onzekerheid", "trend")) %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor weergave van onzekerheid per type deelnemer.",
+    align = "llrrrr", booktabs = TRUE
+  ) |>
+  row_spec(c(3, 6, 9), hline_after = TRUE) |>
+  row_spec(10, bold = TRUE) |>
+  column_spec(6, bold = TRUE)
+```
+
+```{r onzekerheid-model-fit}
+uncertainty |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$onzekerheid, .data$trend) |>
+  complete(
+    .data$type, .data$onzekerheid, .data$trend, fill = list(n = 0)
+  ) -> ds_onzekerheid
+m_type_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend,
+  family = "poisson", data = ds_onzekerheid,
+  control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r onzekerheid-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + onzekerheid, family = "poisson", data = ds_onzekerheid,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type, family = "poisson",
+  data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:trend, family = "poisson",
+  data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_type_trend <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend,
+  family = "poisson", data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+m_type_trend2 <- inla(
+  n ~ 0 + onzekerheid + onzekerheid:type + onzekerheid:trend +
+    onzekerheid:type:trend,
+  family = "poisson", data = ds_onzekerheid, control.compute = list(waic = TRUE)
+)
+waic <- c(
+  m0$waic$waic, m_type$waic$waic, m_trend$waic$waic, m_type_trend$waic$waic,
+  m_type_trend2$waic$waic
+)
+```
+
+```{r onzekerheid-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om onzekerheid te tonen, al dan niet als gradiënt."}
+inla.posterior.sample(n = 1e3, m_type_trend) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_onzekerheid |>
+      select("type", "onzekerheid", "trend")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"onzekerheid", -"trend"), names_to = "sim",
+    values_to = "estimate"
+  ) |>
+  group_by(.data$type, .data$onzekerheid, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    onzekerheid = factor(
+      .data$onzekerheid, levels = c("band", "gradient", "geen"),
+      labels = c("band", "band of \ngradiënt", "geen")
+    )
+  ) |>
+  arrange(.data$onzekerheid) |>
+  group_by(.data$type, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$onzekerheid != "geen") |>
+  group_by(.data$type, .data$onzekerheid) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
+  ) |>
+  ggplot(aes(x = type, y = mediaan, fill = onzekerheid)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
+  ) +
+  scale_y_continuous(
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1,
+    "kans op voorkeur om onzekerheid te tonen"
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
+```
+
+## Indeling van indices {#indeling}
+
+Klassiek maken we enkel een onderscheid tussen significante en niet significante schattingen.
+Een schatting is niet significant wanneer de referentie (index = 100) binnen het betrouwbaarheidsinterval ligt.
+Merk op dat informatie over de onzekerheid bijgevolg noodzakelijk is.
+De significante schattingen kunnen we opdelen in een significante toename (betrouwbaarheidsinterval volledig boven de referentie) en een significante afname (betrouwbaarheidsinterval volledig onder de referentie).
+
+Wanneer we naast de referentie aangeven wat een belangrijke toename of afname is, kunnen we de niet significante indices verder opdelen.
+Een niet significante schatting waarvan het betrouwbaarheidsinterval volledig tussen een belangrijke afname en een belangrijke toename ligt, beschouwen we als "stabiel" (fig. \@ref(fig:indeling-basis)).
+Op basis van het betrouwbaarheidsinterval kunnen we immers stellen dat de kans op een belangrijke afname of toename klein is.
+Van zodra het betrouwbaarheidsinterval een belangrijke toename of afname omvat, hebben we geen enkele zekerheid en beschouwen we de schatting als "onduidelijke trend".
+
+```{r indeling-basis, fig.cap = "Basisindeling van schattingen.", message = FALSE}
+data.frame(
+  effect = factor(
+    1:4,
+    levels = 4:1,
+    labels = c(
+      "niet-significant\nonbekend", "niet-significant\nstabiel",
+      "significant\nafname", "significant\ntoename"
+    )
+  ),
+  lcl = c(0.1, -0.5, -0.2, -0.5),
+  ucl = c(0.5, -0.1, 0.2, 0.5)
+) |>
+  mutate(
+    schatting = (.data$lcl + .data$ucl) / 2,
+    sd = (.data$ucl - .data$schatting) / qnorm(0.95)
+  ) |>
+  ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
+  geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
+  stat_fan(aes(link_sd = sd), geom = "rect") +
+  stat_effect(threshold = 0.25, detailed = FALSE, errorbar = FALSE) +
+  scale_effect(
+    "indeling", detailed = FALSE,
+    labels = class_labels(lang = "nl", detailed = FALSE)
+  ) +
+  scale_y_continuous(
+    breaks = c(-0.25, 0, 0.25),
+    labels = c(
+      "belangrijke\nafname\nt.o.v. referentie", "referentie",
+      "belangrijke\ntoename\nt.o.v. referentie"
+    )
+  ) +
+  theme(
+    axis.title = element_blank()
+  ) +
+  coord_flip()
+```
+
+Om het onderscheid te kunnen maken tussen "stabiel" en "onduidelijke trend" moeten we definiëren wat een een belangrijke toename en een belangrijke afname zijn.
+Eens we dat vastgelegd hebben, kunnen we de indeling verder verfijnen (\@ref(fig:indeling-detail)).
+Is het interval volledig boven de belangrijke toename dan kunnen we spreken van een "sterke toename".
+Een interval volledig tussen de referentie en de belangrijke toename is dan een "matige toename".
+
+```{r indeling-detail, fig.cap = "Gedetailleerd indeling van schattingen.", message = FALSE}
+data.frame(
+  effect = factor(
+    1:10, levels = 10:1,
+    labels = c(
+      "significant\nsterke toename", "significant\ntoename",
+      "significant\nmatige toename", "niet-significant\nstabiel",
+      "significant\nmatige afname", "significant\nafname",
+      "significant\nsterke afname", "niet-significant\nmogelijke toename",
+      "niet-significant\nmogelijke afname", "niet-significant\nonbekend"
+    ) |>
+      rev()
+  ),
+  lcl = c(0.3, 0.05, 0.05, -0.2, -0.2, -0.4, -0.4, -0.2, -0.4, -0.4),
+  ucl = c(0.4, 0.4, 0.2,  0.2, -0.05, -0.2, -0.3,  0.4,  0.2,  0.4)
+) |>
+  mutate(
+    schatting = (.data$lcl + .data$ucl) / 2,
+    sd = (.data$ucl - .data$schatting) / qnorm(0.95)
+  ) |>
+  ggplot(aes(ymin = lcl, ymax = ucl, x = effect, y = schatting)) +
+  geom_hline(yintercept = c(0, -0.25, 0.25), linetype = c(2, 3, 3)) +
+  stat_fan(aes(link_sd = sd), geom = "rect") +
+  stat_effect(threshold = 0.25, errorbar = FALSE) +
+  scale_effect("indeling", labels = class_labels(lang = "nl")) +
+  scale_y_continuous(
+    breaks = c(-0.25, 0, 0.25),
+    labels = c(
+      "belangrijke\nafname\nt.o.v. referentie", "referentie",
+      "belangrijke\ntoename\nt.o.v. referentie"
+    )
+  ) +
+  theme(
+    axis.title = element_blank()
+  ) +
+  coord_flip()
+```
+
+We boden de deelnemers drie keuzemogelijkheden aan: 1) "geen"; 2) "symbool" of 3) "gekleurd symbool" (fig. \@ref(fig:indeling-keuze)).
+Opnieuw lieten we de schaal van de y-as, de aanwezigheid van referentielijnen en de weergave van de onzekerheid afhangen van de eerder gemaakte keuzes van de deelnemer.
+Zie §\@ref(02_voorkeur-individuele-voorkeur) voor een overzicht van de gemaakte keuzes.
+Bij "geen" tonen we enkel de trendlijn.
+Bij "symbool" plaatsen we een symbool ter hoogte van de trendlijn.
+Hierbij hebben alle symbolen dezelfde kleur.
+Het symbool geeft voor elke schatting de interpretatie voor het verschil van de schatting met de referentie.
+Hiervoor gebruiken we de detailleerde interpretatie uit figuur \@ref(fig:indeling-detail).
+"Gekleurd symbool" is, op de kleur na, identiek aan "symbool".
+Voor de kleuren kozen we een kleurgradiënt van donkerrood naar lichtgroen.
+Een aantal deelnemers attendeerde ons op het feit dat deze kleuren mogelijk moeilijk te onderscheiden zijn voor mensen met een gestoord kleurenzicht.
+De gekozen symbolen proberen maximaal rekening te houden met deze mensen.
+Ten eerste bevat elk symbool tekens die dezelfde informatie bevatten als "symbool".
+De lezer heeft bijgevolg de kleur niet nodig om de figuur te interpreteren.
+Ten tweede hebben we bewust gekozen voor een kleurgradiënt die van donker naar licht gaat.
+Mensen die het moeilijker hebben om rood en groen van elkaar te onderscheiden kunnen meestal wel het verschil maken tussen licht en donker.
+Op die manier denken we voor personen die kleur kunnen waarnemen extra ondersteuning te bieden, zonder de overige mensen te beperken.
+
+```{r indeling-keuze, fig.cap = "Keuzemogelijkheden voor het weergeven van een indeling.", fig.height = 11}
+grid.arrange(
+  create_figure(dataset = ds, reference = "lines + text", ci = "band") +
+    ggtitle("geen") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds, reference = "lines + text", ci = "band", effect = "symbol"
+  ) +
+    ggtitle("symbool") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  create_figure(
+    dataset = ds, reference = "lines + text", ci = "band",
+    effect = "colour symbol"
+  ) +
+    ggtitle("gekleurd symbool") +
+    geom_blank(data = data.frame(x = max(ds$x), mu = 1.45)),
+  ncol = 1
+)
+```
+
+```{r indeling}
+classification |>
+  inner_join(background, by = "id") |>
+  count(.data$indeling, .data$type) |>
+  pivot_wider(
+    names_from = "type", names_sort = TRUE, values_from = "n", values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(., indeling = "totaal", across(-"indeling", sum))
+  ) %>%
+  bind_cols(
+    select(., -"indeling") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Voorkeur voor weergave van indeling per type deelnemer.",
+    align = "lrrrr", booktabs = TRUE
+  ) |>
+  row_spec(3, hline_after = TRUE) |>
+  row_spec(4, bold = TRUE) |>
+  column_spec(5, bold = TRUE)
+```
+
+```{r indeling-model-fit}
+classification |>
+  inner_join(background, by = "id") |>
+  count(.data$type, .data$indeling) |>
+  complete(
+    .data$type, .data$indeling, fill = list(n = 0)
+  ) -> ds_indeling
+m0 <- inla(
+  n ~ 0 + indeling,
+  family = "poisson", data = ds_indeling,
+  control.compute = list(waic = TRUE, config = TRUE)
+)
+```
+
+```{r indeling-modelbouw, eval = FALSE}
+m0 <- inla(
+  n ~ 0 + indeling, family = "poisson", data = ds_indeling,
+  control.compute = list(waic = TRUE)
+)
+m_type <- inla(
+  n ~ 0 + indeling + indeling:type, family = "poisson",
+  data = ds_indeling, control.compute = list(waic = TRUE)
+)
+waic <- c(
+  m0$waic$waic, m_type$waic$waic
+)
+```
+
+We vonden geen verschil in voorkeur tussen de deelnemers op basis van hun voorkennis (fig. \@ref(fig:indeling-model)).
+Zes op de tien van de deelnemers verkiest om geen symbool te zien.
+Mogelijk vonden de deelnemers het symbool te groot ten opzichte van de trendlijn.
+Een kleiner symbool zou het symbool dan weer onleesbaar maken.
+Driekwart van de deelnemers die een symbool verkiezen, hebben een voorkeur voor een gekleurd symbool.
+
+```{r indeling-model, message = FALSE, fig.cap = "Kans dat deelnemers verkiezen om symbolen te tonen, al dan niet gekleurd."}
+inla.posterior.sample(n = 1e3, m0) |>
+  map("latent") |>
+  map(data.frame) |>
+  bind_cols() |>
+  rownames_to_column(var = "parameter") |>
+  filter(str_detect(.data$parameter, "Predictor")) |>
+  bind_cols(
+    ds_indeling |>
+      select("type", "indeling")
+  ) |>
+  select(-"parameter") |>
+  pivot_longer(
+    c(-"type", -"indeling"), names_to = "sim", values_to = "estimate"
+  ) |>
+  group_by(.data$type, .data$indeling, .data$sim) |>
+  summarise(
+    estimate = mean(.data$estimate) |>
+      exp(),
+    .groups = "drop"
+  ) |>
+  mutate(
+    indeling = factor(
+      .data$indeling, levels = c("kleursymbool", "symbool", "geen"),
+      labels = c("kleursymbool", "symbool\nal dan niet gekleurd", "geen")
+    )
+  ) |>
+  arrange(.data$indeling) |>
+  group_by(.data$type, .data$sim) |>
+  mutate(
+    estimate = cumsum(.data$estimate) / sum(.data$estimate)
+  ) |>
+  filter(.data$indeling != "geen") |>
+  group_by(.data$type, .data$indeling) |>
+  summarise(
+    mediaan = median(.data$estimate),
+    lcl = quantile(.data$estimate, probs = 0.025),
+    ucl = quantile(.data$estimate, probs = 0.975),
+    sd = sd(qlogis(.data$estimate)), .groups = "drop"
+  ) |>
+  ggplot(aes(x = type, y = mediaan, fill = indeling)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(),
+    link = "logit"
+  ) +
+  scale_y_continuous(
+    "kans op voorkeur voor symbolen",
+    breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1), labels = percent, limits = 0:1
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
+```
+
+## Overzicht van individuele voorkeuren {#02_voorkeur-02_voorkeur-individuele-voorkeur}
+
+De figuren waaruit de deelnemers konden kiezen, hingen steeds af van hun antwoord op de eerdere vragen.
+In \@ref(fig:voorkeur-sankey) geven we een overzicht van de verschillende trajecten die de deelnemers volgden.
+Het traject kan u aflezen door te kijken naar de kleur van het lint en door welke rechthoeken het lint gaat.
+De breedte van het lint geeft aan hoeveel deelnemers een bepaald traject volgden.
+Het breedste lint omvat deelnemers die zich vertrouwd voelen met statistiek en cijfers en een voorkeur hebben voor een procentuele wijziging op de y-as, geannoteerde referentielijnen, onzekerheid als een band en geen symbolen.
+Het tweede breedste lint maakt gelijkaardige keuzes maar verkiest een index op de y-as.
+
+(ref:voorkeur-sankey) Sankey diagram met de voorkeur van de deelnemers.
+
+```{r voorkeur-sankey, fig.cap = "(ref:voorkeur-sankey)", warning = FALSE}
+reference |>
+  filter(.data$trend == "sterk") |>
+  select(-"trend") |>
+  mutate(index = str_replace(.data$index, " ", "\n")) |>
+  inner_join(
+    uncertainty |>
+      filter(.data$trend == "sterke trend met hoge precisie") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(classification, by = "id") |>
+  inner_join(background, by = "id") |>
+  count(
+    `y-as` = .data$index, .data$referentie, .data$onzekerheid, .data$indeling,
+    .data$type
+  ) |>
+  ggplot(
+    aes(
+      axis1 = `y-as`, axis2 = referentie, axis3 = onzekerheid, axis4 = indeling,
+      y = n
+    )
+  ) +
+  geom_alluvium(aes(fill = type), aes.bind = "alluvia") +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:4,
+    labels = c(
+      "voorkeur\nschaal y-as", "voorkeur\nreferentielijnen",
+      "voorkeur\nonzekerheid", "voorkeur\nsymbool"
+    )
+  )
+```

@@ -1,0 +1,40 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting:
+  - id
+  - trend
+  hash: 866992d23b0d66b4aaf3acadf619b9c5364a0390
+  data_hash: 22da8e2f67c10a2551a258f7fb0058af9567f361
+id:
+  class: numeric
+index:
+  class: factor
+  labels:
+  - change
+  - index
+  index:
+  - 1
+  - 2
+  ordered: no
+trend:
+  class: factor
+  labels:
+  - strong
+  - moderate
+  index:
+  - 1
+  - 2
+  ordered: no
+reference:
+  class: factor
+  labels:
+  - none
+  - line
+  - line + text
+  index:
+  - 1
+  - 2
+  - 3
+  ordered: no

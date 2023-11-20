@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it using these metadata.
+title: "Analysis of questionnaire on trend figures"
+authors:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
+keywords:
+- trends figure
+- uncertainty
+- classification
+contact:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
+doi: ~
+license: CC-BY-4.0
+repository-code: https://github.com/inbo/figquest-report/
+type: software
+abstract: "We ran a questionnaire on the visualisation of trend figures.\nFirst we
+  ask the participant to interpret a few simple trend figures consisting of solely
+  a trend line.\nNext we gave them a few options to improve the trend figure.\n1)
+  percentage change instead of an index number.\n2) adding reference lines indicating
+  the size of an important effect.\n3) adding confidence intervals.\n4) adding a symbol
+  with classification of the change.\nFinally we asked the participate again to interpret
+  a few trend figures, now based on their preferences."
+identifiers:
+- type: url
+  value: https://github.com/inbo/figquest-report

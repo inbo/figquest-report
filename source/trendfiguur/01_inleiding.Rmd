@@ -1,0 +1,112 @@
+<!-- hier komt de inhoudstafel bij pdf -->
+
+\mainmatter
+
+# Inleiding
+
+## Onzekerheid op schattingen
+
+Vaak willen we een uitspraak doen over wijzigingen in een grote populatie.
+In een ideale situatie hebben we de nodige informatie ter beschikking over elk element in de populatie.
+Stel dat we willen weten hoe de [totale oppervlakte planologisch groengebied](https://www.vlaanderen.be/inbo/indicatoren/oppervlakte-extra-planologisch-groengebied) in Vlaanderen wijzigt.
+We beschikken voor de verschillende jaren over gebiedsdekkende kaarten met deze informatie.
+Het gewenste antwoord is dan louter een kwestie van jaarlijks de relevante oppervlaktes bij elkaar op te tellen.
+Het getal dan we bekomen is een louter boekhoudkundige berekening die foutloos is.
+Uiteraard mits een foutloze berekening en foutloze brondata.
+
+Vaak willen we uitspraken doen over een populatie waar we nog geen informatie over hebben.
+Bij grote populaties is het vaak onbegonnen werk om elk element te meten.
+Stel dat we de [oppervlakte bos](https://www.vlaanderen.be/inbo/indicatoren/oppervlakte-bos-in-vlaanderen) in Vlaanderen willen opvolgen.
+Momenteel is er geen databank beschikbaar die voor elk perceel de status bos of geen bos bevat.
+Een mogelijkheid is de informatie van de Vlaamse [bosinventaris](https://www.natuurenbos.be/beleid-wetgeving/natuurbeheer/bosinventaris) van het Agentschap voor Natuur en Bos te gebruiken.
+Om inzicht te krijgen in Vlaamse bos, doen zij een heleboel metingen aan individuele bosbomen.
+Omdat het ondoenbaar is om alle bosbomen in Vlaanderen te meten, maken zij gebruik van een systematische steekproef.
+Hierbij zullen ze alle bomen meten in ongeveer 0.2% van de bosoppervlakte.
+Deze informatie kunnen we gebruiken om een schatting te maken van de totale bosoppervlakte in Vlaanderen.
+Doordat we ons baseren op een steekproef zit een bepaalde mate van onzekerheid op het getal.
+Een andere steekproef zal waarschijnlijk tot een iets ander getal leiden.
+Met behulp van statistiek kunnen we inschatten hoe groot de onzekerheid op een schatting bedraagt.
+Het Agentschap rapporteert dat de foutmarge ongeveer 5000 ha bedraagt.
+Stel dat het verschil tussen twee tijdperiodes slechts een paar honderd ha bedraagt.
+Op dat ogenblik is de enige correcte uitspraak dat we op basis van de bosinventaris geen uitspraak kunnen doen over een wijziging in de oppervlakte bos.
+
+Wensen we toch een uitspraak te kunnen doen over kleine verschillen, dan is het noodzakelijk om een grotere steekproef te onderzoeken.
+Hoe groter de steekproef, hoe kleiner de onzekerheid op de schatting.
+Als we de steekproef zo groot maken dat we de volledige populatie omvatten, zitten we terug in de situatie waarbij we een foutloos getal hebben.
+
+Zoals het voorbeeld van de bosinventaris illustreert, is het belangrijk om een idee te hebben van de onzekerheid om tot een correcte interpretatie te komen.
+Vaak toont men deze onzekerheid enkel in wetenschappelijke publicaties.
+Van zodra men de informatie vertaalt naar beleidsmakers of belanghebbenden, laat men de onzekerheid meestal vallen.
+Vaak met het argument dat het anders te moeilijk is om te begrijpen.
+De keerzijde van de medaille is dat beleidsmakers dan een groter risico lopen om de informatie te overinterpreteren en daardoor verkeerde conclusies trekken.
+
+## Bevraging
+
+Om een beter zicht te krijgen op de voorkeur van de gebruikers van trendfiguren, organiseerden we een online bevraging.
+Tijdens deze bevraging legden we de deelnemers de keuze voor tussen verschillende elementen die trendfiguren mogelijk beter interpreteerbaar maken.
+De vier groepen elementen zijn 1) de schaal op de y-as; 2) referentielijnen; 3) aanduiding van de onzekerheid en 4) symbolen met een indeling van de wijzigingen.
+
+Daarnaast lieten we de deelnemers een aantal trendfiguren interpreteren.
+De eerste reeks van trendfiguren interpreteerden de deelnemers voordat ze hun voorkeur voor de stijl van de trendfiguren aangaven.
+Tijdens deze eerste reeks toonden de trendfiguren enkel een eenvoudig lijn.
+De tweede reeks van trendfiguren was telkens in de voorkeursstijl van de deelnemer.
+
+# Achtergrond van de deelnemers
+
+We stuurden de vragenlijst rond via de nieuwsbrieven van INBO en Statistiek Vlaanderen.
+Verder vroegen we aan alle INBO-medewerkers om de vragenlijst in te vullen.
+Tenslotte vroegen we aan een aantal overheidsinstellingen waar we vaak mee samenwerken, om de vragenlijst intern rond te sturen.
+
+In totaal vulden `r nrow(background)` personen onze vragenlijst (deels) in.
+De voorkennis van de deelnemers heeft mogelijk een invloed op de keuzes.
+Daarom vroegen we om een zelfinschatting van hun vertrouwdheid met cijfers en statistiek.
+Tabel \@ref(tab:achtergrond) geeft een kruistabel van deze zelfinschattingen.
+Zoals te verwachten voelen deelnemers die zich vertrouwd voelen met statistiek, zich meestal ook vertrouwd met cijfers.
+Globaal kunnen we drie groepen onderscheiden: 1) deelnemers die zowel met cijfers als statistiek vertrouwd zijn; 2) deelnemers die vertrouwd zijn met cijfers maar niet met statistiek; en 3) deelnemers zijn zich noch met cijfers noch met statistiek vertrouwd voelen.
+Verder in het rapport zullen drie groepen respectievelijk benoemen als "beide", "enkel cijfers" en "weinig vertrouwd".
+We gebruiken hiervoor de volgende criteria:
+
+1.  "beide": iedereen die aangeeft "vertrouwd" of "zeer vertrouwd" te zijn met statistiek.
+2.  "enkel cijfers": iedereen die aangeeft "vertrouwd" of "zeer vertrouwd" te zijn met cijfers en "niet vertrouwd" of "weinig vertrouwd" met statistiek.
+3.  "weinig vertrouwd": iedereen die aangeeft "niet vertrouwd" of "weinig vertrouwd" te zijn met zowel cijfers als statistiek.
+
+In tabel \@ref(tab:achtergrond-type) geven we een overzicht van het aantal deelnemers per groep.
+Merk op dat een belangrijk deel van de deelnemers bestaat uit personen die zich (zeer) vertrouwd voelen met statistiek.
+Bij vervolgonderzoek lijkt het ons belangrijk om zeker de groep "weinig vertrouwd" actief te bevragen.
+
+```{r achtergrond}
+background |>
+  count(.data$cijfers, .data$statistiek, name = "aantal") |>
+  pivot_wider(
+    names_from = "statistiek", names_sort = TRUE, values_from = "aantal",
+    values_fill = 0
+  ) %>%
+  bind_rows(
+    summarise(
+      ., across(-"cijfers", sum), across("cijfers", ~"totaal")
+    )
+  ) %>%
+  bind_cols(
+    select(., -"cijfers") %>%
+      transmute(totaal = pmap_dbl(., sum))
+  ) |>
+  kbl(
+    caption = "Kruistabel van zelfinschatting van de deelnemers qua
+      vertrouwdheid met cijfers (rijen) en statistiek (kolommen).",
+    booktabs = TRUE, align = "lrrrrr"
+  ) |>
+  row_spec(c(2, 4), hline_after = TRUE) |>
+  row_spec(5, bold = TRUE) |>
+  column_spec(c(2, 4), border_left = TRUE) |>
+  column_spec(6, bold = TRUE, border_left = TRUE) |>
+  add_header_above(c(" " = 1, "statistiek" = 4, " " = 1))
+```
+
+```{r achtergrond-type}
+background |>
+  count(.data$type, name = "aantal") |>
+  mutate(aandeel = sprintf("%.0f%%", 100 * .data$aantal / sum(.data$aantal))) |>
+  kbl(
+    booktabs = TRUE, align = "lrr", caption = "Aantal deelnemers per categorie."
+  )
+```

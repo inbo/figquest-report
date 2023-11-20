@@ -1,0 +1,225 @@
+---
+title: Op zoek naar een optimale trendfiguur
+author:
+  - name:
+      given: Thierry
+      family: Onkelinx
+    email: thierry.onkelinx@inbo.be
+    orcid: 0000-0001-8804-4216
+    affiliation: Research Institute for Nature and Forest (INBO)
+    corresponding: true
+reviewer:
+  - name:
+      given: Raïsa
+      family: Carmen
+    email: raisa.carmen@inbo.be
+    orcid: 0000-0003-1025-8702
+    affiliation: Research Institute for Nature and Forest (INBO)
+lang: nl
+style: INBO
+floatbarrier: subsubsection
+keywords: "trend; onzekerheid"
+community: "inbo"
+publication_type: report
+funder: Research Institute for Nature and Forest (INBO)
+rightsholder: Research Institute for Nature and Forest (INBO)
+bibliography: references.bib
+link-citations: TRUE
+site: bookdown::bookdown_site
+nocolophon: TRUE
+output:
+  INBOmd::gitbook: default
+  INBOmd::pdf_report: default
+  INBOmd::epub_book: default
+# Don't run the format below.
+# Only required for RStudio to recognise the project as a bookdown project.
+# Hence don't use 'Build all formats'.
+  bookdown::dontrun: default
+---
+
+# Samenvatting {.unnumbered}
+
+<!-- description: start -->
+
+Op basis van een bevraging zijn we op zoek gegaan naar welke stijlelementen de deelnemers verkiezen bij trendfiguren.
+De vier groepen elementen die we onderzochten, zijn 1) de schaal op de y‐as; 2) referentielijnen; 3) aanduiding van de onzekerheid en 4) symbolen met een indeling van de wijzigingen.
+Daarnaast deden we eveneens een kort peiling van de interpretatie van trendfiguren door de deelnemer.
+Hierbij kregen de deelnemers zowel trendfiguren met de meest eenvoudige stijl te zien als in de stijl van hun voorkeur.
+Verder peilden we naar de voorkennis van de deelnemers.
+Ze konden aangeven in welke mate ze zich vertrouwd voelden met cijfers en met statistiek.
+Zowat driekwart van de deelnemers voelde zich vertrouwd met zowel cijfers als statistiek.
+Een op tien voelde zich weinig tot niet vertrouwd met cijfers en statistiek.
+Een op zes voelde zich wel vertrouwd met cijfers en niet met statistiek.
+
+**Weergave van onzekerheid is toch gewenst?**
+
+De deelnemers waren verdeeld voor wat betreft de schaal van de y-as.
+De ene helft verkoos een index, terwijl de andere helft procentuele wijzigingen verkoos.
+Een ruime meerderheid vond bijkomende referentielijnen en de weergave van onzekerheid een meerwaarde.
+Ongeveer een derde van de deelnemers vond de indeling van de trends een meerwaarde.
+
+**Heeft een aangepaste stijl een invloed?**
+
+Wanneer we een significante toename lieten interpreteren, zagen we een beperkt verschil tussen de eenvoudige en de voorkeursfiguur.
+Zeven op de tien deelnemers gaf in beide gevallen de correcte interpretatie.
+Een op de zes deelnemers wijzigden hun interpretatie van "onduidelijk" naar het correcte "hoger".
+Bij een stabiele toestand gaf slechts een vijfde van de deelnemers in beide reeksen de correcte inschatting "vergelijkbaar".
+Drie op de tien wijzigden hun mening van "hoger" naar het correcte "vergelijkbaar".
+En nog drie op de tien gingen van "onduidelijk" naar het correcte "vergelijkbaar".
+Met figuren in de stijl van hun eigen voorkeur gaf uiteindelijk acht op de tien deelnemers een correcte interpretatie.
+
+Een gelijkaardig verhaal bij een "mogelijke toename" (niet significant toename).
+Slechts een op acht gaf hier in beide reeks het correcte "onduidelijk".
+Maar liefst een op drie wijzigde hun mening van "hoger" naar "onduidelijk".
+
+**Wat is het effect van de aanpassingen?**
+
+Omdat het merendeel van de deelnemers zowel referentie als de weergave van onzekerheid verkoos, kunnen we geen onderscheid maken tussen de invloed van beide.
+Het toevoegen van deze combinatie had de sterkste invloed op een correcte interpretatie.
+De schaal van de y-as en het tonen van symbolen hebben een beperktere invloed.
+Deelnemers die procentuele wijzigingen verkozen, gaven iets vaker het correcte antwoord.
+Hetzelfde gold voor deelnemers met een voorkeur voor de symbolen.
+
+<!-- description: end -->
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, eval = TRUE, cache = FALSE, warning = TRUE, error = FALSE,
+  message = TRUE, fig.width = 6
+)
+library(cluster)
+library(effectclass)
+library(figquest)
+library(git2rdata)
+library(ggalluvial)
+library(gridExtra)
+library(INBOtheme)
+library(INLA)
+library(kableExtra)
+library(scales)
+library(tidyverse)
+if (interactive()) {
+  theme_set(
+    theme_inbo(base_size = 10) +
+          theme(axis.title = element_blank())
+  )
+} else {
+  switch(
+    opts_knit$get("rmarkdown.pandoc.to"),
+    html = {
+      opts_chunk$set(dev = "png", dpi = 72)
+      theme_set(
+        theme_inbo(base_size = 12) +
+          theme(axis.title = element_blank())
+      )
+    },
+    latex = {
+      opts_chunk$set(dev = "cairo_pdf", dpi = 300)
+      theme_set(
+        theme_inbo(base_size = 9) +
+          theme(axis.title = element_blank())
+      )
+      update_geom_defaults("point", list(size = 1.5))
+    },
+    epub3 = {
+      opts_chunk$set(dev = "png", dpi = 300)
+      theme_set(
+        theme_inbo(base_size = 12) +
+          theme(axis.title = element_blank())
+      )
+    }
+  )
+}
+conflicted::conflicts_prefer(dplyr::filter, dplyr::lag)
+delta_percent <- function(x) {
+  label_percent()(x - 1)
+}
+n_sample <- 1e3
+```
+
+```{r read-data}
+read_vc("background", "../../data") |>
+  transmute(
+    .data$id,
+    type = ifelse(
+      .data$statistics %in% c("familiar", "very familiar"), 3,
+      ifelse(
+        .data$numbers %in% c("familiar", "very familiar"), 2, 1
+      )
+    ) |>
+      factor(
+        levels = 1:3, labels = c("weinig vertrouwd", "enkel cijfers", "beide")
+      ),
+    cijfers = factor(
+      .data$numbers,
+      labels = c(
+        "niet vertrouwd", "weinig vertrouwd", "vertrouwd", "zeer vertrouwd"
+      )
+    ),
+    statistiek = factor(
+      .data$statistics,
+      labels = c(
+        "niet vertrouwd", "weinig vertrouwd", "vertrouwd", "zeer vertrouwd"
+      )
+    )
+  ) -> background
+read_vc("reference", "../../data") |>
+  transmute(
+    .data$id,
+    index = factor(
+      .data$index, levels = c("index", "change"),
+      labels = c("index", "procentuele wijziging")
+    ),
+    trend = factor(
+      .data$trend, levels = c("strong", "moderate"),
+      labels = c("sterk", "matig")
+    ),
+    referentie = factor(
+      .data$reference, levels = c("none", "line", "line + text"),
+      labels = c("geen", "lijn", "lijn + tekst")
+    )
+  ) -> reference
+read_vc("uncertainty", "../../data") |>
+  transmute(
+    .data$id,
+    trend = factor(
+      .data$trend,
+      levels = c(
+        "strong trend with high precision",
+        "moderate trend with high precision",
+        "moderate trend with low precision"
+      ),
+      labels = c(
+        "sterke trend met hoge precisie", "matige trend met hoge precisie",
+        "matige trend met lage precisie"
+      )
+    ),
+    onzekerheid = factor(
+      .data$uncertainty, levels = c("gradient", "band", "none"),
+      labels = c("gradient", "band", "geen")
+    )
+  ) -> uncertainty
+read_vc("classification", "../../data") |>
+  transmute(
+    .data$id,
+    indeling = factor(
+      .data$classification, levels = c("colour", "symbol", "none"),
+      labels = c("kleursymbool", "symbool", "geen")
+    )
+  ) -> classification
+read_vc("interpretation", "../../data") |>
+  transmute(
+    .data$id, achteraf = .data$after, eigen = .data$participant,
+    score = factor(
+      .data$score,
+      levels = c("lower", "comparable", "higher", "unclear", "no idea"),
+      labels = c("lager", "vergelijkbaar", "hoger", "onduidelijk", "geen idee")
+    ),
+    waarheid = factor(
+      .data$truth,
+      levels = c("potential increase", "moderate increase", "stable"),
+      labels = c("mogelijke toename", "matige toename", "stabiel")
+    )
+  ) -> interpretation
+```

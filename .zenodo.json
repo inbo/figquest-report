@@ -1,0 +1,37 @@
+{
+  "access_right": "open",
+  "title": "Analysis of questionnaire on trend figures",
+  "description": "<p>We ran a questionnaire on the visualisation of trend figures. First\nwe ask the participant to interpret a few simple trend figures\nconsisting of solely a trend line. Next we gave them a few options to\nimprove the trend figure. 1) percentage change instead of an index\nnumber. 2) adding reference lines indicating the size of an important\neffect. 3) adding confidence intervals. 4) adding a symbol with\nclassification of the change. Finally we asked the participate again to\ninterpret a few trend figures, now based on their preferences.<\/p>",
+  "keywords": [
+    "trends figure",
+    "uncertainty",
+    "classification"
+  ],
+  "upload_type": "software",
+  "license": "CC-BY-4.0",
+  "language": "nld",
+  "contributors": [
+    {
+      "name": "Onkelinx, Thierry",
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0001-8804-4216",
+      "type": "ContactPerson"
+    },
+    {
+      "name": "Research Institute for Nature and Forest (INBO)",
+      "type": "RightsHolder"
+    }
+  ],
+  "creators": [
+    {
+      "name": "Onkelinx, Thierry",
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0001-8804-4216"
+    }
+  ],
+  "communities": [
+    {
+      "identifier": "inbo"
+    }
+  ]
+}

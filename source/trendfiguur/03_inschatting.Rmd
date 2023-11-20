@@ -1,0 +1,616 @@
+# Interpretatie van trendfiguren
+
+Voordat de deelnemers hun voorkeur konden aangeven, schotelden we hun eerste drie eenvoudige trendfiguren voor.
+Hierbij gebruikten we de stijl van figuur \@ref(fig:y-as) met de Y-as uitgedrukt als index (linkerfiguur).
+Bij elke figuur hebben we een specifiek jaar aangeduid met een verticale lijn.
+We vroegen de deelnemers om een inschatting te maken voor de vergelijking tussen dat jaar en het referentiejaar (2000, index = 100).
+De deelnemers konden kiezen tussen volgende mogelijkheden: 1) lager dan 2000; 2) vergelijkbaar met 2000; 3) hoger dan 2000; 4) onduidelijk of er een verschil is met 2000; 5) geen idee.
+De correcte inschatting van de drie figuren volgens de indeling (§\@ref(indeling)) was:
+
+1)  "matige toename": significante toename met betrouwbaarheidsinterval volledig tussen de referentie en de belangrijke toename.
+2)  "stabiel": niet significante wijziging die enkel de referentie omvat en volledig tussen een belangrijke afname en een belangrijke toename ligt.
+3)  "mogelijke toename": niet significante toename met betrouwbaarheidsinterval dat zowel de referentie als een belangrijke toename omvat.
+
+Aangezien dit eenvoudige figuren waren, zonder aanduiding van betrouwbaarheidsintervallen of referentielijnen, konden deelnemers onmogelijk met zekerheid weten wat de correcte indeling was.
+Nadat de deelnemers hun voorkeur konden opgeven, vroegen we hen om opnieuw drie figuren te interpreteren.
+Hierbij kreeg elke deelnemer dezelfde drie tijdreeksen voorgeschoteld, ditmaal in de voorkeursstijl van de deelnemer zelf.
+We vertelden de deelnemers niet dat ze exact dezelfde vragen kregen als bij de start van de bevraging.
+De deelnemers hebben bijgevolg zonder aankondiging dezelfde drie vragen twee keer beantwoord, met enkel het verschil in stijl van de figuur.
+De ruime meerderheid van de deelnemers heeft beide vragenreeksen beantwoord (tab. \@ref(tab:interpretatie-deelname)).
+
+```{r interpretatie-deelname}
+interpretation |>
+  filter(!.data$achteraf | .data$eigen) |>
+  distinct(.data$id, .data$achteraf) |>
+  count(.data$id) |>
+  inner_join(background, by = "id") |>
+  group_by(.data$type) |>
+  summarise(
+    `aantal eerste reeks` = n(),
+    `aantal tweede reeks` = sum(.data$n > 1),
+    aandeel = sprintf("%.1f%%", 100 * mean(.data$n > 1))
+  ) |>
+  kable(align = "lrrr", caption = "deelname aan beide reeksen interpretaties")
+```
+
+## Verschil in antwoorden tussen beide reeksen interpretaties {#voor-na}
+
+We stellen globaal vast dat de interpretatie door de deelnemers sterk afhankelijk is van de gebruikte stijl van de figuren.
+De index met "matige toename" interpreteren de meeste deelnemers als "hoger" bij beide reeksen (fig. \@ref(fig:interpretatie-matig)).
+De belangrijkste verschuiving zijn 24 deelnemers die hun mening wijzigden van "onduidelijk" naar "hoger" (fig. \@ref(fig:interpretatie-matig2)).
+Tijdens de eerste reeks zijn de meningen verdeeld bij de "stabiele" index.
+41% gaat voor "hoger", 32% voor "onduidelijk" en 24% voor "vergelijkbaar" (fig. \@ref(fig:interpretatie-stabiel)).
+Bij de tweede reeks zien we een sterke verschuiving waarbij een kwart van het totale aantal deelnemers verschuift van "onduidelijk" naar "vergelijkbaar" en nog een kwart van "hoger" naar "vergelijkbaar" (fig. \@ref(fig:interpretatie-stabiel2))!
+Een ruime meerderheid van de deelnemers interpreteert de "matige toename" als "hoger" tijdens de eerste reeks (fig. \@ref(fig:interpretatie-mogelijk)).
+Een derde van de deelnemers wijzigt zijn mening van "hoger" naar het correcte "onduidelijk" tijdens de tweede reeks (fig. \@ref(fig:interpretatie-mogelijk2)).
+Samengevat kunnen we stellen dat de stijl van de figuur een grote impact heeft op de interpretatie door de deelnemers.
+
+(ref:interpretatie-matig) Histogram van de antwoorden van de deelnemers voor beide reeksen voor de index met "matige toename" als correcte interpretatie.
+
+```{r interpretatie-matig, fig.cap = "(ref:interpretatie-matig)"}
+interpretation |>
+  filter(!.data$achteraf | .data$eigen, .data$waarheid == "matige toename") |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  complete(.data$id, .data$reeks, fill = list(score = "geen antwoord")) |>
+  count(.data$score, .data$reeks) |>
+  complete(.data$score, .data$reeks, fill = list(n = 0)) |>
+  ggplot(aes(x = score, fill = reeks, y = n)) +
+  geom_col(position = position_dodge()) +
+  annotate(
+    "rect", xmin = 2.5, xmax = 3.5, ymin = 0, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "text", x = 3, y = Inf, label = "correct:\nmatige\ntoename", vjust = 1.2
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.4)))
+```
+
+(ref:interpretatie-matig2) Kruistabel met aantal deelnemers per combinatie van hun antwoord tijdens beide reeksen voor de index met "matige toename" als correcte interpretatie.
+
+```{r interpretatie-matig2, fig.cap = "(ref:interpretatie-matig2)"}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "matige toename"
+  ) |>
+  transmute(
+    .data$id,
+    .data$score,
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(names_from = "reeks", values_from = "score") |>
+  count(.data$eerste, .data$tweede) |>
+  ggplot(aes(x = eerste, y = tweede, fill = n, label = n)) +
+  geom_tile() +
+  annotate(
+    "rect", xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "rect", ymin = 1.5, ymax = 2.5, xmin = -Inf, xmax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  geom_label(fill = "white") +
+  scale_fill_gradient(limits = c(0, NA)) +
+  scale_x_discrete("antwoord tijdens eerste reeks") +
+  scale_y_discrete(
+    "antwoord tijdens tweede reeks",
+    breaks = c(levels(interpretation$score), NA),
+    labels = c(levels(interpretation$score), "geen antwoord")
+  ) +
+  theme(axis.title = element_text())
+```
+
+(ref:interpretatie-matig-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "matige toename" als correcte interpretatie.
+
+```{r interpretatie-matig-sankey, fig.cap = "(ref:interpretatie-matig-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "matige toename"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type), aes.bind = "alluvia") +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
+```
+
+(ref:interpretatie-stabiel) Histogram van de antwoorden van de deelnemers voor beide reeksen voor de index met "stabiel" als correcte interpretatie.
+
+```{r interpretatie-stabiel, fig.cap = "(ref:interpretatie-stabiel)"}
+interpretation |>
+  filter(!.data$achteraf | .data$eigen, .data$waarheid == "stabiel") |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  complete(.data$id, .data$reeks, fill = list(score = "geen antwoord")) |>
+  count(.data$score, .data$reeks) |>
+  complete(.data$score, .data$reeks, fill = list(n = 0)) |>
+  ggplot(aes(x = score, fill = reeks, y = n)) +
+  geom_col(position = position_dodge()) +
+  annotate(
+    "rect", xmin = 1.5, xmax = 2.5, ymin = 0, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "text", x = 2, y = Inf, label = "correct:\nstabiel", vjust = 1.2
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.25)))
+```
+
+(ref:interpretatie-stabiel2) Kruistabel met aantal deelnemers per combinatie van hun antwoord tijdens beide reeksen voor de index met "stabiel" als correcte interpretatie.
+
+```{r interpretatie-stabiel2, fig.cap = "(ref:interpretatie-stabiel2)"}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "stabiel"
+  ) |>
+  transmute(
+    .data$id,
+    .data$score,
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(names_from = "reeks", values_from = "score") |>
+  count(.data$eerste, .data$tweede) |>
+  ggplot(aes(x = eerste, y = tweede, fill = n, label = n)) +
+  geom_tile() +
+  annotate(
+    "rect", xmin = 1.5, xmax = 2.5, ymin = -Inf, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "rect", ymin = 1.5, ymax = 2.5, xmin = -Inf, xmax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  geom_label(fill = "white") +
+  scale_fill_gradient(limits = c(0, NA)) +
+  scale_x_discrete("antwoord tijdens eerste reeks") +
+  scale_y_discrete(
+    "antwoord tijdens tweede reeks",
+    breaks = c(levels(interpretation$score), NA),
+    labels = c(levels(interpretation$score), "geen antwoord")
+  ) +
+  theme(axis.title = element_text())
+```
+
+(ref:interpretatie-stabiel-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "stabiel" als correcte interpretatie.
+
+```{r interpretatie-stabiel-sankey, fig.cap = "(ref:interpretatie-stabiel-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "stabiel"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type), aes.bind = "alluvia") +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
+```
+
+(ref:interpretatie-mogelijk) Histogram van de antwoorden van de deelnemers voor beide reeksen voor de index met "mogelijke toename" als correcte interpretatie.
+
+```{r interpretatie-mogelijk, fig.cap = "(ref:interpretatie-mogelijk)"}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  complete(.data$id, .data$reeks, fill = list(score = "geen antwoord")) |>
+  count(.data$score, .data$reeks) |>
+  complete(.data$score, .data$reeks, fill = list(n = 0)) |>
+  ggplot(aes(x = score, fill = reeks, y = n)) +
+  geom_col(position = position_dodge()) +
+  annotate(
+    "rect", xmin = 3.5, xmax = 4.5, ymin = 0, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "text", x = 4, y = Inf, label = "correct:\nmogelijke\ntoename", vjust = 1.2
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+```
+
+(ref:interpretatie-mogelijk2) Kruistabel met aantal deelnemers per combinatie van hun antwoord tijdens beide reeksen voor de index met "mogelijke toename" als correcte interpretatie.
+
+```{r interpretatie-mogelijk2, fig.cap = "(ref:interpretatie-mogelijk2)"}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename"
+  ) |>
+  transmute(
+    .data$id,
+    .data$score,
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(names_from = "reeks", values_from = "score") |>
+  count(.data$eerste, .data$tweede) |>
+  ggplot(aes(x = eerste, y = tweede, fill = n, label = n)) +
+  geom_tile() +
+  annotate(
+    "rect", xmin = 3.5, xmax = 4.5, ymin = -Inf, ymax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  annotate(
+    "rect", ymin = 2.5, ymax = 3.5, xmin = -Inf, xmax = Inf,
+    colour = inbo_hoofd, fill = NA, linewidth = 1
+  ) +
+  geom_label(fill = "white") +
+  scale_fill_gradient(limits = c(0, NA)) +
+  scale_x_discrete("antwoord tijdens eerste reeks") +
+  scale_y_discrete(
+    "antwoord tijdens tweede reeks",
+    breaks = c(levels(interpretation$score), NA),
+    labels = c(levels(interpretation$score), "geen antwoord")
+  ) +
+  theme(axis.title = element_text())
+```
+
+(ref:interpretatie-mogelijk-sankey) Sankey diagram van de antwoorden van de deelnemers voor beide reeksen voor de index met "mogelijke toename" als correcte interpretatie.
+
+```{r interpretatie-mogelijk-sankey, fig.cap = "(ref:interpretatie-mogelijk-sankey)", warning = FALSE}
+interpretation |>
+  filter(
+    !.data$achteraf | .data$eigen, .data$waarheid == "mogelijke toename"
+  ) |>
+  transmute(
+    .data$id,
+    score = factor(
+      .data$score,
+      levels = levels(.data$score) |>
+        c("geen antwoord")
+    ),
+    reeks = factor(
+      .data$achteraf, levels = c(FALSE, TRUE), labels = c("eerste", "tweede")
+    ),
+  ) |>
+  pivot_wider(
+    names_from = "reeks", values_from = "score", values_fill = "geen antwoord"
+  ) |>
+  inner_join(background, by = "id") |>
+  count(.data$eerste, .data$tweede, .data$type) |>
+  ggplot(aes(axis1 = eerste, axis2 = tweede, y = n)) +
+  geom_alluvium(aes(fill = type), aes.bind = "alluvia") +
+  geom_stratum(aes(fill = type)) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 1.7) +
+  scale_x_continuous(
+    breaks = 1:3, labels = c("eerste reeks", "tweede reeks", "type deelnemer")
+  )
+```
+
+## Factoren die een correcte interpretatie beïnvloeden
+
+In §\@ref(voor-na) stelden we vast dat de stijl van de figuur de interpretatie van de deelnemers sterk beïnvloedde.
+In deze sectie onderzoeken we welke elementen belangrijk zijn opdat de deelnemers tot een correcte interpretatie komen.
+Met een correcte interpretatie bedoelen we dat de deelnemers tot een gelijkaardige interpretatie komen als de onderzoeker.
+We hebben daarom de correcte interpretatie aangeduid in de figuren in §\@ref(voor-na).
+
+Alle deelnemers kregen tijdens de eerste reeks dezelfde figuren voorgeschoteld.
+Deze figuren tonen een "klassieke" trendfiguur: een lijn met index als schaal op de y-as zonder referentielijnen, betrouwbaarheidsinterval of symbolen.
+Tijdens de tweede reeks kreeg elke deelnemer de figuren in de stijl van hun voorkeur te zien.
+De overgrote meerderheid van de deelnemers verkoos om betrouwbaarheidsintervallen en referentielijnen.
+Verder kunnen we de deelnemers in vier groepen indelen op basis van hun voorkeur voor de schaal van y-as en de weergave van symbolen met de indeling (tabel \@ref(tab:verklaring-eigen)).
+
+(ref:verklaring-eigen) Overzicht van de voorkeur van de deelnemers opgesplitst naar voorkeur voor het type index en het gebruik van symbolen (al dan niet gekleurd). `aantal`: aantal deelnemers in deze groep. `onzekerheid`: aandeel deelnemers die een betrouwbaarheidsinterval (`band` of `gradient`) verkiezen. `gradient`: aandeel deelnemers die een `gradient` stijl betrouwbaarheidsinterval verkiezen. `lijnen`: aandeel deelnemers die referentielijnen verkiezen (al dan niet geannoteerd). `geannoteerde lijnen`: aandeel deelnemers die geannoteerde referentielijnen verkiezen. `gekleurd symbool`: aandeel deelnemers die gekleurde symbolen verkiezen.
+
+```{r verklaring-eigen}
+interpretation |>
+  filter(.data$eigen) |>
+  inner_join(
+    reference |>
+      filter(.data$trend == "sterk") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(
+    uncertainty |>
+      filter(.data$trend == "sterke trend met hoge precisie") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(classification, by = "id") |>
+  transmute(
+    id = factor(.data$id),
+    .data$waarheid, .data$score, aangepast = 0,
+    index = as.integer(.data$index == "index"),
+    gradient = as.integer(.data$onzekerheid == "gradient"),
+    onzekerheid = as.integer(.data$onzekerheid != "geen"),
+    lijn = as.integer(.data$referentie != "geen"),
+    lijn_tekst = as.integer(.data$referentie == "lijn + tekst"),
+    symbool = as.integer(.data$indeling != "geen"),
+    kleur = as.integer(.data$indeling == "kleursymbool")
+  ) -> ds_eigen
+ds_eigen |>
+  distinct(
+    .data$id, .data$index, .data$gradient, .data$onzekerheid,
+    lijnen = .data$lijn, `geannoteerde lijnen` = .data$lijn_tekst,
+    .data$symbool, `gekleurd symbool` = .data$kleur
+  ) |>
+  mutate(
+    `y-as` = factor(.data$index, 0:1, c("procentuele wijziging", "index")),
+    symbool = factor(.data$symbool, 0:1, c("geen", "wel"))
+  ) |>
+  group_by(.data$`y-as`, .data$symbool) |>
+  summarise(
+    aantal = n(), .groups = "drop",
+    across(
+      c(
+        "onzekerheid", "gradient", "lijnen", "geannoteerde lijnen",
+        "gekleurd symbool"
+      ),
+      ~sprintf("%.0f%%", 100 * mean(.x))
+    )
+  ) |>
+  kbl(
+    align = "llrrrrrr", caption = "(ref:verklaring-eigen)", booktabs = TRUE
+  ) |>
+  column_spec(c(1, 7, 8), width = "20mm")
+```
+
+```{r verklaring-data}
+interpretation |>
+  filter(.data$eigen) |>
+  inner_join(
+    reference |>
+      filter(.data$trend == "sterk") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(
+    uncertainty |>
+      filter(.data$trend == "sterke trend met hoge precisie") |>
+      select(-"trend"),
+    by = "id"
+  ) |>
+  inner_join(classification, by = "id") |>
+  bind_rows(
+    interpretation |>
+      filter(.data$achteraf, !.data$eigen) |>
+      mutate(
+        index = "procentuele wijziging", referentie = "lijn + tekst",
+        onzekerheid = "gradient", indeling = "kleursymbool"
+      ),
+    interpretation |>
+      filter(!.data$achteraf) |>
+      mutate(
+        index = "index", referentie = "geen", onzekerheid = "geen",
+        indeling = "geen"
+      )
+  ) |>
+  inner_join(background, by = "id") |>
+  transmute(
+    id = factor(.data$id) |>
+      interaction(.data$waarheid),
+    .data$type, .data$waarheid, .data$score,
+    tweede_reeks = as.integer(.data$achteraf),
+    index = as.integer(.data$index == "index"),
+    gradient = as.integer(.data$onzekerheid == "gradient"),
+    onzekerheid = as.integer(.data$onzekerheid != "geen"),
+    lijn = as.integer(.data$referentie != "geen"),
+    lijn_tekst = as.integer(.data$referentie == "lijn + tekst"),
+    symbool = as.integer(.data$indeling != "geen"),
+    kleur = as.integer(.data$indeling == "kleursymbool"),
+    correct = as.integer(
+      (.data$waarheid == "mogelijke toename" & .data$score == "onduidelijk") |
+      (.data$waarheid == "matige toename" & .data$score == "hoger") |
+      (.data$waarheid == "stabiel" & .data$score == "vergelijkbaar")
+    )
+  ) -> ds_interpretatie
+ds_interpretatie |>
+  distinct(
+    .data$tweede_reeks, .data$index, .data$symbool
+  ) |>
+  complete(
+    .data$tweede_reeks, .data$index, .data$symbool
+  ) |>
+  filter(.data$tweede_reeks == 1 | .data$index == 1 & .data$symbool == 0) |>
+  bind_rows(ds_interpretatie) -> ds_interpretatie
+n_pred <- sum(is.na(ds_interpretatie$correct))
+```
+
+```{r verklaring-model}
+expand_grid(
+  intercept = "1", reeks = c("", "tweede_reeks"), index = c("", "index"),
+  symbool = c("", "symbool"),
+  id = "f(
+      id, model = 'iid',
+      hyper = list(theta = list(prior = 'pc.prec', param = c(0.5, 0.01)))
+    )"
+) |>
+  mutate(model_id = row_number()) |>
+  pivot_longer(-"model_id", names_to = "variable", values_to = "selected") |>
+  filter(.data$selected != "") |>
+  group_by(.data$model_id) |>
+  summarise(
+    formula = paste(.data$selected, collapse = " + ") |>
+      sprintf(fmt = "correct ~ %s") |>
+      map(as.formula)
+  ) |>
+  mutate(
+    model = map(
+      .data$formula,
+      ~inla(
+        .x, family = "binomial", data = ds_interpretatie,
+        control.compute = list(waic = TRUE), control.predictor = list(link = 1)
+      )
+    ),
+    waic = map(.data$model, "waic") |>
+      map_dbl("waic"),
+    waic = .data$waic - min(.data$waic),
+    weight = exp(-.data$waic / 2),
+    weight = .data$weight / sum(.data$weight)
+  ) -> model_fit
+```
+
+```{r verklaring-voorspelling}
+model_fit |>
+  transmute(
+    .data$weight,
+    predictions = map(.data$model, "summary.linear.predictor") |>
+      map(
+        ~head(.x, n_pred) |>
+        select("mean", "sd") |>
+        rownames_to_column()
+    )
+  ) |>
+  unnest("predictions") |>
+  mutate(
+    estimate = .data$weight * .data$mean,
+    variance = (.data$weight * .data$sd) ^ 2
+  ) |>
+  group_by(.data$rowname) |>
+  summarise(estimate = sum(.data$estimate), sd = sqrt(sum(.data$variance))) |>
+  mutate(
+    median = plogis(.data$estimate),
+    lcl = plogis(qnorm(0.025, .data$estimate, .data$sd)),
+    ucl = plogis(qnorm(0.975, .data$estimate, .data$sd))
+  ) |>
+  bind_cols(
+    ds_interpretatie |>
+      filter(is.na(.data$correct))
+  ) -> voorspelling
+```
+
+Tijdens de eerste reeks gaven de deelnemers in gemiddeld vier van de tien keren het juiste antwoord (figuur \@ref(fig:verklaring-beste)).
+Tijdens de tweede reeks steeg dit tot drie kwart van de gevallen.
+Vermoedelijk omdat het merendeel van de deelnemers tijdens de tweede reeks betrouwbaarheidsintervallen en referentielijnen verkoos.
+In mindere mate stellen we nog een effect vast van de schaal van de y-as: deelnemers die voor een procentuele wijziging kozen, geven vaker een correct antwoord.
+Ook het tonen van de symbolen verhoogt de kans op een correct antwoord.
+
+Strikt genomen onderzochten we met welke stijl van figuren de deelnemers het best instaat zijn om tot een gelijkwaardige interpretatie als de makers van de figuur te komen.
+Het correcte antwoord selecteren we bijgevolg louter op basis van de volledige set van gegevens, inclusief de kennis over onzekerheid en referentielijnen.
+Indien we de stijl van de figuur in rekening brengen, zou de correcte interpretatie van de eerste reeks figuren steeds "geen idee" zijn.
+
+```{r verklaring-beste, fig.cap = "Gemiddelde kans op een correcte interpretatie in functie van het gebruik van symbolen en de schaal van y-as. De tweede reeks valt grotendeels samen met het toevoegen van referentielijnen en weergave van onzekerheid."}
+voorspelling |>
+  mutate(
+    reeks = factor(.data$tweede_reeks, 0:1, c("eerste reeks", "tweede reeks")),
+    stijl = interaction(.data$index, .data$symbool) |>
+      factor(
+        levels = c("1.0", "1.1", "0.0", "0.1"),
+        labels = c(
+          "index\nzonder symbool", "index\nmet symbool",
+          "procentuele\nwijziging\nzonder symbool",
+          "procentuele\nwijziging\nmet symbool"
+        )
+      ),
+    `y-as`  = factor(.data$index, 0:1, c("procentuele\nwijziging", "index")),
+    symbool = factor(.data$symbool, 0:1, c("geen", "wel")),
+  ) |>
+  ggplot(aes(x = reeks, y = median, fill = stijl, shape = `y-as`)) +
+  geom_hline(yintercept = 0.5, linetype = 2) +
+  geom_hline(yintercept = c(0.1, 0.9), linetype = 4) +
+  geom_hline(yintercept = c(0.25, 0.75), linetype = 3) +
+  stat_fan(
+    aes(link_sd = sd), geom = "rect", position = position_dodge(width = 1),
+    link = "logit"
+  ) +
+  scale_y_continuous(
+    "kans op een correct antwoord", breaks = c(0, 0.1, 0.25, 0.5, 0.75, 0.9, 1),
+    labels = percent, limits = 0:1
+  ) +
+  theme(axis.title.x = element_text()) +
+  coord_flip()
+```
+
+```{r verklaring-parameter, fig.cap = "Gewogen effect van de modelparameters.", eval = FALSE}
+model_fit |>
+  transmute(
+    .data$model_id,
+    .data$weight,
+    parameters = map(.data$model, "summary.fixed") |>
+      map(
+        ~rownames_to_column(.x, var = "parameter") |>
+          select("parameter", "mean", "sd")
+      )
+  ) |>
+  unnest("parameters") |>
+  filter(.data$parameter != "(Intercept)") |>
+  complete(
+    .data$model_id, .data$parameter, fill = list(weight = 0, mean = 0, sd = 0)
+  ) |>
+  mutate(
+    estimate = .data$weight * .data$mean,
+    variance = (.data$weight * .data$sd) ^ 2
+  ) |>
+  group_by(.data$parameter) |>
+  summarise(estimate = sum(.data$estimate), sd = sqrt(sum(.data$variance))) |>
+  mutate(
+    lcl = qnorm(0.025, .data$estimate, .data$sd),
+    ucl = qnorm(0.975, .data$estimate, .data$sd),
+    parameter = reorder(.data$parameter, abs(.data$estimate))
+  ) -> parameters
+ggplot(parameters, aes(x = estimate, y = parameter, xmin = lcl, xmax = ucl)) +
+  geom_vline(xintercept = 0, linetype = 2) +
+  geom_errorbarh() +
+  geom_point()
+```
